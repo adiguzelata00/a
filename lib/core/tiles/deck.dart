@@ -13,11 +13,12 @@ const int fakeOkeyCount = 2;
 /// draws from a shuffled copy of it (see [DrawPile]).
 class RunDeck {
   RunDeck(List<Tile> tiles, {int? nextId})
-      : _tiles = List.of(tiles),
-        _nextId = nextId ??
-            (tiles.isEmpty
-                ? 0
-                : tiles.map((t) => t.id).reduce((a, b) => a > b ? a : b) + 1);
+    : _tiles = List.of(tiles),
+      _nextId =
+          nextId ??
+          (tiles.isEmpty
+              ? 0
+              : tiles.map((t) => t.id).reduce((a, b) => a > b ? a : b) + 1);
 
   /// Classic 106 tile okey set: 4 colors × 1..13 × 2 copies + 2 fake okeys.
   factory RunDeck.standard() {
@@ -74,17 +75,14 @@ class RunDeck {
   }
 
   Map<String, Object> toJson() => {
-        'next': _nextId,
-        'tiles': [for (final t in _tiles) t.toJson()],
-      };
+    'next': _nextId,
+    'tiles': [for (final t in _tiles) t.toJson()],
+  };
 
-  factory RunDeck.fromJson(Map<String, dynamic> json) => RunDeck(
-        [
-          for (final t in json['tiles'] as List)
-            Tile.fromJson(Map<String, dynamic>.from(t as Map)),
-        ],
-        nextId: json['next'] as int,
-      );
+  factory RunDeck.fromJson(Map<String, dynamic> json) => RunDeck([
+    for (final t in json['tiles'] as List)
+      Tile.fromJson(Map<String, dynamic>.from(t as Map)),
+  ], nextId: json['next'] as int);
 }
 
 /// Shuffled draw pile used during a single round.

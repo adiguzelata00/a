@@ -17,7 +17,10 @@ void main() {
       expect(real, hasLength(104));
       for (final c in TileColor.values) {
         for (var n = 1; n <= 13; n++) {
-          expect(real.where((t) => t.color == c && t.number == n), hasLength(2));
+          expect(
+            real.where((t) => t.color == c && t.number == n),
+            hasLength(2),
+          );
         }
       }
       expect(deck.tiles.where((t) => t.isFakeOkey), hasLength(2));
@@ -36,7 +39,9 @@ void main() {
 
     test('json round-trip', () {
       final d = RunDeck.standard();
-      d.replace(d.tiles[3].copyWith(enhancement: Enhancement.gold, seal: Seal.crimson));
+      d.replace(
+        d.tiles[3].copyWith(enhancement: Enhancement.gold, seal: Seal.crimson),
+      );
       final restored = RunDeck.fromJson(d.toJson());
       expect(restored.tiles, d.tiles);
       expect(restored.allocateId(), d.allocateId());

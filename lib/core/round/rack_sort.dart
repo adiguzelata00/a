@@ -27,7 +27,10 @@ List<Tile> sortByColor(List<Tile> tiles, OkeyInfo okey) {
 int _numberRank(int number) => number == 1 ? 14 : number;
 
 List<Tile> _sortWithWildsLast(
-    List<Tile> tiles, OkeyInfo okey, int Function(Tile) key) {
+  List<Tile> tiles,
+  OkeyInfo okey,
+  int Function(Tile) key,
+) {
   final indexed = [for (var i = 0; i < tiles.length; i++) (i, tiles[i])];
   indexed.sort((a, b) {
     final wa = okey.isWild(a.$2) ? 1 : 0;

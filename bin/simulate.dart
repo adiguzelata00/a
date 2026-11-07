@@ -55,7 +55,8 @@ void main(List<String> args) {
   }
   _useColor = !opts.containsKey('no-color') && stdout.supportsAnsiEscapes;
 
-  final seedCode = opts['seed'] ??
+  final seedCode =
+      opts['seed'] ??
       generateSeedCode(SeededRng(DateTime.now().microsecondsSinceEpoch));
   final runRng = SeededRng.fromCode(seedCode);
   final target = int.tryParse(opts['target'] ?? '') ?? Balance.targetFor(1, 0);
@@ -65,8 +66,10 @@ void main(List<String> args) {
   ];
   final boss = opts['boss'] == null ? null : bossesById[opts['boss']];
   if (opts['boss'] != null && boss == null) {
-    stderr.writeln('Bilinmeyen boss: ${opts['boss']}. '
-        'Seçenekler: ${bossesById.keys.join(', ')}');
+    stderr.writeln(
+      'Bilinmeyen boss: ${opts['boss']}. '
+      'Seçenekler: ${bossesById.keys.join(', ')}',
+    );
     exit(64);
   }
 
@@ -83,9 +86,11 @@ void main(List<String> args) {
   );
 
   stdout.writeln('══ Tengri\'nin Taşları — Faz 1 konsol simülasyonu ══');
-  stdout.writeln('Seed: $seedCode   Hedef: $target'
-      '${boss != null ? '   Boss: ${boss.id}' : ''}'
-      '${kuts.isNotEmpty ? '   Kut: ${kuts.map((k) => k.id).join(', ')}' : ''}');
+  stdout.writeln(
+    'Seed: $seedCode   Hedef: $target'
+    '${boss != null ? '   Boss: ${boss.id}' : ''}'
+    '${kuts.isNotEmpty ? '   Kut: ${kuts.map((k) => k.id).join(', ')}' : ''}',
+  );
 
   final auto = opts.containsKey('auto');
   const bot = AutoPlayer();
@@ -93,7 +98,9 @@ void main(List<String> args) {
     _printState(round);
     if (auto) {
       final action = bot.decide(round);
-      stdout.writeln('> ${action.isDiscard ? 'd' : 'p'} ${action.indices.join(' ')}');
+      stdout.writeln(
+        '> ${action.isDiscard ? 'd' : 'p'} ${action.indices.join(' ')}',
+      );
       _apply(round, action.isDiscard ? 'd' : 'p', action.indices);
       continue;
     }
@@ -127,8 +134,10 @@ void main(List<String> args) {
         _guard(() {
           final p = round.preview(indices);
           if (p != null) {
-            stdout.writeln('Önizleme: ${_handNames[p.type]} — ${p.chips} × ${p.mult}'
-                '   (taşlar: ${p.hand.tileChips}, tahmini: ${round.simulate(indices).score})');
+            stdout.writeln(
+              'Önizleme: ${_handNames[p.type]} — ${p.chips} × ${p.mult}'
+              '   (taşlar: ${p.hand.tileChips}, tahmini: ${round.simulate(indices).score})',
+            );
           }
         });
       case 'p' || 'd':
@@ -140,8 +149,10 @@ void main(List<String> args) {
 
   stdout.writeln();
   if (round.phase == RoundPhase.won) {
-    stdout.writeln('★ TUR KAZANILDI! Skor ${round.score} / ${round.target} '
-        '— kalan El: ${round.handsLeft}, en iyi el: ${round.bestHandScore}');
+    stdout.writeln(
+      '★ TUR KAZANILDI! Skor ${round.score} / ${round.target} '
+      '— kalan El: ${round.handsLeft}, en iyi el: ${round.bestHandScore}',
+    );
   } else {
     stdout.writeln('✖ Koşu bitti. Skor ${round.score} / ${round.target}');
   }
@@ -151,19 +162,25 @@ void _apply(Round round, String cmd, List<int> indices) {
   _guard(() {
     if (cmd == 'd') {
       final out = round.discard(indices);
-      stdout.writeln('Atılan: ${out.discarded.map(_tile).join(' ')}  '
-          'Çekilen: ${out.drawn.map(_tile).join(' ')}');
+      stdout.writeln(
+        'Atılan: ${out.discarded.map(_tile).join(' ')}  '
+        'Çekilen: ${out.drawn.map(_tile).join(' ')}',
+      );
       return;
     }
     final out = round.play(indices);
     final s = out.scoring;
-    stdout.writeln('\n${_handNames[s.handType]}  '
-        '[${out.hand.counted.map(_counted).join(' ')}]');
+    stdout.writeln(
+      '\n${_handNames[s.handType]}  '
+      '[${out.hand.counted.map(_counted).join(' ')}]',
+    );
     for (final e in s.events) {
       stdout.writeln('   ${_describe(e, round)}');
     }
-    stdout.writeln('   = ${s.chips.toStringAsFixed(0)} × ${_num(s.mult)} '
-        '→ +${s.score}   (toplam ${out.scoreAfter})');
+    stdout.writeln(
+      '   = ${s.chips.toStringAsFixed(0)} × ${_num(s.mult)} '
+      '→ +${s.score}   (toplam ${out.scoreAfter})',
+    );
     if (out.stolen != null) {
       stdout.writeln('   Al Karısı bir taş çaldı: ${_tile(out.stolen!)}');
     }
@@ -179,7 +196,8 @@ String _describe(ScoreEvent e, Round round) {
     ScoreSourceKind.boss => 'Boss',
   };
   final what = switch (e.kind) {
-    ScoreEventKind.handBase => 'taban ${_num(e.chipsAfter)} × ${_num(e.multAfter)}',
+    ScoreEventKind.handBase =>
+      'taban ${_num(e.chipsAfter)} × ${_num(e.multAfter)}',
     ScoreEventKind.chips => '+${_num(e.amount)} Puan',
     ScoreEventKind.mult => '+${_num(e.amount)} Çarpan',
     ScoreEventKind.xMult => '×${_num(e.amount)} Çarpan',
@@ -192,9 +210,8 @@ String _describe(ScoreEvent e, Round round) {
   return '$src: $what';
 }
 
-String _counted(CountedTile c) => c.usedAsWild
-    ? '✦→${_face(TileFace(c.color, c.number))}'
-    : _tile(c.tile);
+String _counted(CountedTile c) =>
+    c.usedAsWild ? '✦→${_face(TileFace(c.color, c.number))}' : _tile(c.tile);
 
 String _num(num n) =>
     n == n.roundToDouble() ? n.toInt().toString() : n.toStringAsFixed(2);
@@ -210,12 +227,14 @@ void _guard(void Function() f) {
 void _printState(Round round) {
   final okey = round.okey;
   stdout.writeln();
-  stdout.writeln('Skor ${round.score}/${round.target}   '
-      'El ${round.handsLeft}   Değiştir ${round.discardsLeft}   '
-      'Deste ${round.drawPileCount}   '
-      'Gösterge ${_tile(okey.indicator)} → Okey ${_face(okey.okeyFace)}'
-      '${okey.okeyIsWild ? '' : ' (joker değil!)'}'
-      '${round.countedColor != null ? '   Sayılan renk: ${_colorSymbols[round.countedColor]}' : ''}');
+  stdout.writeln(
+    'Skor ${round.score}/${round.target}   '
+    'El ${round.handsLeft}   Değiştir ${round.discardsLeft}   '
+    'Deste ${round.drawPileCount}   '
+    'Gösterge ${_tile(okey.indicator)} → Okey ${_face(okey.okeyFace)}'
+    '${okey.okeyIsWild ? '' : ' (joker değil!)'}'
+    '${round.countedColor != null ? '   Sayılan renk: ${_colorSymbols[round.countedColor]}' : ''}',
+  );
   final rack = round.rack;
   final cells = <String>[];
   final idx = <String>[];
@@ -228,9 +247,11 @@ void _printState(Round round) {
   stdout.writeln('        ${idx.join('  ')}');
 }
 
-int _visibleLength(String s) => s.replaceAll(RegExp(r'\x1B\[[0-9;]*m'), '').runes.length;
+int _visibleLength(String s) =>
+    s.replaceAll(RegExp(r'\x1B\[[0-9;]*m'), '').runes.length;
 
-String _face(TileFace f) => _paint(f.color, '${_colorSymbols[f.color]}${f.number}');
+String _face(TileFace f) =>
+    _paint(f.color, '${_colorSymbols[f.color]}${f.number}');
 
 String _tile(Tile t, {OkeyInfo? okey}) {
   final extras = StringBuffer();

@@ -69,9 +69,9 @@ class Tile {
     required this.id,
     this.enhancement = Enhancement.none,
     this.seal = Seal.none,
-  })  : color = TileColor.black,
-        number = 1,
-        isFakeOkey = true;
+  }) : color = TileColor.black,
+       number = 1,
+       isFakeOkey = true;
 
   final int id;
   final TileColor color;
@@ -87,33 +87,32 @@ class Tile {
     bool? isFakeOkey,
     Enhancement? enhancement,
     Seal? seal,
-  }) =>
-      Tile(
-        id: id ?? this.id,
-        color: color ?? this.color,
-        number: number ?? this.number,
-        isFakeOkey: isFakeOkey ?? this.isFakeOkey,
-        enhancement: enhancement ?? this.enhancement,
-        seal: seal ?? this.seal,
-      );
+  }) => Tile(
+    id: id ?? this.id,
+    color: color ?? this.color,
+    number: number ?? this.number,
+    isFakeOkey: isFakeOkey ?? this.isFakeOkey,
+    enhancement: enhancement ?? this.enhancement,
+    seal: seal ?? this.seal,
+  );
 
   Map<String, Object> toJson() => {
-        'id': id,
-        'c': color.index,
-        'n': number,
-        if (isFakeOkey) 'f': true,
-        if (enhancement != Enhancement.none) 'e': enhancement.index,
-        if (seal != Seal.none) 's': seal.index,
-      };
+    'id': id,
+    'c': color.index,
+    'n': number,
+    if (isFakeOkey) 'f': true,
+    if (enhancement != Enhancement.none) 'e': enhancement.index,
+    if (seal != Seal.none) 's': seal.index,
+  };
 
   factory Tile.fromJson(Map<String, dynamic> json) => Tile(
-        id: json['id'] as int,
-        color: TileColor.values[json['c'] as int],
-        number: json['n'] as int,
-        isFakeOkey: (json['f'] as bool?) ?? false,
-        enhancement: Enhancement.values[(json['e'] as int?) ?? 0],
-        seal: Seal.values[(json['s'] as int?) ?? 0],
-      );
+    id: json['id'] as int,
+    color: TileColor.values[json['c'] as int],
+    number: json['n'] as int,
+    isFakeOkey: (json['f'] as bool?) ?? false,
+    enhancement: Enhancement.values[(json['e'] as int?) ?? 0],
+    seal: Seal.values[(json['s'] as int?) ?? 0],
+  );
 
   @override
   bool operator ==(Object other) =>
@@ -132,9 +131,7 @@ class Tile {
   /// Debug representation, e.g. `R5#12`, `FAKE#105`, `B13+iron`.
   @override
   String toString() {
-    final face = isFakeOkey
-        ? 'FAKE'
-        : '${color.name[0].toUpperCase()}$number';
+    final face = isFakeOkey ? 'FAKE' : '${color.name[0].toUpperCase()}$number';
     final extras = [
       if (enhancement != Enhancement.none) enhancement.name,
       if (seal != Seal.none) 'seal:${seal.name}',

@@ -81,11 +81,7 @@ class HandEvaluator {
   const HandEvaluator();
 
   /// Evaluates [played] (in rack order). Returns null for an empty list.
-  HandResult? evaluate(
-    List<Tile> played,
-    OkeyInfo okey,
-    HandLevels levels,
-  ) {
+  HandResult? evaluate(List<Tile> played, OkeyInfo okey, HandLevels levels) {
     if (played.isEmpty) return null;
     final slots = [
       for (var i = 0; i < played.length; i++) _Slot.from(i, played[i], okey),
@@ -151,15 +147,17 @@ class HandEvaluator {
   }
 
   static List<_Assigned> _single(_Slot slot) => [
-        _Assigned(slot, slot.number ?? 1, slot.color ?? TileColor.red),
-      ];
+    _Assigned(slot, slot.number ?? 1, slot.color ?? TileColor.red),
+  ];
 
   static List<_Assigned>? _pair(List<_Slot> s) {
     final colors = _assignColors(s, distinct: false);
     if (colors == null) return null;
     final number = _commonNumber(s);
     if (number == null) return null;
-    return [for (var i = 0; i < s.length; i++) _Assigned(s[i], number, colors[i])];
+    return [
+      for (var i = 0; i < s.length; i++) _Assigned(s[i], number, colors[i]),
+    ];
   }
 
   /// Best partition of [s] (even length) into valid pairs.
@@ -193,7 +191,9 @@ class HandEvaluator {
     if (colors == null) return null;
     final number = _commonNumber(s);
     if (number == null) return null;
-    return [for (var i = 0; i < s.length; i++) _Assigned(s[i], number, colors[i])];
+    return [
+      for (var i = 0; i < s.length; i++) _Assigned(s[i], number, colors[i]),
+    ];
   }
 
   /// Runs use "positions" 1..14 where position 14 is a 1 placed after 13.
@@ -297,7 +297,10 @@ class HandEvaluator {
   /// [distinct] = all colors must differ (groups, rainbow runs); otherwise all
   /// colors must be equal. Slots without a fixed color (wild okey, Gök Taşı)
   /// take the shared color or the remaining colors in enum order.
-  static List<TileColor>? _assignColors(List<_Slot> s, {required bool distinct}) {
+  static List<TileColor>? _assignColors(
+    List<_Slot> s, {
+    required bool distinct,
+  }) {
     final fixed = [
       for (final slot in s)
         if (slot.color != null) slot.color!,
@@ -342,7 +345,14 @@ Iterable<List<T>> _combinations<T>(List<T> items, int k) sync* {
 
 /// A played tile prepared for matching. `null` number/color = wildcard.
 class _Slot {
-  _Slot(this.index, this.tile, this.number, this.color, this.wild, this.anyColor);
+  _Slot(
+    this.index,
+    this.tile,
+    this.number,
+    this.color,
+    this.wild,
+    this.anyColor,
+  );
 
   factory _Slot.from(int index, Tile tile, OkeyInfo okey) {
     final anyColor = tile.enhancement == Enhancement.skyStone;
@@ -350,8 +360,14 @@ class _Slot {
       return _Slot(index, tile, null, null, true, anyColor);
     }
     final face = okey.faceOf(tile);
-    return _Slot(index, tile, face.number, anyColor ? null : face.color, false,
-        anyColor);
+    return _Slot(
+      index,
+      tile,
+      face.number,
+      anyColor ? null : face.color,
+      false,
+      anyColor,
+    );
   }
 
   final int index;

@@ -130,8 +130,14 @@ class ScoringEngine {
     for (var pos = 0; pos < hand.counted.length; pos++) {
       final tile = hand.counted[pos];
       final idx = tile.playedIndex;
-      if (input.countedColor != null && !tile.matchesColor(input.countedColor!)) {
-        acc.emit(ScoreEventKind.tileDebuffed, ScoreSourceKind.playedTile, idx, 0);
+      if (input.countedColor != null &&
+          !tile.matchesColor(input.countedColor!)) {
+        acc.emit(
+          ScoreEventKind.tileDebuffed,
+          ScoreSourceKind.playedTile,
+          idx,
+          0,
+        );
         continue;
       }
       var triggers = 1;
@@ -141,7 +147,12 @@ class ScoringEngine {
       }
       for (var t = 0; t < triggers; t++) {
         if (t > 0) {
-          acc.emit(ScoreEventKind.retrigger, ScoreSourceKind.playedTile, idx, t);
+          acc.emit(
+            ScoreEventKind.retrigger,
+            ScoreSourceKind.playedTile,
+            idx,
+            t,
+          );
         }
         _scoreCountedTile(acc, tile, contexts);
       }
@@ -179,8 +190,12 @@ class ScoringEngine {
     var score = (acc.chips * acc.mult).floor();
     if (hand.type.isRun && input.rules.runScoreFactor != 1.0) {
       score = (score * input.rules.runScoreFactor).floor();
-      acc.emit(ScoreEventKind.bossPenalty, ScoreSourceKind.boss, -1,
-          input.rules.runScoreFactor);
+      acc.emit(
+        ScoreEventKind.bossPenalty,
+        ScoreSourceKind.boss,
+        -1,
+        input.rules.runScoreFactor,
+      );
     }
     if (input.rules.firstHandScoresZero && input.handNumber == 0) {
       score = 0;
@@ -236,15 +251,22 @@ class _Accumulator {
   int money = 0;
   final List<ScoreEvent> events = [];
 
-  void emit(ScoreEventKind kind, ScoreSourceKind source, int index, num amount) {
-    events.add(ScoreEvent(
-      kind: kind,
-      source: source,
-      sourceIndex: index,
-      amount: amount,
-      chipsAfter: chips,
-      multAfter: mult,
-    ));
+  void emit(
+    ScoreEventKind kind,
+    ScoreSourceKind source,
+    int index,
+    num amount,
+  ) {
+    events.add(
+      ScoreEvent(
+        kind: kind,
+        source: source,
+        sourceIndex: index,
+        amount: amount,
+        chipsAfter: chips,
+        multAfter: mult,
+      ),
+    );
   }
 
   void addChips(num amount, ScoreSourceKind source, int index) {
@@ -295,7 +317,8 @@ class _KutCtx extends KutHandContext {
   int get handNumber => _in.handNumber;
 
   @override
-  void addChips(num amount) => _acc.addChips(amount, ScoreSourceKind.kut, _index);
+  void addChips(num amount) =>
+      _acc.addChips(amount, ScoreSourceKind.kut, _index);
   @override
   void addMult(num amount) => _acc.addMult(amount, ScoreSourceKind.kut, _index);
   @override

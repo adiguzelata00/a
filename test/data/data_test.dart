@@ -28,18 +28,21 @@ void main() {
     expect(Balance.hands[HandType.group4]!.mult, 7);
   });
 
-  test('targets: floor 1 = 300/450/600, increasing within and across floors', () {
-    expect(Balance.targetFor(1, 0), 300);
-    expect(Balance.targetFor(1, 1), 450);
-    expect(Balance.targetFor(1, 2), 600);
-    for (var f = 1; f <= 10; f++) {
-      expect(Balance.targetFor(f, 1), greaterThan(Balance.targetFor(f, 0)));
-      expect(Balance.targetFor(f, 2), greaterThan(Balance.targetFor(f, 1)));
-      if (f > 1) {
-        // Same slot on the next floor grows ~1.6-1.9×.
-        final growth = Balance.targetFor(f, 0) / Balance.targetFor(f - 1, 0);
-        expect(growth, inInclusiveRange(1.6, 1.95));
+  test(
+    'targets: floor 1 = 300/450/600, increasing within and across floors',
+    () {
+      expect(Balance.targetFor(1, 0), 300);
+      expect(Balance.targetFor(1, 1), 450);
+      expect(Balance.targetFor(1, 2), 600);
+      for (var f = 1; f <= 10; f++) {
+        expect(Balance.targetFor(f, 1), greaterThan(Balance.targetFor(f, 0)));
+        expect(Balance.targetFor(f, 2), greaterThan(Balance.targetFor(f, 1)));
+        if (f > 1) {
+          // Same slot on the next floor grows ~1.6-1.9×.
+          final growth = Balance.targetFor(f, 0) / Balance.targetFor(f - 1, 0);
+          expect(growth, inInclusiveRange(1.6, 1.95));
+        }
       }
-    }
-  });
+    },
+  );
 }

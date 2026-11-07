@@ -63,7 +63,11 @@ abstract class KutBehavior {
   void beforeScoring(KutHandContext ctx) {}
 
   /// Additional times the counted tile at [countedPosition] triggers.
-  int extraTileTriggers(KutHandContext ctx, CountedTile tile, int countedPosition) => 0;
+  int extraTileTriggers(
+    KutHandContext ctx,
+    CountedTile tile,
+    int countedPosition,
+  ) => 0;
 
   void onTileScored(KutHandContext ctx, CountedTile tile) {}
 
@@ -122,7 +126,7 @@ class KutDefinition {
 /// A Kut owned by the player, with mutable per-instance state.
 class KutInstance {
   KutInstance(this.definition, [Map<String, num>? state])
-      : state = state ?? Map.of(definition.behavior.initialState());
+    : state = state ?? Map.of(definition.behavior.initialState());
 
   final KutDefinition definition;
   final Map<String, num> state;

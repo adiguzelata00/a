@@ -30,7 +30,11 @@ class AutoPlayer {
         round.handsLeft > 1 &&
         bestScore < needed * weakScoreRatio &&
         round.drawPileCount > 0) {
-      final toss = _leastConnected(round.rack, round.okey, round.config.maxTilesPerAction);
+      final toss = _leastConnected(
+        round.rack,
+        round.okey,
+        round.config.maxTilesPerAction,
+      );
       if (toss.isNotEmpty) return AutoAction.discard(toss);
     }
     return AutoAction.play(best);
@@ -79,7 +83,8 @@ class AutoPlayer {
           continue;
         }
         final g = okey.faceOf(o);
-        final sameColorNear = g.color == f.color && (g.number - f.number).abs() <= 2;
+        final sameColorNear =
+            g.color == f.color && (g.number - f.number).abs() <= 2;
         final sameNumber = g.number == f.number;
         if (sameColorNear || sameNumber) c++;
       }

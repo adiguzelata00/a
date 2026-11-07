@@ -28,8 +28,8 @@ int nextTileNumber(int number) => number == maxTileNumber ? 1 : number + 1;
 /// * Fake okeys take the okey's face and behave like normal tiles.
 class OkeyInfo {
   OkeyInfo({required this.indicator, this.okeyIsWild = true})
-      : assert(!indicator.isFakeOkey, 'A fake okey can not be the indicator'),
-        okeyFace = TileFace(indicator.color, nextTileNumber(indicator.number));
+    : assert(!indicator.isFakeOkey, 'A fake okey can not be the indicator'),
+      okeyFace = TileFace(indicator.color, nextTileNumber(indicator.number));
 
   final Tile indicator;
   final TileFace okeyFace;

@@ -6,7 +6,11 @@ var _nextId = 1000;
 /// Parses a tile code: `R5` red 5, `Y13` yellow 13, `B1` blue 1,
 /// `K7` black (kara) 7, `F` fake okey.
 /// Options: `enh` enhancement, `seal` seal.
-Tile t(String code, {Enhancement enh = Enhancement.none, Seal seal = Seal.none}) {
+Tile t(
+  String code, {
+  Enhancement enh = Enhancement.none,
+  Seal seal = Seal.none,
+}) {
   if (code == 'F') {
     return Tile.fakeOkey(id: _nextId++, enhancement: enh, seal: seal);
   }
@@ -32,7 +36,10 @@ List<Tile> ts(String codes) => [for (final c in codes.split(' ')) t(c)];
 OkeyInfo okeyIs(String okeyCode, {bool wild = true}) {
   final o = t(okeyCode);
   final indicatorNumber = o.number == 1 ? 13 : o.number - 1;
-  return OkeyInfo(indicator: o.copyWith(number: indicatorNumber), okeyIsWild: wild);
+  return OkeyInfo(
+    indicator: o.copyWith(number: indicatorNumber),
+    okeyIsWild: wild,
+  );
 }
 
 /// A neutral okey (black 13 -> okey black 1) for tests that don't use okeys.

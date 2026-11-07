@@ -26,8 +26,8 @@ class SeededRng {
 
   /// Restores an RNG from [state] (see [state] getter).
   SeededRng.fromState(List<int> state)
-      : assert(state.length == 5),
-        _seed = state[0] & _mask {
+    : assert(state.length == 5),
+      _seed = state[0] & _mask {
     _a = state[1] & _mask;
     _b = state[2] & _mask;
     _c = state[3] & _mask;

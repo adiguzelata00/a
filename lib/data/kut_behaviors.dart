@@ -72,8 +72,11 @@ class FirstTileRetriggerKut extends KutBehavior {
   final int extra;
 
   @override
-  int extraTileTriggers(KutHandContext ctx, CountedTile tile, int countedPosition) =>
-      countedPosition == 0 ? extra : 0;
+  int extraTileTriggers(
+    KutHandContext ctx,
+    CountedTile tile,
+    int countedPosition,
+  ) => countedPosition == 0 ? extra : 0;
 }
 
 /// Kayra Han: gains ×mult permanently whenever a Destan is used.
@@ -130,7 +133,8 @@ class DiscardStackKut extends KutBehavior {
 
   @override
   void onDiscard(KutInstance self, List<Tile> discarded) {
-    self.state['mult'] = (self.state['mult'] ?? 0) + multPerTile * discarded.length;
+    self.state['mult'] =
+        (self.state['mult'] ?? 0) + multPerTile * discarded.length;
   }
 
   @override
@@ -160,7 +164,8 @@ class MoneyPerHandLeftKut extends KutBehavior {
   final int money;
 
   @override
-  int roundEndMoney(KutInstance self, RoundEndInfo info) => money * info.handsLeft;
+  int roundEndMoney(KutInstance self, RoundEndInfo info) =>
+      money * info.handsLeft;
 }
 
 /// Kervan: first shop reroll is free.

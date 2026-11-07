@@ -22,19 +22,21 @@ ScoringResult score(
 }) {
   final lv = levels();
   final hand = evaluator.evaluate(played, okey ?? neutralOkey, lv)!;
-  return engine.score(ScoringInput(
-    hand: hand,
-    heldTiles: held,
-    levels: lv,
-    kuts: kutInstances ?? [for (final id in kuts) KutInstance(kutById(id))],
-    rules: rules,
-    tuning: Balance.tileEffects,
-    handNumber: handNumber,
-    discardsLeft: discardsLeft,
-    isBossRound: boss,
-    countedColor: countedColor,
-    rng: rng,
-  ));
+  return engine.score(
+    ScoringInput(
+      hand: hand,
+      heldTiles: held,
+      levels: lv,
+      kuts: kutInstances ?? [for (final id in kuts) KutInstance(kutById(id))],
+      rules: rules,
+      tuning: Balance.tileEffects,
+      handNumber: handNumber,
+      discardsLeft: discardsLeft,
+      isBossRound: boss,
+      countedColor: countedColor,
+      rng: rng,
+    ),
+  );
 }
 
 void main() {
@@ -43,7 +45,10 @@ void main() {
       final r = score(ts('R4 R5 R6'));
       expect(r.score, 120);
       expect(r.events.first.kind, ScoreEventKind.handBase);
-      expect(r.events.where((e) => e.kind == ScoreEventKind.chips), hasLength(3));
+      expect(
+        r.events.where((e) => e.kind == ScoreEventKind.chips),
+        hasLength(3),
+      );
     });
 
     test('tiles outside the meld add nothing', () {
@@ -75,8 +80,12 @@ void main() {
     test('Kristal breaks with ~25% chance and is deterministic per seed', () {
       var broken = 0;
       for (var seed = 0; seed < 400; seed++) {
-        final a = score([t('R5', enh: Enhancement.crystal)], rng: SeededRng(seed));
-        final b = score([t('R5', enh: Enhancement.crystal)], rng: SeededRng(seed));
+        final a = score([
+          t('R5', enh: Enhancement.crystal),
+        ], rng: SeededRng(seed));
+        final b = score([
+          t('R5', enh: Enhancement.crystal),
+        ], rng: SeededRng(seed));
         expect(a.brokenTiles.length, b.brokenTiles.length);
         broken += a.brokenTiles.length;
       }
@@ -84,8 +93,13 @@ void main() {
     });
 
     test('Demir held: ×1.5 per iron tile each hand', () {
-      final r = score(ts('R5 R5'),
-          held: [t('K9', enh: Enhancement.iron), t('K10', enh: Enhancement.iron)]);
+      final r = score(
+        ts('R5 R5'),
+        held: [
+          t('K9', enh: Enhancement.iron),
+          t('K10', enh: Enhancement.iron),
+        ],
+      );
       expect(r.mult, 2 * 1.5 * 1.5);
       expect(r.score, 90);
     });
@@ -97,12 +111,17 @@ void main() {
     test('Kızıl Tamga: counted tile triggers twice', () {
       final r = score([t('R5', seal: Seal.crimson), t('R5')]);
       expect(r.chips, 10 + 5 + 5 + 5);
-      expect(r.events.where((e) => e.kind == ScoreEventKind.retrigger), hasLength(1));
+      expect(
+        r.events.where((e) => e.kind == ScoreEventKind.retrigger),
+        hasLength(1),
+      );
     });
 
     test('Kızıl Tamga on a held iron tile retriggers the held effect', () {
-      final r = score(ts('R5 R5'),
-          held: [t('K9', enh: Enhancement.iron, seal: Seal.crimson)]);
+      final r = score(
+        ts('R5 R5'),
+        held: [t('K9', enh: Enhancement.iron, seal: Seal.crimson)],
+      );
       expect(r.mult, 2 * 1.5 * 1.5);
     });
 
@@ -118,7 +137,8 @@ void main() {
       final r = score(ts('R7 Y7 B7'), kuts: ['umay_ana']);
       expect(r.score, 51 * 7);
       final seq = [
-        for (final e in r.events) '${e.source.name}:${e.sourceIndex}:${e.kind.name}'
+        for (final e in r.events)
+          '${e.source.name}:${e.sourceIndex}:${e.kind.name}',
       ];
       expect(seq, [
         'hand:-1:handBase',
@@ -130,13 +150,17 @@ void main() {
     });
 
     test('full order: tiles → held → hand Kuts', () {
-      final r = score(ts('R4 R5 R6'),
-          held: [t('K9', enh: Enhancement.iron)], kuts: ['bozkurt', 'umay_ana']);
+      final r = score(
+        ts('R4 R5 R6'),
+        held: [t('K9', enh: Enhancement.iron)],
+        kuts: ['bozkurt', 'umay_ana'],
+      );
       final sources = [for (final e in r.events) e.source];
       final firstHeld = sources.indexOf(ScoreSourceKind.heldTile);
       final lastPlayed = sources.lastIndexOf(ScoreSourceKind.playedTile);
       final bozkurt = r.events.indexWhere(
-          (e) => e.source == ScoreSourceKind.kut && e.sourceIndex == 0);
+        (e) => e.source == ScoreSourceKind.kut && e.sourceIndex == 0,
+      );
       expect(lastPlayed, lessThan(firstHeld));
       expect(firstHeld, lessThan(bozkurt));
       // chips 40; mult: 3 +4+4+4 (umay) = 15, ×1.5 (iron) = 22.5, +10 = 32.5
@@ -159,12 +183,18 @@ void main() {
     });
 
     test('Kam Davulu stacks with Kızıl Tamga', () {
-      final r = score([t('R5', seal: Seal.crimson), t('R5')], kuts: ['kam_davulu']);
+      final r = score(
+        [t('R5', seal: Seal.crimson), t('R5')],
+        kuts: ['kam_davulu'],
+      );
       expect(r.chips, 10 + 5 * 3 + 5);
     });
 
     test('retrigger repeats per-tile Kut effects', () {
-      final r = score([t('R5', seal: Seal.crimson), t('R5')], kuts: ['umay_ana']);
+      final r = score(
+        [t('R5', seal: Seal.crimson), t('R5')],
+        kuts: ['umay_ana'],
+      );
       expect(r.mult, 2 + 4 * 3);
     });
   });
@@ -179,8 +209,10 @@ void main() {
     });
 
     test('color Kuts see Gök Taşı as every color', () {
-      final r = score([t('Y4'), t('K5', enh: Enhancement.skyStone), t('Y6')],
-          kuts: ['umay_ana']);
+      final r = score(
+        [t('Y4'), t('K5', enh: Enhancement.skyStone), t('Y6')],
+        kuts: ['umay_ana'],
+      );
       expect(r.mult, 3 + 4);
     });
 
@@ -188,12 +220,17 @@ void main() {
       expect(score(ts('R4 R5 R6'), kuts: ['bozkurt']).mult, 13);
       expect(score(ts('R5 R5'), kuts: ['bozkurt']).mult, 2);
       expect(score(ts('R7 Y7 B7'), kuts: ['asena']).mult, 6);
-      expect(score(ts('R5 Y5 B5 K8 K9 K10'), kuts: ['bozkurt', 'asena']).mult,
-          (9 + 10) * 2);
+      expect(
+        score(ts('R5 Y5 B5 K8 K9 K10'), kuts: ['bozkurt', 'asena']).mult,
+        (9 + 10) * 2,
+      );
     });
 
     test('Tulpar: +15 chips per remaining discard', () {
-      expect(score(ts('R5 R5'), kuts: ['tulpar'], discardsLeft: 2).chips, 20 + 30);
+      expect(
+        score(ts('R5 R5'), kuts: ['tulpar'], discardsLeft: 2).chips,
+        20 + 30,
+      );
     });
 
     test('Kopuz: only for 3 or fewer played tiles', () {
@@ -203,7 +240,14 @@ void main() {
 
     test('Ülgen\'in Işığı: ×3 only when a wild okey is in the meld', () {
       final okey = okeyIs('Y5');
-      expect(score([t('R4'), t('Y5'), t('R6')], okey: okey, kuts: ['ulgen_isigi']).mult, 9);
+      expect(
+        score(
+          [t('R4'), t('Y5'), t('R6')],
+          okey: okey,
+          kuts: ['ulgen_isigi'],
+        ).mult,
+        9,
+      );
       expect(score(ts('R4 R5 R6'), okey: okey, kuts: ['ulgen_isigi']).mult, 3);
     });
 
@@ -218,20 +262,35 @@ void main() {
     });
 
     test('Ergenekon: held iron tiles also give +20 chips', () {
-      final r = score(ts('R5 R5'),
-          held: [t('K9', enh: Enhancement.iron), t('K3')], kuts: ['ergenekon']);
+      final r = score(
+        ts('R5 R5'),
+        held: [
+          t('K9', enh: Enhancement.iron),
+          t('K3'),
+        ],
+        kuts: ['ergenekon'],
+      );
       expect(r.chips, 40);
     });
 
-    test('Gök Börü grows before scoring; state is only returned, not mutated', () {
-      final kut = KutInstance(kutById('gok_boru'));
-      final r = score(ts('R7 Y7 B7 K7'), kutInstances: [kut]);
-      expect(r.mult, 7 * 2);
-      expect(r.updatedKuts.single.state['xMult'], 2);
-      expect(kut.state['xMult'], 1, reason: 'input instance untouched');
-      // Other hands do not grow it.
-      expect(score(ts('R5 R5'), kutInstances: [kut]).updatedKuts.single.state['xMult'], 1);
-    });
+    test(
+      'Gök Börü grows before scoring; state is only returned, not mutated',
+      () {
+        final kut = KutInstance(kutById('gok_boru'));
+        final r = score(ts('R7 Y7 B7 K7'), kutInstances: [kut]);
+        expect(r.mult, 7 * 2);
+        expect(r.updatedKuts.single.state['xMult'], 2);
+        expect(kut.state['xMult'], 1, reason: 'input instance untouched');
+        // Other hands do not grow it.
+        expect(
+          score(
+            ts('R5 R5'),
+            kutInstances: [kut],
+          ).updatedKuts.single.state['xMult'],
+          1,
+        );
+      },
+    );
 
     test('Kayra Han: +0.25 × per Destan used', () {
       final kut = KutInstance(kutById('kayra_han'));
@@ -251,12 +310,18 @@ void main() {
     test('Tepegöz: only the active color is counted', () {
       final r = score(ts('R7 Y7 B7'), countedColor: TileColor.red);
       expect(r.chips, 30 + 7);
-      expect(r.events.where((e) => e.kind == ScoreEventKind.tileDebuffed), hasLength(2));
+      expect(
+        r.events.where((e) => e.kind == ScoreEventKind.tileDebuffed),
+        hasLength(2),
+      );
     });
 
     test('Tepegöz: Gök Taşı still counts', () {
-      final r = score([t('R7'), t('Y7', enh: Enhancement.skyStone), t('B7')],
-          countedColor: TileColor.red);
+      final r = score([
+        t('R7'),
+        t('Y7', enh: Enhancement.skyStone),
+        t('B7'),
+      ], countedColor: TileColor.red);
       expect(r.chips, 30 + 14);
     });
 

@@ -22,18 +22,78 @@ abstract final class Balance {
   // Hand types: base chips / mult and per-level increase (Destan).
   // ---------------------------------------------------------------------
   static const Map<HandType, HandStats> hands = {
-    HandType.single: HandStats(chips: 5, mult: 1, chipsPerLevel: 10, multPerLevel: 1),
-    HandType.pair: HandStats(chips: 10, mult: 2, chipsPerLevel: 15, multPerLevel: 1),
-    HandType.twoPair: HandStats(chips: 20, mult: 2, chipsPerLevel: 20, multPerLevel: 1),
-    HandType.run3: HandStats(chips: 25, mult: 3, chipsPerLevel: 20, multPerLevel: 2),
-    HandType.group3: HandStats(chips: 30, mult: 3, chipsPerLevel: 25, multPerLevel: 2),
-    HandType.threePairs: HandStats(chips: 45, mult: 4, chipsPerLevel: 30, multPerLevel: 2),
-    HandType.run4: HandStats(chips: 45, mult: 4, chipsPerLevel: 30, multPerLevel: 3),
-    HandType.rainbowRun: HandStats(chips: 40, mult: 4, chipsPerLevel: 30, multPerLevel: 3),
-    HandType.run5: HandStats(chips: 70, mult: 5, chipsPerLevel: 35, multPerLevel: 3),
-    HandType.group4: HandStats(chips: 60, mult: 7, chipsPerLevel: 30, multPerLevel: 3),
-    HandType.run6: HandStats(chips: 100, mult: 8, chipsPerLevel: 40, multPerLevel: 4),
-    HandType.skyMeld: HandStats(chips: 120, mult: 9, chipsPerLevel: 50, multPerLevel: 4),
+    HandType.single: HandStats(
+      chips: 5,
+      mult: 1,
+      chipsPerLevel: 10,
+      multPerLevel: 1,
+    ),
+    HandType.pair: HandStats(
+      chips: 10,
+      mult: 2,
+      chipsPerLevel: 15,
+      multPerLevel: 1,
+    ),
+    HandType.twoPair: HandStats(
+      chips: 20,
+      mult: 2,
+      chipsPerLevel: 20,
+      multPerLevel: 1,
+    ),
+    HandType.run3: HandStats(
+      chips: 25,
+      mult: 3,
+      chipsPerLevel: 20,
+      multPerLevel: 2,
+    ),
+    HandType.group3: HandStats(
+      chips: 30,
+      mult: 3,
+      chipsPerLevel: 25,
+      multPerLevel: 2,
+    ),
+    HandType.threePairs: HandStats(
+      chips: 45,
+      mult: 4,
+      chipsPerLevel: 30,
+      multPerLevel: 2,
+    ),
+    HandType.run4: HandStats(
+      chips: 45,
+      mult: 4,
+      chipsPerLevel: 30,
+      multPerLevel: 3,
+    ),
+    HandType.rainbowRun: HandStats(
+      chips: 40,
+      mult: 4,
+      chipsPerLevel: 30,
+      multPerLevel: 3,
+    ),
+    HandType.run5: HandStats(
+      chips: 70,
+      mult: 5,
+      chipsPerLevel: 35,
+      multPerLevel: 3,
+    ),
+    HandType.group4: HandStats(
+      chips: 60,
+      mult: 7,
+      chipsPerLevel: 30,
+      multPerLevel: 3,
+    ),
+    HandType.run6: HandStats(
+      chips: 100,
+      mult: 8,
+      chipsPerLevel: 40,
+      multPerLevel: 4,
+    ),
+    HandType.skyMeld: HandStats(
+      chips: 120,
+      mult: 9,
+      chipsPerLevel: 50,
+      multPerLevel: 4,
+    ),
   };
 
   static HandLevels newHandLevels() => HandLevels(hands);
@@ -58,7 +118,14 @@ abstract final class Balance {
   /// Small-trial target per floor. Big = ×1.5, Boss = ×2 (see below).
   /// Growth is ~1.75× per floor.
   static const List<int> floorBaseTargets = [
-    300, 525, 900, 1600, 2800, 4800, 8400, 14500,
+    300,
+    525,
+    900,
+    1600,
+    2800,
+    4800,
+    8400,
+    14500,
   ];
   static const List<double> roundTargetMultipliers = [1.0, 1.5, 2.0];
 
@@ -68,8 +135,7 @@ abstract final class Balance {
   static int targetFor(int floor, int roundInFloor) {
     final base = floor <= floorCount
         ? floorBaseTargets[floor - 1]
-        : floorBaseTargets.last *
-            _pow(endlessGrowth, floor - floorCount);
+        : floorBaseTargets.last * _pow(endlessGrowth, floor - floorCount);
     return (base * roundTargetMultipliers[roundInFloor]).round();
   }
 

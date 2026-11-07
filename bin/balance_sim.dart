@@ -20,7 +20,9 @@ void main(List<String> args) {
     if (args[i] == '--kuts') kutIds = args[i + 1].split(',');
   }
   const bot = AutoPlayer();
-  print('Kut: ${kutIds.isEmpty ? '-' : kutIds.join(', ')}   tur sayısı: $rounds');
+  print(
+    'Kut: ${kutIds.isEmpty ? '-' : kutIds.join(', ')}   tur sayısı: $rounds',
+  );
   print('Kat  Küçük        Büyük        Boss         ort. skor (Küçük)');
   for (var floor = 1; floor <= Balance.floorCount; floor++) {
     final cells = <String>[];
@@ -47,8 +49,12 @@ void main(List<String> args) {
         total += round.score;
       }
       if (slot == 0) avg = total / rounds;
-      cells.add('${target.toString().padLeft(5)} %${(100 * wins / rounds).round().toString().padLeft(3)}');
+      cells.add(
+        '${target.toString().padLeft(5)} %${(100 * wins / rounds).round().toString().padLeft(3)}',
+      );
     }
-    print('${floor.toString().padLeft(3)}  ${cells.join('   ')}   ${avg.round()}');
+    print(
+      '${floor.toString().padLeft(3)}  ${cells.join('   ')}   ${avg.round()}',
+    );
   }
 }

@@ -71,8 +71,10 @@ class DiscardOutcome {
   final List<Tile> drawn;
 
   /// Discarded tiles with a purple seal (each creates a Tılsım, Phase 3).
-  List<Tile> get purpleSealed =>
-      [for (final t in discarded) if (t.seal == Seal.purple) t];
+  List<Tile> get purpleSealed => [
+    for (final t in discarded)
+      if (t.seal == Seal.purple) t,
+  ];
 }
 
 /// Preview shown before playing ("Seri-4 — 45 × 4").
@@ -101,8 +103,8 @@ class Round {
     this.tuning = const TileEffectTuning(),
     this.evaluator = const HandEvaluator(),
     this.engine = const ScoringEngine(),
-  })  : _rng = rng,
-        _kuts = List.of(kuts) {
+  }) : _rng = rng,
+       _kuts = List.of(kuts) {
     final shuffleRng = rng.fork('shuffle');
     _pile = DrawPile.shuffled(deckTiles, shuffleRng);
     // RULE DECISION: the indicator is removed from the pile for this round.
@@ -164,8 +166,7 @@ class Round {
   /// Tiles destroyed this round (crystal shatters); remove from run deck.
   List<Tile> get destroyedTiles => List.unmodifiable(_destroyed);
 
-  int get maxTilesPerPlay =>
-      rules.maxTilesPerPlay ?? config.maxTilesPerAction;
+  int get maxTilesPerPlay => rules.maxTilesPerPlay ?? config.maxTilesPerAction;
 
   bool isFaceDown(int rackIndex) => _faceDownIds.contains(_rack[rackIndex].id);
 
@@ -195,7 +196,11 @@ class Round {
     if (rackIndices.isEmpty) return null;
     final played = _selected(rackIndices, maxTilesPerPlay);
     final hand = evaluator.evaluate(played, okey, levels)!;
-    return HandPreview(hand, levels.chipsOf(hand.type), levels.multOf(hand.type));
+    return HandPreview(
+      hand,
+      levels.chipsOf(hand.type),
+      levels.multOf(hand.type),
+    );
   }
 
   /// Full scoring simulation of a selection without changing any state
@@ -259,7 +264,9 @@ class Round {
   /// Discards the selected tiles and draws replacements ("Değiştir").
   DiscardOutcome discard(List<int> rackIndices) {
     _ensurePlaying();
-    if (discardsLeft <= 0) throw RoundActionException(ActionError.noDiscardsLeft);
+    if (discardsLeft <= 0) {
+      throw RoundActionException(ActionError.noDiscardsLeft);
+    }
     final tiles = _selected(rackIndices, config.maxTilesPerAction);
     discardsLeft--;
     final ids = {for (final t in tiles) t.id};
@@ -292,8 +299,11 @@ class Round {
     return money;
   }
 
-  ScoringInput _scoringInput(HandResult hand, List<int> rackIndices,
-      {required SeededRng? rng}) {
+  ScoringInput _scoringInput(
+    HandResult hand,
+    List<int> rackIndices, {
+    required SeededRng? rng,
+  }) {
     final selected = rackIndices.toSet();
     final held = [
       for (var i = 0; i < _rack.length; i++)
@@ -339,20 +349,23 @@ class Round {
 
   void _rollCountedColor() {
     if (!rules.singleColorPerHand) return;
-    countedColor =
-        _rng.fork('color$handsPlayed').pick(TileColor.values);
+    countedColor = _rng.fork('color$handsPlayed').pick(TileColor.values);
   }
 
   /// Validated, rack-ordered (left to right) selection.
   List<Tile> _selected(List<int> rackIndices, int max) {
-    if (rackIndices.isEmpty) throw RoundActionException(ActionError.noSelection);
+    if (rackIndices.isEmpty) {
+      throw RoundActionException(ActionError.noSelection);
+    }
     final unique = rackIndices.toSet().toList()..sort();
     if (unique.length != rackIndices.length ||
         unique.first < 0 ||
         unique.last >= _rack.length) {
       throw RoundActionException(ActionError.invalidIndex);
     }
-    if (unique.length > max) throw RoundActionException(ActionError.tooManyTiles);
+    if (unique.length > max) {
+      throw RoundActionException(ActionError.tooManyTiles);
+    }
     return [for (final i in unique) _rack[i]];
   }
 

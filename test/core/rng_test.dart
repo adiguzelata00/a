@@ -6,22 +6,29 @@ void main() {
     test('same seed produces the same sequence', () {
       final a = SeededRng(42);
       final b = SeededRng(42);
-      expect(List.generate(50, (_) => a.nextUint32()),
-          List.generate(50, (_) => b.nextUint32()));
+      expect(
+        List.generate(50, (_) => a.nextUint32()),
+        List.generate(50, (_) => b.nextUint32()),
+      );
     });
 
     test('different seeds produce different sequences', () {
       final a = SeededRng(1);
       final b = SeededRng(2);
-      expect(List.generate(10, (_) => a.nextUint32()),
-          isNot(List.generate(10, (_) => b.nextUint32())));
+      expect(
+        List.generate(10, (_) => a.nextUint32()),
+        isNot(List.generate(10, (_) => b.nextUint32())),
+      );
     });
 
     test('golden values stay stable across versions/platforms', () {
       // If this fails, saved runs / shared seeds would change behaviour.
       final r = SeededRng(12345);
-      expect(List.generate(3, (_) => r.nextUint32()),
-          [518667457, 440444462, 4232892992]);
+      expect(List.generate(3, (_) => r.nextUint32()), [
+        518667457,
+        440444462,
+        4232892992,
+      ]);
       expect(seedFromCode('TENGRI42'), 2749712248);
     });
 

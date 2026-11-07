@@ -43,7 +43,11 @@ enum HandType {
   /// Gök Per – a Grup-3 and a Seri-3 at the same time (6 tiles).
   skyMeld(size: 6, isRun: true, isGroup: true);
 
-  const HandType({required this.size, this.isRun = false, this.isGroup = false});
+  const HandType({
+    required this.size,
+    this.isRun = false,
+    this.isGroup = false,
+  });
 
   /// Number of tiles that make up (and are counted by) this hand type.
   final int size;
@@ -73,7 +77,7 @@ class HandStats {
 /// Current level of each hand type for a run (upgraded by Destan items).
 class HandLevels {
   HandLevels(this.table, [Map<HandType, int>? levels])
-      : _levels = {for (final t in HandType.values) t: levels?[t] ?? 1};
+    : _levels = {for (final t in HandType.values) t: levels?[t] ?? 1};
 
   final Map<HandType, HandStats> table;
   final Map<HandType, int> _levels;
@@ -98,12 +102,15 @@ class HandLevels {
 
   HandLevels copy() => HandLevels(table, Map.of(_levels));
 
-  Map<String, int> toJson() => {for (final e in _levels.entries) e.key.name: e.value};
+  Map<String, int> toJson() => {
+    for (final e in _levels.entries) e.key.name: e.value,
+  };
 
   factory HandLevels.fromJson(
-          Map<HandType, HandStats> table, Map<String, dynamic> json) =>
-      HandLevels(table, {
-        for (final t in HandType.values)
-          if (json[t.name] != null) t: json[t.name] as int,
-      });
+    Map<HandType, HandStats> table,
+    Map<String, dynamic> json,
+  ) => HandLevels(table, {
+    for (final t in HandType.values)
+      if (json[t.name] != null) t: json[t.name] as int,
+  });
 }

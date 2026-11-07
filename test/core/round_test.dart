@@ -9,17 +9,16 @@ Round newRound({
   int target = 300,
   RoundRules rules = RoundRules.normal,
   List<String> kuts = const [],
-}) =>
-    Round(
-      deckTiles: RunDeck.standard().tiles,
-      target: target,
-      rng: SeededRng(seed),
-      levels: Balance.newHandLevels(),
-      config: Balance.round,
-      rules: rules,
-      kuts: [for (final id in kuts) KutInstance(kutById(id))],
-      tuning: Balance.tileEffects,
-    );
+}) => Round(
+  deckTiles: RunDeck.standard().tiles,
+  target: target,
+  rng: SeededRng(seed),
+  levels: Balance.newHandLevels(),
+  config: Balance.round,
+  rules: rules,
+  kuts: [for (final id in kuts) KutInstance(kutById(id))],
+  tuning: Balance.tileEffects,
+);
 
 void main() {
   group('round setup', () {
@@ -35,7 +34,10 @@ void main() {
 
     test('same seed => same indicator and rack; other seed differs', () {
       expect(newRound(seed: 5).rack, newRound(seed: 5).rack);
-      expect(newRound(seed: 5).okey.indicator, newRound(seed: 5).okey.indicator);
+      expect(
+        newRound(seed: 5).okey.indicator,
+        newRound(seed: 5).okey.indicator,
+      );
       expect(newRound(seed: 5).rack, isNot(newRound(seed: 6).rack));
     });
 
@@ -71,7 +73,10 @@ void main() {
       }
 
       expect(err(() => r.play([])), ActionError.noSelection);
-      expect(err(() => r.play([0, 1, 2, 3, 4, 5, 6])), ActionError.tooManyTiles);
+      expect(
+        err(() => r.play([0, 1, 2, 3, 4, 5, 6])),
+        ActionError.tooManyTiles,
+      );
       expect(err(() => r.play([1, 1])), ActionError.invalidIndex);
       expect(err(() => r.play([10])), ActionError.invalidIndex);
       expect(r.handsLeft, 4, reason: 'failed actions change nothing');
@@ -184,7 +189,10 @@ void main() {
 
     test('Demirkıyak: max 4 tiles per play (discard still 6)', () {
       final r = newRound(rules: boss('demirkiyak'));
-      expect(() => r.play([0, 1, 2, 3, 4]), throwsA(isA<RoundActionException>()));
+      expect(
+        () => r.play([0, 1, 2, 3, 4]),
+        throwsA(isA<RoundActionException>()),
+      );
       r.discard([0, 1, 2, 3, 4]);
     });
 
@@ -198,7 +206,10 @@ void main() {
     test('Yel Ana: rack shuffled and hidden after a hand; reveal works', () {
       final r = newRound(rules: boss('yel_ana'), target: 1 << 30);
       r.play([0]);
-      expect(List.generate(r.rack.length, r.isFaceDown).every((x) => x), isTrue);
+      expect(
+        List.generate(r.rack.length, r.isFaceDown).every((x) => x),
+        isTrue,
+      );
       r.reveal(2);
       expect(r.isFaceDown(2), isFalse);
     });
