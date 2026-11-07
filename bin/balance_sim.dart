@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 // Batch simulation with the greedy AutoPlayer to sanity-check targets.
 //
 //   dart run bin/balance_sim.dart [--rounds 40] [--kuts umay_ana,bozkurt]
