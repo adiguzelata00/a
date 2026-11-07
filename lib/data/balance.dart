@@ -118,14 +118,14 @@ abstract final class Balance {
   /// Small-trial target per floor. Big = ×1.5, Boss = ×2 (see below).
   /// Growth is ~1.75× per floor.
   static const List<int> floorBaseTargets = [
-    300,
-    525,
-    900,
-    1600,
-    2800,
-    4800,
-    8400,
-    14500,
+    250,
+    450,
+    800,
+    1400,
+    2500,
+    4300,
+    7200,
+    12000,
   ];
   static const List<double> roundTargetMultipliers = [1.0, 1.5, 2.0];
 
@@ -215,18 +215,18 @@ abstract final class Balance {
   static const double asenaXMult = 2;
   static const int tulparChipsPerDiscard = 15;
   static const int kopuzMaxTiles = 3;
-  static const int kopuzMult = 20;
+  static const int kopuzMult = 15;
   static const int kamDavuluExtraTriggers = 1;
   static const double erlikPazarligiXMult = 3;
   static const int erlikPazarligiHandsDelta = -1;
   static const double ulgenIsigiXMult = 3;
   static const double kayraHanXMultPerDestan = 0.25;
   static const double zumruduankaThreshold = 0.25;
-  static const int oguzKaganChips = 50;
-  static const int oguzKaganMult = 5;
+  static const int oguzKaganChips = 60;
+  static const int oguzKaganMult = 8;
   static const int dedeKorkutMoneyPerHand = 2;
   static const int yadaTasiMultPerTile = 1;
   static const int nazarBoncuguMult = 15;
-  static const int ergenekonChips = 20;
+  static const int ergenekonChips = 30;
   static const double gokBoruXMultPerGroup4 = 1;
 }

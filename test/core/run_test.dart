@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tengri_taslari/core/core.dart';
+import 'package:tengri_taslari/data/balance.dart';
 import 'package:tengri_taslari/data/kuts.dart';
 import 'package:tengri_taslari/data/run_setup.dart';
 
@@ -45,7 +46,7 @@ void main() {
       expect(r.floorTags, hasLength(2));
       expect(r.floorVoucher, isNotNull);
       expect(r.slots.first, RoundSlotStatus.current);
-      expect(r.currentTarget, 300);
+      expect(r.currentTarget, Balance.targetFor(1, 0));
       expect(r.world, 0);
     });
 

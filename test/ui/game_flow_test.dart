@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tengri_taslari/app.dart';
 import 'package:tengri_taslari/core/core.dart';
+import 'package:tengri_taslari/data/balance.dart';
 import 'package:tengri_taslari/data/kuts.dart';
 import 'package:tengri_taslari/data/run_setup.dart';
 import 'package:tengri_taslari/services/audio_service.dart';
@@ -127,7 +128,7 @@ void main() {
       await h.pump(tester);
       expect(find.text('Küçük Sınav'), findsOneWidget);
       expect(find.text('Büyük Sınav'), findsOneWidget);
-      expect(find.text('300'), findsWidgets);
+      expect(find.text('${Balance.targetFor(1, 0)}'), findsWidgets);
       expect(find.textContaining('Atlarsan'), findsWidgets);
       expect(tester.takeException(), isNull);
     });

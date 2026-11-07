@@ -207,7 +207,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kutKopuzName => 'Kopuz';
 
   @override
-  String get kutKopuzDesc => '+20 Mult if 3 or fewer tiles are played.';
+  String get kutKopuzDesc => '+15 Mult if 3 or fewer tiles are played.';
 
   @override
   String get kutKamDavuluName => 'Shaman Drum';
@@ -247,7 +247,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kutOguzKaganName => 'Oğuz Kağan';
 
   @override
-  String get kutOguzKaganDesc => '+50 Chips and +5 Mult for Run-5 or longer.';
+  String get kutOguzKaganDesc => '+60 Chips and +8 Mult for Run-5 or longer.';
 
   @override
   String get kutDedeKorkutName => 'Dede Korkut';
@@ -278,7 +278,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get kutErgenekonDesc =>
-      'Iron tiles held in the rack also give +20 Chips.';
+      'Iron tiles held in the rack also give +30 Chips.';
 
   @override
   String get kutGokBoruName => 'Sky Wolf';

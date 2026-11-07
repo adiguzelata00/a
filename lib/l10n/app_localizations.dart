@@ -461,7 +461,7 @@ abstract class AppLocalizations {
   /// No description provided for @kutKopuzDesc.
   ///
   /// In tr, this message translates to:
-  /// **'3 veya daha az taşla oynanan ellerde +20 Çarpan.'**
+  /// **'3 veya daha az taşla oynanan ellerde +15 Çarpan.'**
   String get kutKopuzDesc;
 
   /// No description provided for @kutKamDavuluName.
@@ -533,7 +533,7 @@ abstract class AppLocalizations {
   /// No description provided for @kutOguzKaganDesc.
   ///
   /// In tr, this message translates to:
-  /// **'Seri-5 ve üstü ellerde +50 Puan, +5 Çarpan.'**
+  /// **'Seri-5 ve üstü ellerde +60 Puan, +8 Çarpan.'**
   String get kutOguzKaganDesc;
 
   /// No description provided for @kutDedeKorkutName.
@@ -593,7 +593,7 @@ abstract class AppLocalizations {
   /// No description provided for @kutErgenekonDesc.
   ///
   /// In tr, this message translates to:
-  /// **'İstakada tutulan Demir taşlar ayrıca +20 Puan verir.'**
+  /// **'İstakada tutulan Demir taşlar ayrıca +30 Puan verir.'**
   String get kutErgenekonDesc;
 
   /// No description provided for @kutGokBoruName.

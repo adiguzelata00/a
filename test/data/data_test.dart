@@ -29,11 +29,11 @@ void main() {
   });
 
   test(
-    'targets: floor 1 = 300/450/600, increasing within and across floors',
+    'targets: floor 1 = 250/375/500, increasing within and across floors',
     () {
-      expect(Balance.targetFor(1, 0), 300);
-      expect(Balance.targetFor(1, 1), 450);
-      expect(Balance.targetFor(1, 2), 600);
+      expect(Balance.targetFor(1, 0), 250);
+      expect(Balance.targetFor(1, 1), 375);
+      expect(Balance.targetFor(1, 2), 500);
       for (var f = 1; f <= 10; f++) {
         expect(Balance.targetFor(f, 1), greaterThan(Balance.targetFor(f, 0)));
         expect(Balance.targetFor(f, 2), greaterThan(Balance.targetFor(f, 1)));

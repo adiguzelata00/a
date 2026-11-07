@@ -207,7 +207,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get kutKopuzName => 'Kopuz';
 
   @override
-  String get kutKopuzDesc => '3 veya daha az taşla oynanan ellerde +20 Çarpan.';
+  String get kutKopuzDesc => '3 veya daha az taşla oynanan ellerde +15 Çarpan.';
 
   @override
   String get kutKamDavuluName => 'Kam Davulu';
@@ -247,7 +247,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get kutOguzKaganName => 'Oğuz Kağan';
 
   @override
-  String get kutOguzKaganDesc => 'Seri-5 ve üstü ellerde +50 Puan, +5 Çarpan.';
+  String get kutOguzKaganDesc => 'Seri-5 ve üstü ellerde +60 Puan, +8 Çarpan.';
 
   @override
   String get kutDedeKorkutName => 'Dede Korkut';
@@ -279,7 +279,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get kutErgenekonDesc =>
-      'İstakada tutulan Demir taşlar ayrıca +20 Puan verir.';
+      'İstakada tutulan Demir taşlar ayrıca +30 Puan verir.';
 
   @override
   String get kutGokBoruName => 'Gök Börü';

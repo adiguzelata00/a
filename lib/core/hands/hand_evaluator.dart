@@ -121,6 +121,34 @@ class HandEvaluator {
     return best;
   }
 
+  /// Every selection of rack indices whose tiles form a hand type exactly
+  /// (all tiles counted), plus every single tile. Much cheaper than
+  /// evaluating all subsets; used by bots and balance simulations.
+  List<List<int>> meldCandidates(
+    List<Tile> rack,
+    OkeyInfo okey, {
+    int maxSize = 6,
+  }) {
+    final slots = [
+      for (var i = 0; i < rack.length; i++) _Slot.from(i, rack[i], okey),
+    ];
+    final result = <List<int>>[
+      for (var i = 0; i < rack.length; i++) [i],
+    ];
+    for (var k = 2; k <= maxSize && k <= slots.length; k++) {
+      final types = [
+        for (final t in HandType.values)
+          if (t.size == k) t,
+      ];
+      for (final subset in _combinations(slots, k)) {
+        if (types.any((t) => _bestAssignment(t, subset) != null)) {
+          result.add([for (final s in subset) s.index]);
+        }
+      }
+    }
+    return result;
+  }
+
   /// Best assignment (highest tile chips) of [s] as [type], or null.
   static List<_Assigned>? _bestAssignment(HandType type, List<_Slot> s) {
     switch (type) {

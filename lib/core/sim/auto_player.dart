@@ -1,3 +1,4 @@
+import '../hands/hand_evaluator.dart';
 import '../round/round.dart';
 import '../tiles/okey.dart';
 import '../tiles/tile.dart';
@@ -33,68 +34,66 @@ class AutoPlayer {
       final toss = _leastConnected(
         round.rack,
         round.okey,
-        round.config.maxTilesPerAction,
+        round.config.maxTilesPerAction - 1,
+        keep: best.length > 1 ? best.toSet() : const {},
       );
       if (toss.isNotEmpty) return AutoAction.discard(toss);
     }
     return AutoAction.play(best);
   }
 
-  /// Exhaustive search over all selections of 1..maxTilesPerPlay tiles.
+  /// Best selection among all exact melds and single tiles, scored with
+  /// the full engine (Kuts, held effects, boss rules).
   List<int> bestPlay(Round round) {
-    final n = round.rack.length;
-    final maxK = round.maxTilesPerPlay < n ? round.maxTilesPerPlay : n;
+    final candidates = const HandEvaluator().meldCandidates(
+      round.rack,
+      round.okey,
+      maxSize: round.maxTilesPerPlay,
+    );
     List<int> best = const [0];
     var bestScore = -1;
     var bestSize = 0;
-    void visit(int start, List<int> current) {
-      if (current.isNotEmpty) {
-        final s = round.simulate(current).score;
-        // Prefer higher score, then fewer tiles (keeps tiles for later).
-        if (s > bestScore || (s == bestScore && current.length < bestSize)) {
-          bestScore = s;
-          bestSize = current.length;
-          best = List.of(current);
-        }
-      }
-      if (current.length == maxK) return;
-      for (var i = start; i < n; i++) {
-        current.add(i);
-        visit(i + 1, current);
-        current.removeLast();
+    for (final c in candidates) {
+      final s = round.simulate(c).score;
+      // Prefer higher score, then fewer tiles (keeps tiles for later).
+      if (s > bestScore || (s == bestScore && c.length < bestSize)) {
+        bestScore = s;
+        bestSize = c.length;
+        best = c;
       }
     }
-
-    visit(0, []);
     return best;
   }
 
-  List<int> _leastConnected(List<Tile> rack, OkeyInfo okey, int max) {
+  /// Tiles worth throwing away: not wild, not in [keep], and with at most
+  /// one neighbour (same color within 2, or same number) in the rack.
+  /// Weakest first, at most [max].
+  List<int> _leastConnected(
+    List<Tile> rack,
+    OkeyInfo okey,
+    int max, {
+    Set<int> keep = const {},
+  }) {
     int connections(int i) {
-      final t = rack[i];
-      if (okey.isWild(t)) return 99;
-      final f = okey.faceOf(t);
+      final f = okey.faceOf(rack[i]);
       var c = 0;
       for (var j = 0; j < rack.length; j++) {
-        if (j == i) continue;
-        final o = rack[j];
-        if (okey.isWild(o)) {
-          c++;
-          continue;
-        }
-        final g = okey.faceOf(o);
+        if (j == i || okey.isWild(rack[j])) continue;
+        final g = okey.faceOf(rack[j]);
         final sameColorNear =
             g.color == f.color && (g.number - f.number).abs() <= 2;
-        final sameNumber = g.number == f.number;
-        if (sameColorNear || sameNumber) c++;
+        if (sameColorNear || g.number == f.number) c++;
       }
       return c;
     }
 
-    final lonely = [
+    final scored = [
       for (var i = 0; i < rack.length; i++)
-        if (connections(i) == 0) i,
-    ];
-    return lonely.take(max).toList();
+        if (!okey.isWild(rack[i]) && !keep.contains(i)) (i, connections(i)),
+    ]..sort((a, b) => a.$2.compareTo(b.$2));
+    return [
+      for (final (i, c) in scored)
+        if (c <= 1) i,
+    ].take(max).toList();
   }
 }

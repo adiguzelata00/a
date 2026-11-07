@@ -172,8 +172,8 @@ void main() {
       final group = ts('R7 Y7 B7'); // chips 51, mult 3
       final addThenMul = score(group, kuts: ['kopuz', 'asena']);
       final mulThenAdd = score(group, kuts: ['asena', 'kopuz']);
-      expect(addThenMul.score, 51 * ((3 + 20) * 2));
-      expect(mulThenAdd.score, 51 * (3 * 2 + 20));
+      expect(addThenMul.score, 51 * ((3 + Balance.kopuzMult) * 2));
+      expect(mulThenAdd.score, 51 * (3 * 2 + Balance.kopuzMult));
       expect(addThenMul.score, greaterThan(mulThenAdd.score));
     });
 
@@ -234,7 +234,10 @@ void main() {
     });
 
     test('Kopuz: only for 3 or fewer played tiles', () {
-      expect(score(ts('R5 R5 K9'), kuts: ['kopuz']).mult, 22);
+      expect(
+        score(ts('R5 R5 K9'), kuts: ['kopuz']).mult,
+        2 + Balance.kopuzMult,
+      );
       expect(score(ts('R5 R5 K9 K11'), kuts: ['kopuz']).mult, 2);
     });
 
@@ -252,7 +255,10 @@ void main() {
     });
 
     test('Oğuz Kağan: Seri-5 and above', () {
-      expect(score(ts('R2 R3 R4 R5 R6'), kuts: ['oguz_kagan']).mult, 10);
+      expect(
+        score(ts('R2 R3 R4 R5 R6'), kuts: ['oguz_kagan']).mult,
+        5 + Balance.oguzKaganMult,
+      );
       expect(score(ts('R2 R3 R4 R5'), kuts: ['oguz_kagan']).mult, 4);
     });
 
@@ -270,7 +276,7 @@ void main() {
         ],
         kuts: ['ergenekon'],
       );
-      expect(r.chips, 40);
+      expect(r.chips, 20 + Balance.ergenekonChips);
     });
 
     test(

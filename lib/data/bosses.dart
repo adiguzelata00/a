@@ -6,8 +6,16 @@ import '../core/run/boss.dart';
 export '../core/run/boss.dart';
 
 const List<BossDefinition> allBosses = [
-  BossDefinition(id: 'tepegoz', rules: RoundRules(singleColorPerHand: true)),
-  BossDefinition(id: 'erlik_han', rules: RoundRules(firstHandScoresZero: true)),
+  BossDefinition(
+    id: 'tepegoz',
+    rules: RoundRules(singleColorPerHand: true),
+    minFloor: 2,
+  ),
+  BossDefinition(
+    id: 'erlik_han',
+    rules: RoundRules(firstHandScoresZero: true),
+    minFloor: 2,
+  ),
   BossDefinition(id: 'al_karisi', rules: RoundRules(stealTileAfterHand: true)),
   BossDefinition(
     id: 'yel_ana',
