@@ -55,88 +55,118 @@ class Playback {
   );
 }
 
-/// Immutable snapshot of the game table for the UI.
+/// Which screen the app shows.
+enum GameScreen { menu, roundSelect, table, cashout, shop, pack, runEnd }
+
+/// Immutable snapshot for the UI.
 ///
-/// [round] is a mutable core object; [version] increments on every change
-/// so that Riverpod notices updates.
-class TableState {
-  const TableState({
-    required this.round,
-    required this.seedCode,
-    required this.floor,
-    required this.roundInFloor,
+/// [run] and [round] are mutable core objects; [version] increments on every
+/// change so that Riverpod notices updates. [round] keeps pointing at the
+/// last played round after the run moved on, so table widgets that are
+/// still animating out never see a missing round.
+class GameState {
+  const GameState({
+    this.run,
+    this.round,
+    this.showMenu = true,
     this.version = 0,
     this.selectedIds = const {},
     this.playback,
     this.shakeCount = 0,
+    this.error,
+    this.errorCount = 0,
   });
 
-  final Round round;
-  final String seedCode;
-  final int floor;
-
-  /// 0 = small, 1 = big, 2 = boss.
-  final int roundInFloor;
+  final RunState? run;
+  final Round? round;
+  final bool showMenu;
   final int version;
   final Set<int> selectedIds;
+
   final Playback? playback;
 
   /// Incremented for every big hit; the table shakes when it changes.
   final int shakeCount;
 
+  /// Last rejected action (shown as a message), with a counter so the same
+  /// error twice is shown twice.
+  final RunError? error;
+  final int errorCount;
+
+  GameScreen get screen {
+    final r = run;
+    if (showMenu || r == null) return GameScreen.menu;
+    // Keep the table visible until the last hand finished animating.
+    if (playback != null) return GameScreen.table;
+    return switch (r.phase) {
+      RunPhase.roundSelect => GameScreen.roundSelect,
+      RunPhase.round => GameScreen.table,
+      RunPhase.cashout => GameScreen.cashout,
+      RunPhase.shop => GameScreen.shop,
+      RunPhase.packOpen => GameScreen.pack,
+      RunPhase.won || RunPhase.lost => GameScreen.runEnd,
+    };
+  }
+
   bool get isAnimating => playback != null;
 
+  /// Kuts to display (as scored while animating).
+  List<KutInstance> get kuts => playback?.kuts ?? run?.kuts ?? const [];
+
   /// Tiles currently shown in the rack (held tiles while scoring).
-  List<Tile> get visibleRack => playback?.held ?? round.rack;
+  List<Tile> get visibleRack => playback?.held ?? round?.rack ?? const [];
 
   /// Score shown in the HUD (old score until the playback finishes).
   int get displayedScore {
     final p = playback;
-    if (p == null) return round.score;
+    if (p == null) return round?.score ?? 0;
     return p.finished ? p.scoreAfter : p.scoreBefore;
   }
 
   /// Rack indices of the selected tiles (ascending).
   List<int> get selectedIndices {
-    final rack = round.rack;
+    final rack = round?.rack ?? const <Tile>[];
     return [
       for (var i = 0; i < rack.length; i++)
         if (selectedIds.contains(rack[i].id)) i,
     ];
   }
 
-  bool get canPlay =>
+  bool get _roundActive =>
       !isAnimating &&
-      round.phase == RoundPhase.playing &&
-      round.handsLeft > 0 &&
+      run?.phase == RunPhase.round &&
+      round?.phase == RoundPhase.playing;
+
+  bool get canPlay =>
+      _roundActive &&
+      round!.handsLeft > 0 &&
       selectedIds.isNotEmpty &&
-      selectedIds.length <= round.maxTilesPerPlay;
+      selectedIds.length <= round!.maxTilesPerPlay;
 
   bool get canDiscard =>
-      !isAnimating &&
-      round.phase == RoundPhase.playing &&
-      round.discardsLeft > 0 &&
+      _roundActive &&
+      round!.discardsLeft > 0 &&
       selectedIds.isNotEmpty &&
-      selectedIds.length <= round.config.maxTilesPerAction;
+      selectedIds.length <= round!.config.maxTilesPerAction;
 
-  /// Round over and nothing is animating any more.
-  bool get showResult => !isAnimating && round.phase != RoundPhase.playing;
-
-  TableState copyWith({
+  GameState copyWith({
+    RunState? run,
     Round? round,
-    String? seedCode,
+    bool? showMenu,
     Set<int>? selectedIds,
     Playback? playback,
     bool clearPlayback = false,
     int? shakeCount,
-  }) => TableState(
+    RunError? error,
+  }) => GameState(
+    run: run ?? this.run,
     round: round ?? this.round,
-    seedCode: seedCode ?? this.seedCode,
-    floor: floor,
-    roundInFloor: roundInFloor,
+    showMenu: showMenu ?? this.showMenu,
     version: version + 1,
     selectedIds: selectedIds ?? this.selectedIds,
     playback: clearPlayback ? null : (playback ?? this.playback),
     shakeCount: shakeCount ?? this.shakeCount,
+    error: error ?? this.error,
+    errorCount: error != null ? errorCount + 1 : errorCount,
   );
 }

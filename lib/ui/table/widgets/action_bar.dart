@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../l10n_ext.dart';
+import '../../theme/app_theme.dart';
 import '../../theme/palette.dart';
-import '../table_controller.dart';
+import '../../game/game_controller.dart';
 
 /// Bottom buttons: Discard, sort by number / color, Play.
 class ActionBar extends ConsumerWidget {
@@ -12,12 +13,12 @@ class ActionBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final s = ref.watch(
-      tableControllerProvider.select(
+      gameControllerProvider.select(
         (s) =>
             (canPlay: s.canPlay, canDiscard: s.canDiscard, busy: s.isAnimating),
       ),
     );
-    final controller = ref.read(tableControllerProvider.notifier);
+    final controller = ref.read(gameControllerProvider.notifier);
     final l10n = context.l10n;
 
     return Padding(
@@ -89,7 +90,11 @@ class _BigButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           side: const BorderSide(color: Palette.gold, width: 1.5),
         ),
-        textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+        textStyle: const TextStyle(
+          fontFamily: appFontFamily,
+          fontSize: 18,
+          fontWeight: FontWeight.w800,
+        ),
       ),
       child: FittedBox(fit: BoxFit.scaleDown, child: Text(label, maxLines: 1)),
     );

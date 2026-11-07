@@ -158,6 +158,9 @@ class Round {
   /// Best single hand score of the round.
   int bestHandScore = 0;
 
+  /// Hand type of the most recent play (Gök Tamga creates its Destan).
+  HandType? lastHandType;
+
   List<Tile> get rack => List.unmodifiable(_rack);
   List<Tile> get discardPile => List.unmodifiable(_discardPile);
   int get drawPileCount => _pile.remaining;
@@ -172,6 +175,35 @@ class Round {
 
   /// Reveals a face-down tile (Yel Ana).
   void reveal(int rackIndex) => _faceDownIds.remove(_rack[rackIndex].id);
+
+  /// Replaces the rack tile with the same id (Tılsım effects).
+  void updateRackTile(Tile tile) {
+    final i = _rack.indexWhere((t) => t.id == tile.id);
+    if (i < 0) throw RoundActionException(ActionError.invalidIndex);
+    _rack[i] = tile;
+  }
+
+  /// Removes a rack tile for good (Yakma Tılsımı). It is listed in
+  /// [destroyedTiles] and the rack is refilled.
+  void destroyRackTile(int tileId) {
+    final i = _rack.indexWhere((t) => t.id == tileId);
+    if (i < 0) throw RoundActionException(ActionError.invalidIndex);
+    _destroyed.add(_rack.removeAt(i));
+    _faceDownIds.remove(tileId);
+    if (phase == RoundPhase.playing) _refill();
+  }
+
+  /// Reorders Kuts (their order is the trigger order).
+  void moveKut(int from, int to) {
+    final k = _kuts.removeAt(from);
+    _kuts.insert(to, k);
+  }
+
+  /// Adds a Kut mid-round (Kam Tılsımı).
+  void addKut(KutInstance kut) => _kuts.add(kut);
+
+  /// Removes a Kut (e.g. Zümrüdüanka vanishing after saving the run).
+  void removeKutInstance(KutInstance kut) => _kuts.remove(kut);
 
   /// Moves a tile inside the rack (drag & drop).
   void moveTile(int from, int to) {
@@ -225,6 +257,7 @@ class Round {
     final before = score;
     score += result.score;
     if (result.score > bestHandScore) bestHandScore = result.score;
+    lastHandType = hand.type;
     moneyEarned += result.moneyEarned;
     _kuts = result.updatedKuts;
     handsLeft--;

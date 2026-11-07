@@ -8,7 +8,7 @@ import '../../theme/palette.dart';
 import '../../widgets/effects.dart';
 import '../../widgets/tile_view.dart';
 import '../event_labels.dart';
-import '../table_controller.dart';
+import '../../game/game_controller.dart';
 
 /// Wooden rack ("istaka"). Tap = select, drag = reorder.
 /// During scoring it shows the held tiles and their effects (Demir ...).
@@ -22,10 +22,10 @@ class RackView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(tableControllerProvider);
-    final controller = ref.read(tableControllerProvider.notifier);
+    final state = ref.watch(gameControllerProvider);
+    final controller = ref.read(gameControllerProvider.notifier);
     final tiles = state.visibleRack;
-    final round = state.round;
+    final round = state.round!;
     final playback = state.playback;
     final event = playback?.current;
     final l10n = context.l10n;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'l10n/app_localizations.dart';
-import 'ui/table/table_screen.dart';
+import 'ui/game/game_root.dart';
 import 'ui/theme/app_theme.dart';
 
 class TengriApp extends StatelessWidget {
@@ -26,8 +26,7 @@ class TengriApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      // Phase 3 adds the menu / run flow; Phase 2 opens the table directly.
-      home: const TableScreen(),
+      home: const GameRoot(),
     );
   }
 }

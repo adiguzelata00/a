@@ -1,16 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tengri_taslari/core/core.dart';
-import 'package:tengri_taslari/data/balance.dart';
-import 'package:tengri_taslari/data/kuts.dart';
+import 'package:tengri_taslari/data/run_setup.dart' as setup;
 import 'package:tengri_taslari/services/audio_service.dart';
 import 'package:tengri_taslari/services/haptics_service.dart';
 
 import '../settings/settings_providers.dart';
-import 'table_state.dart';
-
-/// Phase 2 demo: a single round with a fixed target and two starter Kuts so
-/// Kut triggers can be seen. Phase 3 replaces this with the run loop.
-const List<String> demoKutIds = ['umay_ana', 'bozkurt'];
+import 'game_state.dart';
 
 /// A hand scoring at least this share of the target counts as a "big hit"
 /// (screen shake + strong haptic).
@@ -25,56 +20,77 @@ abstract final class PlaybackTiming {
   static const outro = Duration(milliseconds: 900);
 }
 
-/// Owns the current [Round] and drives the scoring playback.
-class TableController extends Notifier<TableState> {
+/// Owns the [RunState] and drives navigation and the scoring playback.
+class GameController extends Notifier<GameState> {
   bool _skipRequested = false;
 
   @override
-  TableState build() =>
-      _createState(ref.read(initialSeedCodeProvider) ?? _randomSeedCode());
+  GameState build() {
+    final seed = ref.read(initialSeedCodeProvider);
+    // A seed passed in (tests, `?seed=`) starts a run right away.
+    if (seed != null) return _newRunState(seed);
+    return const GameState();
+  }
 
-  static String _randomSeedCode() =>
+  static String randomSeedCode() =>
       generateSeedCode(SeededRng(DateTime.now().microsecondsSinceEpoch));
 
-  TableState _createState(String seedCode) {
-    const floor = 1;
-    const roundInFloor = 0;
-    final round = Round(
-      deckTiles: RunDeck.standard().tiles,
-      target: Balance.targetFor(floor, roundInFloor),
-      rng: SeededRng.fromCode(seedCode).fork('floor$floor-round$roundInFloor'),
-      levels: Balance.newHandLevels(),
-      config: Balance.round,
-      kuts: [for (final id in demoKutIds) KutInstance(kutById(id))],
-      tuning: Balance.tileEffects,
-    );
-    return TableState(
-      round: round,
-      seedCode: seedCode,
-      floor: floor,
-      roundInFloor: roundInFloor,
-    );
-  }
+  GameState _newRunState(String seed) =>
+      GameState(run: ref.read(runFactoryProvider)(seed), showMenu: false);
 
   AudioService get _audio => ref.read(audioServiceProvider);
   HapticsService get _haptics => ref.read(hapticsServiceProvider);
+  RunState get _run => state.run!;
 
-  /// Starts a new round. [seedCode] = null picks a random seed.
-  void newRound({String? seedCode}) {
-    _skipRequested = false;
-    state = _createState(seedCode ?? _randomSeedCode());
+  void _changed() => state = state.copyWith();
+
+  /// Runs a run action; rejected actions become a visible message.
+  bool _act(void Function(RunState run) action, {Round? round}) {
+    try {
+      action(_run);
+      state = state.copyWith(round: round ?? _run.round);
+      return true;
+    } on RunActionException catch (e) {
+      state = state.copyWith(error: e.error);
+      return false;
+    }
   }
+
+  // ---------------------------------------------------------------- menu
+
+  void newRun({String? seedCode}) {
+    _skipRequested = false;
+    state = _newRunState(seedCode ?? randomSeedCode());
+  }
+
+  void toMenu() => state = state.copyWith(showMenu: true);
+
+  void resume() {
+    if (state.run != null) state = state.copyWith(showMenu: false);
+  }
+
+  // -------------------------------------------------------- round select
+
+  void startRound() {
+    _act((r) => r.startRound());
+    state = state.copyWith(selectedIds: const <int>{});
+  }
+
+  void skipRound() => _act((r) => r.skipRound());
 
   // ---------------------------------------------------------------- rack
 
   /// Selects / deselects a rack tile. Returns false if the limit is reached.
   bool toggleTile(int tileId) {
-    if (state.isAnimating || state.round.phase != RoundPhase.playing) {
+    final round = state.round;
+    if (state.isAnimating ||
+        round == null ||
+        round.phase != RoundPhase.playing) {
       return false;
     }
     final selected = Set.of(state.selectedIds);
     if (!selected.remove(tileId)) {
-      if (selected.length >= state.round.config.maxTilesPerAction) return false;
+      if (selected.length >= round.config.maxTilesPerAction) return false;
       selected.add(tileId);
     }
     _audio.play(SoundId.tileTap);
@@ -87,42 +103,69 @@ class TableController extends Notifier<TableState> {
 
   void moveTile(int from, int to) {
     if (state.isAnimating || from == to) return;
-    state.round.moveTile(from, to);
-    state = state.copyWith();
+    state.round!.moveTile(from, to);
+    _changed();
   }
 
   void sortByNumber() {
     if (state.isAnimating) return;
-    state.round.sortRackByNumber();
+    state.round!.sortRackByNumber();
     _audio.play(SoundId.tilePlace);
-    state = state.copyWith();
+    _changed();
   }
 
   void sortByColor() {
     if (state.isAnimating) return;
-    state.round.sortRackByColor();
+    state.round!.sortRackByColor();
     _audio.play(SoundId.tilePlace);
-    state = state.copyWith();
+    _changed();
   }
 
   void reveal(int rackIndex) {
-    state.round.reveal(rackIndex);
-    state = state.copyWith();
+    state.round!.reveal(rackIndex);
+    _changed();
   }
 
   HandPreview? preview() {
+    final round = state.round;
     final indices = state.selectedIndices;
-    if (indices.isEmpty || indices.length > state.round.maxTilesPerPlay) {
+    if (round == null ||
+        indices.isEmpty ||
+        indices.length > round.maxTilesPerPlay) {
       return null;
     }
-    return state.round.preview(indices);
+    return round.preview(indices);
   }
 
-  // ------------------------------------------------------------- actions
+  /// Reorders Kuts (trigger order).
+  void moveKut(int from, int to) {
+    if (state.isAnimating || from == to) return;
+    _act((r) => r.moveKut(from, to));
+  }
+
+  // --------------------------------------------------------- consumables
+
+  /// Uses consumable [index] on the selected rack tiles (if it needs any).
+  void useConsumable(int index) {
+    if (state.isAnimating) return;
+    final indices = state.selectedIndices;
+    final ok = _act((r) => r.useConsumable(index, rackIndices: indices));
+    if (ok) {
+      _audio.play(SoundId.kutTrigger);
+      _haptics.trigger(HapticKind.play);
+      state = state.copyWith(selectedIds: const <int>{});
+    }
+  }
+
+  void sellConsumable(int index) {
+    if (_act((r) => r.sellConsumable(index))) _audio.play(SoundId.money);
+  }
+
+  // -------------------------------------------------------------- round
 
   void discard() {
     if (!state.canDiscard) return;
-    state.round.discard(state.selectedIndices);
+    _act((r) => r.discard(state.selectedIndices));
     _audio.play(SoundId.tileDraw);
     state = state.copyWith(selectedIds: const <int>{});
   }
@@ -130,7 +173,7 @@ class TableController extends Notifier<TableState> {
   /// Plays the selection and replays the scoring events with delays.
   Future<void> play() async {
     if (!state.canPlay) return;
-    final round = state.round;
+    final round = state.round!;
     final indices = state.selectedIndices;
     final selected = indices.toSet();
     final rackBefore = round.rack;
@@ -140,7 +183,7 @@ class TableController extends Notifier<TableState> {
     ];
     final kutsBefore = round.kuts;
 
-    final outcome = round.play(indices);
+    final outcome = _run.play(indices);
     _haptics.trigger(HapticKind.play);
     _audio.play(SoundId.tilePlace);
     _skipRequested = false;
@@ -182,9 +225,13 @@ class TableController extends Notifier<TableState> {
     await _wait(PlaybackTiming.outro);
     if (!ref.mounted) return;
 
+    if (round.phase != RoundPhase.playing) {
+      _audio.play(
+        round.phase == RoundPhase.won ? SoundId.roundWon : SoundId.roundLost,
+      );
+      _run.finishRound();
+    }
     state = state.copyWith(clearPlayback: true);
-    if (round.phase == RoundPhase.won) _audio.play(SoundId.roundWon);
-    if (round.phase == RoundPhase.lost) _audio.play(SoundId.roundLost);
   }
 
   /// Fast-forwards the running playback.
@@ -220,12 +267,53 @@ class TableController extends Notifier<TableState> {
         break;
     }
   }
+
+  // ------------------------------------------------------- cashout/shop
+
+  void collectCashout() {
+    if (_act((r) => r.collectCashout())) _audio.play(SoundId.money);
+  }
+
+  void buyItem(int index) {
+    if (_act((r) => r.buyItem(index))) _audio.play(SoundId.money);
+  }
+
+  void buyPack(int index) {
+    if (_act((r) => r.buyPack(index))) _audio.play(SoundId.money);
+  }
+
+  void buyVoucher() {
+    if (_act((r) => r.buyVoucher())) _audio.play(SoundId.money);
+  }
+
+  void reroll() {
+    if (_act((r) => r.reroll())) _audio.play(SoundId.tileDraw);
+  }
+
+  void sellKut(int index) {
+    if (_act((r) => r.sellKut(index))) _audio.play(SoundId.money);
+  }
+
+  void leaveShop() => _act((r) => r.leaveShop());
+
+  void choosePackOption(int index) {
+    if (_act((r) => r.choosePackOption(index))) _audio.play(SoundId.kutTrigger);
+  }
+
+  void skipPack() => _act((r) => r.skipPack());
+
+  void continueEndless() => _act((r) => r.continueEndless());
 }
 
-/// Seed code of the first round (null = random). Overridden in tests and,
-/// later, by "continue run" / daily challenge.
+/// Seed code of the first run (null = show the main menu). Overridden in
+/// tests and by `?seed=` on web/debug builds.
 final initialSeedCodeProvider = Provider<String?>((ref) => null);
 
-final tableControllerProvider = NotifierProvider<TableController, TableState>(
-  TableController.new,
+/// Creates a run for a seed code. Overridden in tests (e.g. easy targets).
+final runFactoryProvider = Provider<RunState Function(String seed)>(
+  (ref) => setup.newRun,
+);
+
+final gameControllerProvider = NotifierProvider<GameController, GameState>(
+  GameController.new,
 );

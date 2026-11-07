@@ -197,5 +197,238 @@
     }
   },
   "countedColorHint": "Sayılan renk",
-  "playAreaHint": "Taşları sürükleyerek diz, dokunarak seç"
+  "playAreaHint": "Taşları sürükleyerek diz, dokunarak seç",
+  "menuSubtitle": "Yeraltından Gök'e sekiz kat",
+  "menuNewRun": "Yeni Koşu",
+  "menuContinue": "Devam Et",
+  "menuCollection": "Koleksiyon",
+  "menuSettings": "Ayarlar",
+  "comingSoon": "Yakında",
+  "worldUnderworld": "Yeraltı",
+  "worldMiddle": "Yeryüzü",
+  "worldSky": "Gökyüzü",
+  "endlessLabel": "Sonsuz Gök",
+  "rewardLabel": "Ödül: {amount} Akçe",
+  "@rewardLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "startRound": "Başla",
+  "skipRound": "Atla",
+  "skipReward": "Atlarsan: {reward}",
+  "@skipReward": {
+    "placeholders": {
+      "reward": {
+        "type": "String"
+      }
+    }
+  },
+  "statusDone": "Tamamlandı",
+  "statusSkipped": "Atlandı",
+  "statusUpcoming": "Sırada",
+  "tagMoney": "+{amount} Akçe",
+  "@tagMoney": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "tagKutPack": "Bedava Kut Kesesi",
+  "tagDestanPack": "Bedava Destan Kesesi",
+  "tagTilsimPack": "Bedava Tılsım Kesesi",
+  "bossTepegozName": "Tepegöz",
+  "bossTepegozDesc": "Her elde yalnızca tek bir renk sayılır.",
+  "bossErlikHanName": "Erlik Han",
+  "bossErlikHanDesc": "Oynanan ilk el puan vermez.",
+  "bossAlKarisiName": "Al Karısı",
+  "bossAlKarisiDesc": "Her El'den sonra istakadan bir taş çalınır.",
+  "bossYelAnaName": "Yel Ana",
+  "bossYelAnaDesc": "Her El'den sonra istaka karışır, taşlar kapalı gelir.",
+  "bossSahmeranName": "Şahmeran",
+  "bossSahmeranDesc": "Seri içeren eller yarım puan verir.",
+  "bossAlbastiName": "Albastı",
+  "bossAlbastiDesc": "Değiştir hakkı yok.",
+  "bossDemirkiyakName": "Demirkıyak",
+  "bossDemirkiyakDesc": "El başına en fazla 4 taş oynanabilir.",
+  "bossKaraKusName": "Kara Kuş",
+  "bossKaraKusDesc": "Okey bu turda joker değil.",
+  "cashoutTitle": "Tur kazanıldı",
+  "cashRoundReward": "Tur ödülü",
+  "cashHandsLeft": "Kalan El",
+  "cashInterest": "Faiz",
+  "cashGoldTiles": "Altın taşlar",
+  "cashTileMoney": "Altın Tamgalar",
+  "cashTotal": "Toplam",
+  "collect": "Topla",
+  "savedBy": "{name} seni kurtardı!",
+  "@savedBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "shopTitle": "Pazar",
+  "reroll": "Yenile · {cost}",
+  "@reroll": {
+    "placeholders": {
+      "cost": {
+        "type": "int"
+      }
+    }
+  },
+  "rerollFree": "Yenile · bedava",
+  "leaveShop": "Sonraki tur",
+  "buy": "Al",
+  "sell": "Sat · {amount}",
+  "@sell": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "use": "Kullan",
+  "price": "{price} Akçe",
+  "@price": {
+    "placeholders": {
+      "price": {
+        "type": "int"
+      }
+    }
+  },
+  "soldOut": "Satıldı",
+  "voucherTitle": "Kupon",
+  "packsTitle": "Keseler",
+  "itemsTitle": "Tezgâh",
+  "packKut": "Kut Kesesi",
+  "packDestan": "Destan Kesesi",
+  "packTilsim": "Tılsım Kesesi",
+  "packTile": "Taş Kesesi",
+  "packDesc": "{count} seçenekten birini al",
+  "@packDesc": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "packChoose": "Birini seç",
+  "skip": "Geç",
+  "kutsTitle": "Kut'lar",
+  "consumablesTitle": "Eşyalar",
+  "errNotEnoughMoney": "Yeterli Akçe yok",
+  "errNoKutSlot": "Kut yuvaları dolu",
+  "errNoConsumableSlot": "Eşya yuvaları dolu",
+  "errInvalidTarget": "Önce istakadan uygun sayıda taş seç",
+  "errGeneric": "Bu şimdi yapılamaz",
+  "runWonTitle": "Tengri'ye ulaştın!",
+  "runLostTitle": "Koşu bitti",
+  "statsFloor": "Ulaşılan kat",
+  "statsRounds": "Kazanılan tur",
+  "statsHands": "Oynanan el",
+  "statsBestHand": "En yüksek el",
+  "statsTotalScore": "Toplam skor",
+  "statsFavoriteKut": "En çok tetiklenen Kut",
+  "statsFavoriteHand": "En çok oynanan el",
+  "statsSeed": "Seed",
+  "continueEndless": "Sonsuz Gök'e devam",
+  "mainMenu": "Ana Menü",
+  "handWithLevel": "{hand} · Sv.{level}",
+  "@handWithLevel": {
+    "placeholders": {
+      "hand": {
+        "type": "String"
+      },
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "rarityCommon": "Yaygın",
+  "rarityRare": "Nadir",
+  "rarityLegendary": "Efsanevi",
+  "destanDesc": "{hand} seviyesini 1 artırır.",
+  "@destanDesc": {
+    "placeholders": {
+      "hand": {
+        "type": "String"
+      }
+    }
+  },
+  "tilsimTargetHint": "İstakadan en fazla {count} taş seç, sonra Kullan.",
+  "@tilsimTargetHint": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "colorRed": "Kırmızı",
+  "colorYellow": "Sarı",
+  "colorBlue": "Mavi",
+  "colorBlack": "Siyah",
+  "destanGoc": "Göç Destanı",
+  "destanTureyis": "Türeyiş Destanı",
+  "destanSatukBugra": "Satuk Buğra Han Destanı",
+  "destanAlpamis": "Alpamış Destanı",
+  "destanKoroglu": "Köroğlu Destanı",
+  "destanDedeKorkut": "Dede Korkut Hikâyeleri",
+  "destanManas": "Manas Destanı",
+  "destanSu": "Şu Destanı",
+  "destanOguzKagan": "Oğuz Kağan Destanı",
+  "destanErgenekon": "Ergenekon Destanı",
+  "destanErTostuk": "Er Töstük Destanı",
+  "destanYaratilis": "Yaratılış Destanı",
+  "tilsimDemirciName": "Demirci Tılsımı",
+  "tilsimDemirciDesc": "En fazla 2 taşı Demir taşa çevirir.",
+  "tilsimSimyaciName": "Simyacı Tılsımı",
+  "tilsimSimyaciDesc": "1 taşı Altın taşa çevirir.",
+  "tilsimRenkName": "Renk Tılsımı",
+  "tilsimRenkDesc": "En fazla 3 taşı {color} renge boyar.",
+  "@tilsimRenkDesc": {
+    "placeholders": {
+      "color": {
+        "type": "String"
+      }
+    }
+  },
+  "tilsimAynaName": "Ayna Tılsımı",
+  "tilsimAynaDesc": "Seçili taşın bir kopyasını desteye ekler.",
+  "tilsimYakmaName": "Yakma Tılsımı",
+  "tilsimYakmaDesc": "En fazla 2 taşı desteden kalıcı olarak siler.",
+  "tilsimKamName": "Kam Tılsımı",
+  "tilsimKamDesc": "Rastgele bir Kut yaratır (boş yuva gerekir).",
+  "tilsimTamgaName": "Tamga Tılsımı",
+  "tilsimTamgaDesc": "Seçili taşa rastgele bir Tamga basar.",
+  "tilsimYukseltmeName": "Yükseltme Tılsımı",
+  "tilsimYukseltmeDesc": "En fazla 2 taşın sayısını 1 artırır.",
+  "voucherEkElName": "Ek El",
+  "voucherEkElDesc": "Her turda +1 El.",
+  "voucherEkDegistirName": "Ek Değiştir",
+  "voucherEkDegistirDesc": "Her turda +1 Değiştir.",
+  "voucherGenisIstakaName": "Geniş İstaka",
+  "voucherGenisIstakaDesc": "İstakaya +1 taş.",
+  "voucherKutYuvasiName": "Kut Yuvası",
+  "voucherKutYuvasiDesc": "+1 Kut yuvası.",
+  "voucherHeybeName": "Heybe",
+  "voucherHeybeDesc": "+1 eşya yuvası.",
+  "voucherPazarlikName": "Pazarlık",
+  "voucherPazarlikDesc": "Pazar'da her şey %25 indirimli.",
+  "voucherHazineName": "Hazine",
+  "voucherHazineDesc": "Faiz sınırı +5.",
+  "enhBone": "Kemik: +30 Puan",
+  "enhIron": "Demir: istakada tutulunca ×1.5 Çarpan",
+  "enhGold": "Altın: tur sonunda istakadaysa +3 Akçe",
+  "enhCrystal": "Kristal: ×2 Çarpan, 1/4 kırılır",
+  "enhSkyStone": "Gök Taşı: her renk sayılır",
+  "sealCrimson": "Kızıl Tamga: iki kez tetiklenir",
+  "sealGold": "Altın Tamga: sayılınca +3 Akçe",
+  "sealSky": "Gök Tamga: tur sonunda Destan yaratır",
+  "sealPurple": "Mor Tamga: atılınca Tılsım yaratır",
+  "tileAdded": "Desteye eklenir"
 }

@@ -679,6 +679,882 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Taşları sürükleyerek diz, dokunarak seç'**
   String get playAreaHint;
+
+  /// No description provided for @menuSubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeraltından Gök\'e sekiz kat'**
+  String get menuSubtitle;
+
+  /// No description provided for @menuNewRun.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni Koşu'**
+  String get menuNewRun;
+
+  /// No description provided for @menuContinue.
+  ///
+  /// In tr, this message translates to:
+  /// **'Devam Et'**
+  String get menuContinue;
+
+  /// No description provided for @menuCollection.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koleksiyon'**
+  String get menuCollection;
+
+  /// No description provided for @menuSettings.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ayarlar'**
+  String get menuSettings;
+
+  /// No description provided for @comingSoon.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yakında'**
+  String get comingSoon;
+
+  /// No description provided for @worldUnderworld.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeraltı'**
+  String get worldUnderworld;
+
+  /// No description provided for @worldMiddle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeryüzü'**
+  String get worldMiddle;
+
+  /// No description provided for @worldSky.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gökyüzü'**
+  String get worldSky;
+
+  /// No description provided for @endlessLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sonsuz Gök'**
+  String get endlessLabel;
+
+  /// No description provided for @rewardLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödül: {amount} Akçe'**
+  String rewardLabel(int amount);
+
+  /// No description provided for @startRound.
+  ///
+  /// In tr, this message translates to:
+  /// **'Başla'**
+  String get startRound;
+
+  /// No description provided for @skipRound.
+  ///
+  /// In tr, this message translates to:
+  /// **'Atla'**
+  String get skipRound;
+
+  /// No description provided for @skipReward.
+  ///
+  /// In tr, this message translates to:
+  /// **'Atlarsan: {reward}'**
+  String skipReward(String reward);
+
+  /// No description provided for @statusDone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tamamlandı'**
+  String get statusDone;
+
+  /// No description provided for @statusSkipped.
+  ///
+  /// In tr, this message translates to:
+  /// **'Atlandı'**
+  String get statusSkipped;
+
+  /// No description provided for @statusUpcoming.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sırada'**
+  String get statusUpcoming;
+
+  /// No description provided for @tagMoney.
+  ///
+  /// In tr, this message translates to:
+  /// **'+{amount} Akçe'**
+  String tagMoney(int amount);
+
+  /// No description provided for @tagKutPack.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bedava Kut Kesesi'**
+  String get tagKutPack;
+
+  /// No description provided for @tagDestanPack.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bedava Destan Kesesi'**
+  String get tagDestanPack;
+
+  /// No description provided for @tagTilsimPack.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bedava Tılsım Kesesi'**
+  String get tagTilsimPack;
+
+  /// No description provided for @bossTepegozName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tepegöz'**
+  String get bossTepegozName;
+
+  /// No description provided for @bossTepegozDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Her elde yalnızca tek bir renk sayılır.'**
+  String get bossTepegozDesc;
+
+  /// No description provided for @bossErlikHanName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Erlik Han'**
+  String get bossErlikHanName;
+
+  /// No description provided for @bossErlikHanDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oynanan ilk el puan vermez.'**
+  String get bossErlikHanDesc;
+
+  /// No description provided for @bossAlKarisiName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Al Karısı'**
+  String get bossAlKarisiName;
+
+  /// No description provided for @bossAlKarisiDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Her El\'den sonra istakadan bir taş çalınır.'**
+  String get bossAlKarisiDesc;
+
+  /// No description provided for @bossYelAnaName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yel Ana'**
+  String get bossYelAnaName;
+
+  /// No description provided for @bossYelAnaDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Her El\'den sonra istaka karışır, taşlar kapalı gelir.'**
+  String get bossYelAnaDesc;
+
+  /// No description provided for @bossSahmeranName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şahmeran'**
+  String get bossSahmeranName;
+
+  /// No description provided for @bossSahmeranDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seri içeren eller yarım puan verir.'**
+  String get bossSahmeranDesc;
+
+  /// No description provided for @bossAlbastiName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Albastı'**
+  String get bossAlbastiName;
+
+  /// No description provided for @bossAlbastiDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Değiştir hakkı yok.'**
+  String get bossAlbastiDesc;
+
+  /// No description provided for @bossDemirkiyakName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Demirkıyak'**
+  String get bossDemirkiyakName;
+
+  /// No description provided for @bossDemirkiyakDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'El başına en fazla 4 taş oynanabilir.'**
+  String get bossDemirkiyakDesc;
+
+  /// No description provided for @bossKaraKusName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kara Kuş'**
+  String get bossKaraKusName;
+
+  /// No description provided for @bossKaraKusDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Okey bu turda joker değil.'**
+  String get bossKaraKusDesc;
+
+  /// No description provided for @cashoutTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tur kazanıldı'**
+  String get cashoutTitle;
+
+  /// No description provided for @cashRoundReward.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tur ödülü'**
+  String get cashRoundReward;
+
+  /// No description provided for @cashHandsLeft.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kalan El'**
+  String get cashHandsLeft;
+
+  /// No description provided for @cashInterest.
+  ///
+  /// In tr, this message translates to:
+  /// **'Faiz'**
+  String get cashInterest;
+
+  /// No description provided for @cashGoldTiles.
+  ///
+  /// In tr, this message translates to:
+  /// **'Altın taşlar'**
+  String get cashGoldTiles;
+
+  /// No description provided for @cashTileMoney.
+  ///
+  /// In tr, this message translates to:
+  /// **'Altın Tamgalar'**
+  String get cashTileMoney;
+
+  /// No description provided for @cashTotal.
+  ///
+  /// In tr, this message translates to:
+  /// **'Toplam'**
+  String get cashTotal;
+
+  /// No description provided for @collect.
+  ///
+  /// In tr, this message translates to:
+  /// **'Topla'**
+  String get collect;
+
+  /// No description provided for @savedBy.
+  ///
+  /// In tr, this message translates to:
+  /// **'{name} seni kurtardı!'**
+  String savedBy(String name);
+
+  /// No description provided for @shopTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pazar'**
+  String get shopTitle;
+
+  /// No description provided for @reroll.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yenile · {cost}'**
+  String reroll(int cost);
+
+  /// No description provided for @rerollFree.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yenile · bedava'**
+  String get rerollFree;
+
+  /// No description provided for @leaveShop.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sonraki tur'**
+  String get leaveShop;
+
+  /// No description provided for @buy.
+  ///
+  /// In tr, this message translates to:
+  /// **'Al'**
+  String get buy;
+
+  /// No description provided for @sell.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sat · {amount}'**
+  String sell(int amount);
+
+  /// No description provided for @use.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kullan'**
+  String get use;
+
+  /// No description provided for @price.
+  ///
+  /// In tr, this message translates to:
+  /// **'{price} Akçe'**
+  String price(int price);
+
+  /// No description provided for @soldOut.
+  ///
+  /// In tr, this message translates to:
+  /// **'Satıldı'**
+  String get soldOut;
+
+  /// No description provided for @voucherTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kupon'**
+  String get voucherTitle;
+
+  /// No description provided for @packsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Keseler'**
+  String get packsTitle;
+
+  /// No description provided for @itemsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tezgâh'**
+  String get itemsTitle;
+
+  /// No description provided for @packKut.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kut Kesesi'**
+  String get packKut;
+
+  /// No description provided for @packDestan.
+  ///
+  /// In tr, this message translates to:
+  /// **'Destan Kesesi'**
+  String get packDestan;
+
+  /// No description provided for @packTilsim.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tılsım Kesesi'**
+  String get packTilsim;
+
+  /// No description provided for @packTile.
+  ///
+  /// In tr, this message translates to:
+  /// **'Taş Kesesi'**
+  String get packTile;
+
+  /// No description provided for @packDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} seçenekten birini al'**
+  String packDesc(int count);
+
+  /// No description provided for @packChoose.
+  ///
+  /// In tr, this message translates to:
+  /// **'Birini seç'**
+  String get packChoose;
+
+  /// No description provided for @skip.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geç'**
+  String get skip;
+
+  /// No description provided for @kutsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kut\'lar'**
+  String get kutsTitle;
+
+  /// No description provided for @consumablesTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Eşyalar'**
+  String get consumablesTitle;
+
+  /// No description provided for @errNotEnoughMoney.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeterli Akçe yok'**
+  String get errNotEnoughMoney;
+
+  /// No description provided for @errNoKutSlot.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kut yuvaları dolu'**
+  String get errNoKutSlot;
+
+  /// No description provided for @errNoConsumableSlot.
+  ///
+  /// In tr, this message translates to:
+  /// **'Eşya yuvaları dolu'**
+  String get errNoConsumableSlot;
+
+  /// No description provided for @errInvalidTarget.
+  ///
+  /// In tr, this message translates to:
+  /// **'Önce istakadan uygun sayıda taş seç'**
+  String get errInvalidTarget;
+
+  /// No description provided for @errGeneric.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu şimdi yapılamaz'**
+  String get errGeneric;
+
+  /// No description provided for @runWonTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tengri\'ye ulaştın!'**
+  String get runWonTitle;
+
+  /// No description provided for @runLostTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koşu bitti'**
+  String get runLostTitle;
+
+  /// No description provided for @statsFloor.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ulaşılan kat'**
+  String get statsFloor;
+
+  /// No description provided for @statsRounds.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kazanılan tur'**
+  String get statsRounds;
+
+  /// No description provided for @statsHands.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oynanan el'**
+  String get statsHands;
+
+  /// No description provided for @statsBestHand.
+  ///
+  /// In tr, this message translates to:
+  /// **'En yüksek el'**
+  String get statsBestHand;
+
+  /// No description provided for @statsTotalScore.
+  ///
+  /// In tr, this message translates to:
+  /// **'Toplam skor'**
+  String get statsTotalScore;
+
+  /// No description provided for @statsFavoriteKut.
+  ///
+  /// In tr, this message translates to:
+  /// **'En çok tetiklenen Kut'**
+  String get statsFavoriteKut;
+
+  /// No description provided for @statsFavoriteHand.
+  ///
+  /// In tr, this message translates to:
+  /// **'En çok oynanan el'**
+  String get statsFavoriteHand;
+
+  /// No description provided for @statsSeed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seed'**
+  String get statsSeed;
+
+  /// No description provided for @continueEndless.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sonsuz Gök\'e devam'**
+  String get continueEndless;
+
+  /// No description provided for @mainMenu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ana Menü'**
+  String get mainMenu;
+
+  /// No description provided for @handWithLevel.
+  ///
+  /// In tr, this message translates to:
+  /// **'{hand} · Sv.{level}'**
+  String handWithLevel(String hand, int level);
+
+  /// No description provided for @rarityCommon.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yaygın'**
+  String get rarityCommon;
+
+  /// No description provided for @rarityRare.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nadir'**
+  String get rarityRare;
+
+  /// No description provided for @rarityLegendary.
+  ///
+  /// In tr, this message translates to:
+  /// **'Efsanevi'**
+  String get rarityLegendary;
+
+  /// No description provided for @destanDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'{hand} seviyesini 1 artırır.'**
+  String destanDesc(String hand);
+
+  /// No description provided for @tilsimTargetHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'İstakadan en fazla {count} taş seç, sonra Kullan.'**
+  String tilsimTargetHint(int count);
+
+  /// No description provided for @colorRed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kırmızı'**
+  String get colorRed;
+
+  /// No description provided for @colorYellow.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sarı'**
+  String get colorYellow;
+
+  /// No description provided for @colorBlue.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mavi'**
+  String get colorBlue;
+
+  /// No description provided for @colorBlack.
+  ///
+  /// In tr, this message translates to:
+  /// **'Siyah'**
+  String get colorBlack;
+
+  /// No description provided for @destanGoc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Göç Destanı'**
+  String get destanGoc;
+
+  /// No description provided for @destanTureyis.
+  ///
+  /// In tr, this message translates to:
+  /// **'Türeyiş Destanı'**
+  String get destanTureyis;
+
+  /// No description provided for @destanSatukBugra.
+  ///
+  /// In tr, this message translates to:
+  /// **'Satuk Buğra Han Destanı'**
+  String get destanSatukBugra;
+
+  /// No description provided for @destanAlpamis.
+  ///
+  /// In tr, this message translates to:
+  /// **'Alpamış Destanı'**
+  String get destanAlpamis;
+
+  /// No description provided for @destanKoroglu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Köroğlu Destanı'**
+  String get destanKoroglu;
+
+  /// No description provided for @destanDedeKorkut.
+  ///
+  /// In tr, this message translates to:
+  /// **'Dede Korkut Hikâyeleri'**
+  String get destanDedeKorkut;
+
+  /// No description provided for @destanManas.
+  ///
+  /// In tr, this message translates to:
+  /// **'Manas Destanı'**
+  String get destanManas;
+
+  /// No description provided for @destanSu.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şu Destanı'**
+  String get destanSu;
+
+  /// No description provided for @destanOguzKagan.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oğuz Kağan Destanı'**
+  String get destanOguzKagan;
+
+  /// No description provided for @destanErgenekon.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ergenekon Destanı'**
+  String get destanErgenekon;
+
+  /// No description provided for @destanErTostuk.
+  ///
+  /// In tr, this message translates to:
+  /// **'Er Töstük Destanı'**
+  String get destanErTostuk;
+
+  /// No description provided for @destanYaratilis.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yaratılış Destanı'**
+  String get destanYaratilis;
+
+  /// No description provided for @tilsimDemirciName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Demirci Tılsımı'**
+  String get tilsimDemirciName;
+
+  /// No description provided for @tilsimDemirciDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'En fazla 2 taşı Demir taşa çevirir.'**
+  String get tilsimDemirciDesc;
+
+  /// No description provided for @tilsimSimyaciName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Simyacı Tılsımı'**
+  String get tilsimSimyaciName;
+
+  /// No description provided for @tilsimSimyaciDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'1 taşı Altın taşa çevirir.'**
+  String get tilsimSimyaciDesc;
+
+  /// No description provided for @tilsimRenkName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Renk Tılsımı'**
+  String get tilsimRenkName;
+
+  /// No description provided for @tilsimRenkDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'En fazla 3 taşı {color} renge boyar.'**
+  String tilsimRenkDesc(String color);
+
+  /// No description provided for @tilsimAynaName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ayna Tılsımı'**
+  String get tilsimAynaName;
+
+  /// No description provided for @tilsimAynaDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seçili taşın bir kopyasını desteye ekler.'**
+  String get tilsimAynaDesc;
+
+  /// No description provided for @tilsimYakmaName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yakma Tılsımı'**
+  String get tilsimYakmaName;
+
+  /// No description provided for @tilsimYakmaDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'En fazla 2 taşı desteden kalıcı olarak siler.'**
+  String get tilsimYakmaDesc;
+
+  /// No description provided for @tilsimKamName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kam Tılsımı'**
+  String get tilsimKamName;
+
+  /// No description provided for @tilsimKamDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Rastgele bir Kut yaratır (boş yuva gerekir).'**
+  String get tilsimKamDesc;
+
+  /// No description provided for @tilsimTamgaName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tamga Tılsımı'**
+  String get tilsimTamgaName;
+
+  /// No description provided for @tilsimTamgaDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seçili taşa rastgele bir Tamga basar.'**
+  String get tilsimTamgaDesc;
+
+  /// No description provided for @tilsimYukseltmeName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yükseltme Tılsımı'**
+  String get tilsimYukseltmeName;
+
+  /// No description provided for @tilsimYukseltmeDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'En fazla 2 taşın sayısını 1 artırır.'**
+  String get tilsimYukseltmeDesc;
+
+  /// No description provided for @voucherEkElName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ek El'**
+  String get voucherEkElName;
+
+  /// No description provided for @voucherEkElDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Her turda +1 El.'**
+  String get voucherEkElDesc;
+
+  /// No description provided for @voucherEkDegistirName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ek Değiştir'**
+  String get voucherEkDegistirName;
+
+  /// No description provided for @voucherEkDegistirDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Her turda +1 Değiştir.'**
+  String get voucherEkDegistirDesc;
+
+  /// No description provided for @voucherGenisIstakaName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geniş İstaka'**
+  String get voucherGenisIstakaName;
+
+  /// No description provided for @voucherGenisIstakaDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'İstakaya +1 taş.'**
+  String get voucherGenisIstakaDesc;
+
+  /// No description provided for @voucherKutYuvasiName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kut Yuvası'**
+  String get voucherKutYuvasiName;
+
+  /// No description provided for @voucherKutYuvasiDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'+1 Kut yuvası.'**
+  String get voucherKutYuvasiDesc;
+
+  /// No description provided for @voucherHeybeName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Heybe'**
+  String get voucherHeybeName;
+
+  /// No description provided for @voucherHeybeDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'+1 eşya yuvası.'**
+  String get voucherHeybeDesc;
+
+  /// No description provided for @voucherPazarlikName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pazarlık'**
+  String get voucherPazarlikName;
+
+  /// No description provided for @voucherPazarlikDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pazar\'da her şey %25 indirimli.'**
+  String get voucherPazarlikDesc;
+
+  /// No description provided for @voucherHazineName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hazine'**
+  String get voucherHazineName;
+
+  /// No description provided for @voucherHazineDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Faiz sınırı +5.'**
+  String get voucherHazineDesc;
+
+  /// No description provided for @enhBone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kemik: +30 Puan'**
+  String get enhBone;
+
+  /// No description provided for @enhIron.
+  ///
+  /// In tr, this message translates to:
+  /// **'Demir: istakada tutulunca ×1.5 Çarpan'**
+  String get enhIron;
+
+  /// No description provided for @enhGold.
+  ///
+  /// In tr, this message translates to:
+  /// **'Altın: tur sonunda istakadaysa +3 Akçe'**
+  String get enhGold;
+
+  /// No description provided for @enhCrystal.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kristal: ×2 Çarpan, 1/4 kırılır'**
+  String get enhCrystal;
+
+  /// No description provided for @enhSkyStone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gök Taşı: her renk sayılır'**
+  String get enhSkyStone;
+
+  /// No description provided for @sealCrimson.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kızıl Tamga: iki kez tetiklenir'**
+  String get sealCrimson;
+
+  /// No description provided for @sealGold.
+  ///
+  /// In tr, this message translates to:
+  /// **'Altın Tamga: sayılınca +3 Akçe'**
+  String get sealGold;
+
+  /// No description provided for @sealSky.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gök Tamga: tur sonunda Destan yaratır'**
+  String get sealSky;
+
+  /// No description provided for @sealPurple.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mor Tamga: atılınca Tılsım yaratır'**
+  String get sealPurple;
+
+  /// No description provided for @tileAdded.
+  ///
+  /// In tr, this message translates to:
+  /// **'Desteye eklenir'**
+  String get tileAdded;
 }
 
 class _AppLocalizationsDelegate

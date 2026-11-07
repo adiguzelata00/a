@@ -44,6 +44,10 @@ abstract final class Palette {
   // World backgrounds (Phase 3): underworld, middle world, sky.
   static const underworldTop = Color(0xFF2A0F2E);
   static const underworldBottom = Color(0xFF120612);
+  static const steppeTop = Color(0xFF243B22);
+  static const steppeBottom = Color(0xFF2B1D10);
+  static const skyTop = Color(0xFF0B1E4A);
+  static const skyBottom = Color(0xFF1B1530);
 
   static Color tileColor(TileColor c) => switch (c) {
     TileColor.red => red,

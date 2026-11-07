@@ -5,7 +5,7 @@ import '../../l10n_ext.dart';
 import '../../settings/settings_providers.dart';
 import '../../theme/palette.dart';
 import '../../widgets/effects.dart';
-import '../table_controller.dart';
+import '../../game/game_controller.dart';
 
 /// Top bar: floor, target, score, hands, discards, money, speed.
 class Hud extends ConsumerWidget {
@@ -15,26 +15,26 @@ class Hud extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final s = ref.watch(
-      tableControllerProvider.select(
+      gameControllerProvider.select(
         (s) => (
           score: s.displayedScore,
-          target: s.round.target,
-          hands: s.round.handsLeft,
-          discards: s.round.discardsLeft,
-          money: s.round.moneyEarned,
-          floor: s.floor,
-          roundInFloor: s.roundInFloor,
-          seed: s.seedCode,
-          deck: s.round.drawPileCount,
+          target: s.round!.target,
+          hands: s.round!.handsLeft,
+          discards: s.round!.discardsLeft,
+          money: s.run!.money,
+          floor: s.run!.floor,
+          roundInFloor: s.run!.roundInFloor,
+          seed: s.run!.seedCode,
+          deck: s.round!.drawPileCount,
+          bossId: s.round!.isBossRound ? s.run!.boss.id : null,
+          endless: s.run!.endless,
         ),
       ),
     );
     final speed = ref.watch(gameSpeedProvider);
-    final roundName = switch (s.roundInFloor) {
-      0 => l10n.roundSmall,
-      1 => l10n.roundBig,
-      _ => l10n.roundBoss,
-    };
+    final roundName = s.bossId != null
+        ? l10n.bossName(s.bossId!)
+        : l10n.roundName(s.roundInFloor);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
@@ -71,6 +71,16 @@ class Hud extends ConsumerWidget {
               ),
             ],
           ),
+          if (s.bossId != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 2),
+              child: Text(
+                l10n.bossDescription(s.bossId!),
+                key: const Key('boss-banner'),
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Palette.multRed, fontSize: 12),
+              ),
+            ),
           const SizedBox(height: 6),
           Row(
             children: [

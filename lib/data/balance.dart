@@ -159,6 +159,40 @@ abstract final class Balance {
   static const int rerollCostStep = 1;
 
   // ---------------------------------------------------------------------
+  // Shop ("Pazar")
+  // ---------------------------------------------------------------------
+  static const int shopItemSlots = 2;
+  static const int shopPackSlots = 2;
+  static const int packPrice = 4;
+
+  /// Options inside an opened pack (choose one).
+  static const int packChoices = 3;
+
+  /// Item slot contents: Kut / Destan / Tılsım.
+  static const Map<String, int> shopItemWeights = {
+    'kut': 70,
+    'destan': 15,
+    'tilsim': 15,
+  };
+  static const Map<Rarity, int> rarityWeights = {
+    Rarity.common: 70,
+    Rarity.rare: 25,
+    Rarity.legendary: 5,
+  };
+  static const int destanPrice = 3;
+  static const int tilsimPrice = 3;
+  static const int voucherPrice = 10;
+
+  /// Discount voucher: prices × this (rounded down, min 1).
+  static const double discountFactor = 0.75;
+
+  /// Interest voucher: raises the interest cap by this much.
+  static const int interestCapPerVoucher = 5;
+
+  /// "Akçe" skip tag reward.
+  static const int skipMoney = 5;
+
+  // ---------------------------------------------------------------------
   // Kut prices & slots
   // ---------------------------------------------------------------------
   static const int kutSlots = 5;

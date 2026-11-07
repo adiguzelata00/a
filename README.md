@@ -3,7 +3,7 @@
 Okey taşlarıyla oynanan, Türk mitolojisi temalı, deste kurmalı **roguelike bulmaca oyunu**.
 Flutter (+ ileride Flame), Android öncelikli, dikey ekran.
 
-> Durum: **Faz 2 — Oynanabilir tek tur** tamamlandı.
+> Durum: **Faz 3 — Koşu döngüsü ve Pazar** tamamlandı.
 
 ## Mimari
 
@@ -15,17 +15,22 @@ lib/
     hands/         HandType, HandLevels, HandEvaluator (okey joker + Gök Taşı dahil)
     scoring/       ScoringEngine, ScoreEvent (animasyon akışı), Kut arayüzü
     round/         Round durum makinesi, RoundRules (boss kısıtları), rack sıralama
+    run/           RunState (koşu durum makinesi), Pazar/Kese/Kupon, Destan/Tılsım, etiketler
     sim/           AutoPlayer (açgözlü bot: simülasyon & denge)
   data/            Veri odaklı içerik
     balance.dart   TÜM denge sayıları (el tablosu, hedefler, ekonomi, Kut değerleri)
     kuts.dart      20 Kut (kut_behaviors.dart'taki parametrik davranışlardan)
     bosses.dart    8 Boss (RoundRules olarak)
+    consumables.dart  12 Destan, 8 Tılsım, 7 Kupon
+    run_setup.dart    Denge sayılarını ve kataloğu çekirdeğe bağlar
   l10n/            ARB dosyaları (app_tr.arb varsayılan, app_en.arb) + üretilen sınıflar
   services/        AudioService (yer tutucu), HapticsService
   ui/
     art/           Kodla çizilen yer tutucular (taş, renk sembolleri, tamgalar, Kut amblemi)
     theme/         Palette (tüm renkler tek yerde), tema
-    table/         Oyun masası: TableController (Riverpod), TableState, widget'lar
+    game/          GameController (Riverpod) + GameState + GameRoot (ekran geçişleri)
+    screens/       Ana Menü, Tur Seçimi, Tur Sonucu, Pazar, Kese, Koşu Sonu
+    table/         Oyun masası widget'ları
     widgets/       Ortak efektler (count-up, zıplama, titreme, uçan etiket, ekran sarsıntısı)
     settings/      Oyun hızı (1×/2×/4×)
 bin/
@@ -76,6 +81,28 @@ Konsol komutları: `p 0 3 5` oyna, `d 1 2` değiştir, `v 0 3 5` önizleme, `m 7
 - Varsayılan dil **Türkçe**; dil seçimi Faz 5 ayarlarında. Web/debug derlemelerinde `?seed=KOD`
   aynı turu yeniden üretir.
 
+## Faz 3 — Koşu döngüsü
+
+Akış: **Ana Menü → Tur Seçimi → Masa → Tur Sonucu → Pazar → Tur Seçimi … → Koşu Sonu**.
+
+- `RunState` (saf Dart) tüm koşuyu yönetir: 8 Kat × (Küçük, Büyük, Boss), Akçe, Kut'lar, eşyalar,
+  Kuponlar, istatistikler. Her rastgele karar seed'in o yere özel bir dalından gelir
+  (`boss-f3`, `shop-f2-r1` ...), yani aynı seed + aynı hamleler = aynı koşu.
+- **Tur Seçimi:** Küçük/Büyük atlanabilir; her birinin önceden belli bir etiketi var
+  (+5 Akçe veya bedava Kut/Destan/Tılsım Kesesi). Boss atlanamaz; kat başında seçilir, aynı Boss
+  havuz bitene kadar tekrar gelmez.
+- **Tur Sonucu:** tur ödülü (3/4/5) + kalan El başına 1 + Kut paraları (Dede Korkut) + istakadaki
+  Altın taşlar + Altın Tamgalar + faiz (her 5 Akçe'ye 1, en fazla 5).
+- **Pazar:** 2 tezgâh yuvası (Kut %70 / Destan %15 / Tılsım %15; nadirlik 70/25/5), 2 Kese,
+  kat başına 1 Kupon, yenileme 5 (+1 artar; Kervan ilki bedava). Kut'lar ve eşyalar yarı fiyata satılır.
+- **Keseler:** 3 seçenekten 1. Destan seçilince hemen uygulanır; Kut/Tılsım boş yuva ister;
+  Taş Kesesi geliştirmeli/tamgalı yeni taşı desteye ekler.
+- **Eşyalar:** dokun → açıklama, Kullan / Sat. Taş isteyen Tılsımlar masada, istakadan seçili taşlara
+  uygulanır (istaka + deste birlikte güncellenir).
+- **Kut'lar** sürüklenerek sıralanır (tetiklenme sırası); büyüyen Kut'lar kartta rozet gösterir (×2, +3).
+- 8. Kat Boss'u yenilince koşu kazanılır; **Sonsuz Gök** ile 9. kattan devam edilebilir.
+- Arka plan dünyaya göre değişir: Yeraltı (Kat 1-2), Yeryüzü (3-5), Gökyüzü (6-8, yıldızlı).
+
 ## Kural kararları (spec'te belirsiz olanlar)
 
 - **Alaca Seri** tam 4 taştır: "hepsi farklı renk" + 4 renk ⇒ en fazla 4.
@@ -94,3 +121,10 @@ Konsol komutları: `p 0 3 5` oyna, `d 1 2` değiştir, `v 0 3 5` önizleme, `m 7
 - **Gök Börü:** Grup-4 oynandığı elde büyüme önce olur, o el zaten artmış çarpanla sayılır.
 - **Hedef eğrisi:** Kat başına ~1.75×; bu yüzden Kat N+1 Küçük Sınav, Kat N Boss'undan düşük olabilir (spec'teki 1.6–1.9× aralığının doğal sonucu).
 - Sıralamada **1**, 13'ün sağına konur (15 puan değeri ve 12-13-1 serileri için).
+- **Renk Tılsımı**'nın rengi eşya oluşurken belirlenir (renk seçici yerine), adı/açıklaması rengi söyler.
+- **Destan Kesesi**'nden seçilen Destan hemen uygulanır (yuva gerektirmez). Destan eşyası her an kullanılabilir.
+- **Kam Tılsımı** ve Destan masa dışında da kullanılabilir; taş isteyen Tılsımlar yalnızca turda.
+- **Zümrüdüanka** kurtarınca tur kazanılmış sayılır (normal ödül), Kut yok olur.
+- **Mor Tamga** / **Gök Tamga** eşya yaratır ancak eşya yuvası boşsa.
+- **Atlama etiketi**: Kese etiketleri kese hemen açılır; seçmeden geçilebilir.
+- **Kut satışı** tur dışında yapılır (masada Kut yalnızca sıralanır).

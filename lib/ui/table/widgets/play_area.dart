@@ -5,10 +5,11 @@ import 'package:tengri_taslari/core/core.dart';
 import '../../l10n_ext.dart';
 import '../../theme/palette.dart';
 import '../../widgets/effects.dart';
+import '../../widgets/kut_row.dart';
 import '../../widgets/tile_view.dart';
 import '../event_labels.dart';
-import '../table_controller.dart';
-import '../table_state.dart';
+import '../../game/game_controller.dart';
+import '../../game/game_state.dart';
 
 /// Center of the table: indicator/okey, hand preview and scoring playback.
 class PlayArea extends ConsumerWidget {
@@ -16,8 +17,8 @@ class PlayArea extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(tableControllerProvider);
-    final controller = ref.read(tableControllerProvider.notifier);
+    final state = ref.watch(gameControllerProvider);
+    final controller = ref.read(gameControllerProvider.notifier);
     final playback = state.playback;
 
     return GestureDetector(
@@ -25,7 +26,7 @@ class PlayArea extends ConsumerWidget {
       onTap: playback != null ? controller.skipPlayback : null,
       child: Column(
         children: [
-          _OkeyInfoRow(round: state.round),
+          _OkeyInfoRow(round: state.round!),
           const SizedBox(height: 8),
           if (playback != null)
             _HandHeader(
@@ -39,7 +40,7 @@ class PlayArea extends ConsumerWidget {
           Expanded(
             child: Center(
               child: playback != null
-                  ? _PlayedTiles(playback: playback, okey: state.round.okey)
+                  ? _PlayedTiles(playback: playback, okey: state.round!.okey)
                   : Text(
                       context.l10n.playAreaHint,
                       textAlign: TextAlign.center,
@@ -70,60 +71,64 @@ class _OkeyInfoRow extends StatelessWidget {
       number: okey.okeyFace.number,
     );
     const labelStyle = TextStyle(fontSize: 10, color: Palette.textMuted);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Column(
-          children: [
-            Text(l10n.indicator, style: labelStyle),
-            const SizedBox(height: 2),
-            TileView(tile: okey.indicator, okey: null, width: 30),
-          ],
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8),
-          child: Icon(Icons.arrow_forward, size: 16, color: Palette.goldDark),
-        ),
-        Column(
-          children: [
-            Text(
-              okey.okeyIsWild ? l10n.okey : l10n.okeyNotWild,
-              style: labelStyle,
-            ),
-            const SizedBox(height: 2),
-            TileView(tile: okeyTile, okey: okey, width: 30),
-          ],
-        ),
-        if (round.countedColor != null) ...[
-          const SizedBox(width: 16),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        children: [
           Column(
             children: [
-              Text(l10n.countedColorHint, style: labelStyle),
+              Text(l10n.indicator, style: labelStyle),
               const SizedBox(height: 2),
-              TileView(
-                tile: Tile(id: -2, color: round.countedColor!, number: 1),
-                okey: null,
-                width: 30,
-              ),
+              TileView(tile: okey.indicator, okey: null, width: 30),
             ],
           ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: Icon(Icons.arrow_forward, size: 16, color: Palette.goldDark),
+          ),
+          Column(
+            children: [
+              Text(
+                okey.okeyIsWild ? l10n.okey : l10n.okeyNotWild,
+                style: labelStyle,
+              ),
+              const SizedBox(height: 2),
+              TileView(tile: okeyTile, okey: okey, width: 30),
+            ],
+          ),
+          if (round.countedColor != null) ...[
+            const SizedBox(width: 16),
+            Column(
+              children: [
+                Text(l10n.countedColorHint, style: labelStyle),
+                const SizedBox(height: 2),
+                TileView(
+                  tile: Tile(id: -2, color: round.countedColor!, number: 1),
+                  okey: null,
+                  width: 30,
+                ),
+              ],
+            ),
+          ],
+          const Spacer(),
+          const ConsumableBar(cardWidth: 38),
         ],
-      ],
+      ),
     );
   }
 }
 
 class _PreviewHeader extends StatelessWidget {
   const _PreviewHeader({required this.controller, required this.state});
-  final TableController controller;
-  final TableState state;
+  final GameController controller;
+  final GameState state;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    if (state.selectedIds.length > state.round.maxTilesPerPlay) {
+    if (state.selectedIds.length > state.round!.maxTilesPerPlay) {
       return _HandHeader(
-        title: l10n.tooManyTiles(state.round.maxTilesPerPlay),
+        title: l10n.tooManyTiles(state.round!.maxTilesPerPlay),
         chips: 0,
         mult: 0,
       );
@@ -137,9 +142,11 @@ class _PreviewHeader extends StatelessWidget {
         muted: true,
       );
     }
+    final level = state.round!.levels.levelOf(preview.type);
+    final name = l10n.handName(preview.type);
     return _HandHeader(
       key: const Key('hand-preview'),
-      title: l10n.handName(preview.type),
+      title: level > 1 ? l10n.handWithLevel(name, level) : name,
       chips: preview.chips.toDouble(),
       mult: preview.mult.toDouble(),
     );

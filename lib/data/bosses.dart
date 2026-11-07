@@ -1,20 +1,9 @@
 // Boss catalogue. Names / descriptions are localized by `id`.
 
 import '../core/round/round_rules.dart';
+import '../core/run/boss.dart';
 
-class BossDefinition {
-  const BossDefinition({
-    required this.id,
-    required this.rules,
-    this.minFloor = 1,
-  });
-
-  final String id;
-  final RoundRules rules;
-
-  /// First floor on which this boss may appear.
-  final int minFloor;
-}
+export '../core/run/boss.dart';
 
 const List<BossDefinition> allBosses = [
   BossDefinition(id: 'tepegoz', rules: RoundRules(singleColorPerHand: true)),

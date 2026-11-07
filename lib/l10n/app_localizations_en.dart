@@ -334,4 +334,468 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get playAreaHint => 'Drag to arrange tiles, tap to select';
+
+  @override
+  String get menuSubtitle => 'Eight floors from the Underworld to the Sky';
+
+  @override
+  String get menuNewRun => 'New Run';
+
+  @override
+  String get menuContinue => 'Continue';
+
+  @override
+  String get menuCollection => 'Collection';
+
+  @override
+  String get menuSettings => 'Settings';
+
+  @override
+  String get comingSoon => 'Coming soon';
+
+  @override
+  String get worldUnderworld => 'Underworld';
+
+  @override
+  String get worldMiddle => 'Middle World';
+
+  @override
+  String get worldSky => 'Sky';
+
+  @override
+  String get endlessLabel => 'Endless Sky';
+
+  @override
+  String rewardLabel(int amount) {
+    return 'Reward: $amount Akçe';
+  }
+
+  @override
+  String get startRound => 'Start';
+
+  @override
+  String get skipRound => 'Skip';
+
+  @override
+  String skipReward(String reward) {
+    return 'Skip reward: $reward';
+  }
+
+  @override
+  String get statusDone => 'Cleared';
+
+  @override
+  String get statusSkipped => 'Skipped';
+
+  @override
+  String get statusUpcoming => 'Upcoming';
+
+  @override
+  String tagMoney(int amount) {
+    return '+$amount Akçe';
+  }
+
+  @override
+  String get tagKutPack => 'Free Kut Pack';
+
+  @override
+  String get tagDestanPack => 'Free Destan Pack';
+
+  @override
+  String get tagTilsimPack => 'Free Tılsım Pack';
+
+  @override
+  String get bossTepegozName => 'Tepegöz';
+
+  @override
+  String get bossTepegozDesc => 'Only one color counts in each hand.';
+
+  @override
+  String get bossErlikHanName => 'Erlik Han';
+
+  @override
+  String get bossErlikHanDesc => 'The first hand scores nothing.';
+
+  @override
+  String get bossAlKarisiName => 'Al Karısı';
+
+  @override
+  String get bossAlKarisiDesc =>
+      'A tile is stolen from the rack after each hand.';
+
+  @override
+  String get bossYelAnaName => 'Yel Ana';
+
+  @override
+  String get bossYelAnaDesc =>
+      'After each hand the rack is shuffled face down.';
+
+  @override
+  String get bossSahmeranName => 'Şahmeran';
+
+  @override
+  String get bossSahmeranDesc => 'Hands with a run score half.';
+
+  @override
+  String get bossAlbastiName => 'Albastı';
+
+  @override
+  String get bossAlbastiDesc => 'No discards.';
+
+  @override
+  String get bossDemirkiyakName => 'Demirkıyak';
+
+  @override
+  String get bossDemirkiyakDesc => 'At most 4 tiles per hand.';
+
+  @override
+  String get bossKaraKusName => 'Kara Kuş';
+
+  @override
+  String get bossKaraKusDesc => 'The okey is not wild this round.';
+
+  @override
+  String get cashoutTitle => 'Round won';
+
+  @override
+  String get cashRoundReward => 'Round reward';
+
+  @override
+  String get cashHandsLeft => 'Hands left';
+
+  @override
+  String get cashInterest => 'Interest';
+
+  @override
+  String get cashGoldTiles => 'Gold tiles';
+
+  @override
+  String get cashTileMoney => 'Gold seals';
+
+  @override
+  String get cashTotal => 'Total';
+
+  @override
+  String get collect => 'Collect';
+
+  @override
+  String savedBy(String name) {
+    return '$name saved you!';
+  }
+
+  @override
+  String get shopTitle => 'Bazaar';
+
+  @override
+  String reroll(int cost) {
+    return 'Reroll · $cost';
+  }
+
+  @override
+  String get rerollFree => 'Reroll · free';
+
+  @override
+  String get leaveShop => 'Next round';
+
+  @override
+  String get buy => 'Buy';
+
+  @override
+  String sell(int amount) {
+    return 'Sell · $amount';
+  }
+
+  @override
+  String get use => 'Use';
+
+  @override
+  String price(int price) {
+    return '$price Akçe';
+  }
+
+  @override
+  String get soldOut => 'Sold';
+
+  @override
+  String get voucherTitle => 'Voucher';
+
+  @override
+  String get packsTitle => 'Packs';
+
+  @override
+  String get itemsTitle => 'Stall';
+
+  @override
+  String get packKut => 'Kut Pack';
+
+  @override
+  String get packDestan => 'Destan Pack';
+
+  @override
+  String get packTilsim => 'Tılsım Pack';
+
+  @override
+  String get packTile => 'Tile Pack';
+
+  @override
+  String packDesc(int count) {
+    return 'Pick one of $count';
+  }
+
+  @override
+  String get packChoose => 'Choose one';
+
+  @override
+  String get skip => 'Skip';
+
+  @override
+  String get kutsTitle => 'Kuts';
+
+  @override
+  String get consumablesTitle => 'Items';
+
+  @override
+  String get errNotEnoughMoney => 'Not enough Akçe';
+
+  @override
+  String get errNoKutSlot => 'Kut slots are full';
+
+  @override
+  String get errNoConsumableSlot => 'Item slots are full';
+
+  @override
+  String get errInvalidTarget => 'Select a valid number of rack tiles first';
+
+  @override
+  String get errGeneric => 'You can\'t do that now';
+
+  @override
+  String get runWonTitle => 'You reached Tengri!';
+
+  @override
+  String get runLostTitle => 'Run over';
+
+  @override
+  String get statsFloor => 'Floor reached';
+
+  @override
+  String get statsRounds => 'Rounds won';
+
+  @override
+  String get statsHands => 'Hands played';
+
+  @override
+  String get statsBestHand => 'Best hand';
+
+  @override
+  String get statsTotalScore => 'Total score';
+
+  @override
+  String get statsFavoriteKut => 'Most triggered Kut';
+
+  @override
+  String get statsFavoriteHand => 'Most played hand';
+
+  @override
+  String get statsSeed => 'Seed';
+
+  @override
+  String get continueEndless => 'Continue into the Endless Sky';
+
+  @override
+  String get mainMenu => 'Main Menu';
+
+  @override
+  String handWithLevel(String hand, int level) {
+    return '$hand · Lv.$level';
+  }
+
+  @override
+  String get rarityCommon => 'Common';
+
+  @override
+  String get rarityRare => 'Rare';
+
+  @override
+  String get rarityLegendary => 'Legendary';
+
+  @override
+  String destanDesc(String hand) {
+    return 'Levels up $hand by 1.';
+  }
+
+  @override
+  String tilsimTargetHint(int count) {
+    return 'Select up to $count rack tiles, then Use.';
+  }
+
+  @override
+  String get colorRed => 'Red';
+
+  @override
+  String get colorYellow => 'Yellow';
+
+  @override
+  String get colorBlue => 'Blue';
+
+  @override
+  String get colorBlack => 'Black';
+
+  @override
+  String get destanGoc => 'Migration Epic';
+
+  @override
+  String get destanTureyis => 'Origin Epic';
+
+  @override
+  String get destanSatukBugra => 'Epic of Satuk Bughra';
+
+  @override
+  String get destanAlpamis => 'Epic of Alpamysh';
+
+  @override
+  String get destanKoroglu => 'Epic of Köroğlu';
+
+  @override
+  String get destanDedeKorkut => 'Tales of Dede Korkut';
+
+  @override
+  String get destanManas => 'Epic of Manas';
+
+  @override
+  String get destanSu => 'Epic of Shu';
+
+  @override
+  String get destanOguzKagan => 'Epic of Oghuz Khagan';
+
+  @override
+  String get destanErgenekon => 'Epic of Ergenekon';
+
+  @override
+  String get destanErTostuk => 'Epic of Er Töstük';
+
+  @override
+  String get destanYaratilis => 'Creation Epic';
+
+  @override
+  String get tilsimDemirciName => 'Smith\'s Charm';
+
+  @override
+  String get tilsimDemirciDesc => 'Turns up to 2 tiles into Iron.';
+
+  @override
+  String get tilsimSimyaciName => 'Alchemist\'s Charm';
+
+  @override
+  String get tilsimSimyaciDesc => 'Turns 1 tile into Gold.';
+
+  @override
+  String get tilsimRenkName => 'Color Charm';
+
+  @override
+  String tilsimRenkDesc(String color) {
+    return 'Paints up to 3 tiles $color.';
+  }
+
+  @override
+  String get tilsimAynaName => 'Mirror Charm';
+
+  @override
+  String get tilsimAynaDesc => 'Adds a copy of the selected tile to the deck.';
+
+  @override
+  String get tilsimYakmaName => 'Burning Charm';
+
+  @override
+  String get tilsimYakmaDesc => 'Removes up to 2 tiles from the deck for good.';
+
+  @override
+  String get tilsimKamName => 'Shaman\'s Charm';
+
+  @override
+  String get tilsimKamDesc => 'Creates a random Kut (needs a free slot).';
+
+  @override
+  String get tilsimTamgaName => 'Seal Charm';
+
+  @override
+  String get tilsimTamgaDesc => 'Stamps a random seal on the selected tile.';
+
+  @override
+  String get tilsimYukseltmeName => 'Ascension Charm';
+
+  @override
+  String get tilsimYukseltmeDesc => 'Raises up to 2 tiles by 1.';
+
+  @override
+  String get voucherEkElName => 'Extra Hand';
+
+  @override
+  String get voucherEkElDesc => '+1 hand every round.';
+
+  @override
+  String get voucherEkDegistirName => 'Extra Discard';
+
+  @override
+  String get voucherEkDegistirDesc => '+1 discard every round.';
+
+  @override
+  String get voucherGenisIstakaName => 'Wide Rack';
+
+  @override
+  String get voucherGenisIstakaDesc => '+1 rack size.';
+
+  @override
+  String get voucherKutYuvasiName => 'Kut Slot';
+
+  @override
+  String get voucherKutYuvasiDesc => '+1 Kut slot.';
+
+  @override
+  String get voucherHeybeName => 'Saddlebag';
+
+  @override
+  String get voucherHeybeDesc => '+1 item slot.';
+
+  @override
+  String get voucherPazarlikName => 'Haggling';
+
+  @override
+  String get voucherPazarlikDesc => 'Everything in the Bazaar is 25% off.';
+
+  @override
+  String get voucherHazineName => 'Treasury';
+
+  @override
+  String get voucherHazineDesc => 'Interest cap +5.';
+
+  @override
+  String get enhBone => 'Bone: +30 Chips';
+
+  @override
+  String get enhIron => 'Iron: ×1.5 Mult while held';
+
+  @override
+  String get enhGold => 'Gold: +3 Akçe if held at round end';
+
+  @override
+  String get enhCrystal => 'Crystal: ×2 Mult, 1 in 4 shatters';
+
+  @override
+  String get enhSkyStone => 'Sky Stone: counts as every color';
+
+  @override
+  String get sealCrimson => 'Crimson Seal: triggers twice';
+
+  @override
+  String get sealGold => 'Gold Seal: +3 Akçe when counted';
+
+  @override
+  String get sealSky => 'Sky Seal: creates a Destan at round end';
+
+  @override
+  String get sealPurple => 'Purple Seal: creates a Tılsım when discarded';
+
+  @override
+  String get tileAdded => 'Added to your deck';
 }
