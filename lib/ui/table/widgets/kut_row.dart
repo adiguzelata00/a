@@ -106,7 +106,7 @@ class _KutCard extends StatelessWidget {
         children: [
           Expanded(
             child: CustomPaint(
-              painter: _EmblemPainter(kut.id.hashCode & 0xFF, Palette.gold),
+              painter: _EmblemPainter(fnv1a32(kut.id), Palette.gold),
               child: const SizedBox.expand(),
             ),
           ),

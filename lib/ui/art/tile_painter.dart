@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tengri_taslari/core/core.dart';
 
+import '../theme/app_theme.dart';
 import '../theme/palette.dart';
 import 'symbols.dart';
 
@@ -143,6 +144,7 @@ class TilePainter extends CustomPainter {
       text: TextSpan(
         text: '${face.number}',
         style: TextStyle(
+          fontFamily: appFontFamily,
           color: color,
           fontSize: w * (face.number >= 10 ? 0.5 : 0.6),
           fontWeight: FontWeight.w900,
@@ -186,6 +188,7 @@ class TilePainter extends CustomPainter {
       text: TextSpan(
         text: '${okeyFace.number}',
         style: TextStyle(
+          fontFamily: appFontFamily,
           color: color,
           fontSize: w * 0.26,
           fontWeight: FontWeight.w800,

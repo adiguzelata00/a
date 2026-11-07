@@ -54,7 +54,7 @@ class SeededRng {
 
   /// Uniform 32-bit unsigned integer.
   int nextUint32() {
-    final result = (_rotl((_b * 5) & _mask, 7) * 9) & _mask;
+    final result = _mul32(_rotl(_mul32(_b, 5), 7), 9);
     final t = (_b << 9) & _mask;
     _c ^= _a;
     _d ^= _b;
@@ -104,14 +104,27 @@ class SeededRng {
     return list[nextInt(list.length)];
   }
 
-  static int _rotl(int x, int k) => ((x << k) | (x >> (32 - k))) & _mask;
+  static int _rotl(int x, int k) =>
+      (((x << k) & _mask) | (x >> (32 - k))) & _mask;
 
   static int _mix32(int z) {
     var x = z & _mask;
-    x = ((x ^ (x >> 16)) * 0x85EBCA6B) & _mask;
-    x = ((x ^ (x >> 13)) * 0xC2B2AE35) & _mask;
+    x = _mul32(x ^ (x >> 16), 0x85EBCA6B);
+    x = _mul32(x ^ (x >> 13), 0xC2B2AE35);
     return (x ^ (x >> 16)) & _mask;
   }
+}
+
+/// 32-bit multiplication modulo 2^32 (like JavaScript's Math.imul).
+///
+/// A plain `a * b` of two 32-bit values needs 64 bits; on the web (where
+/// Dart ints are JS doubles with 53 bits) that silently loses the low bits.
+/// Splitting [a] into 16-bit halves keeps every intermediate value below
+/// 2^49, so the result is identical on the VM, AOT, JS and Wasm.
+int _mul32(int a, int b) {
+  final lo = (a & 0xFFFF) * b;
+  final hi = (((a >> 16) & 0xFFFF) * b) & 0xFFFF;
+  return (lo + hi * 0x10000) & 0xFFFFFFFF;
 }
 
 /// 32-bit FNV-1a hash over the UTF-16 code units of [input].
@@ -119,9 +132,9 @@ int fnv1a32(String input) {
   var hash = 0x811C9DC5;
   for (final unit in input.codeUnits) {
     hash ^= unit & 0xFF;
-    hash = (hash * 0x01000193) & 0xFFFFFFFF;
+    hash = _mul32(hash, 0x01000193);
     hash ^= unit >> 8;
-    hash = (hash * 0x01000193) & 0xFFFFFFFF;
+    hash = _mul32(hash, 0x01000193);
   }
   return hash;
 }
