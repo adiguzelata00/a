@@ -1,0 +1,201 @@
+{
+  "@@locale": "tr",
+  "appTitle": "Tengri'nin Taşları",
+  "target": "Hedef",
+  "score": "Skor",
+  "hands": "El",
+  "discards": "Değiştir",
+  "money": "Akçe",
+  "floorLabel": "Kat {floor}",
+  "@floorLabel": {
+    "placeholders": {
+      "floor": {
+        "type": "int"
+      }
+    }
+  },
+  "roundSmall": "Küçük Sınav",
+  "roundBig": "Büyük Sınav",
+  "roundBoss": "Boss",
+  "indicator": "Gösterge",
+  "okey": "Okey",
+  "okeyNotWild": "Joker değil",
+  "play": "Oyna",
+  "discard": "Değiştir",
+  "sortByNumber": "Sayı",
+  "sortByColor": "Renk",
+  "selectTiles": "Oynamak için taş seç",
+  "chips": "Puan",
+  "mult": "Çarpan",
+  "roundWon": "Tur kazanıldı!",
+  "roundLost": "Koşu bitti",
+  "finalScore": "Skor: {score} / {target}",
+  "@finalScore": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "bestHand": "En iyi el: {score}",
+  "@bestHand": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "handsLeftBonus": "Kalan El: {count}",
+  "@handsLeftBonus": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "newRound": "Yeni Tur",
+  "tryAgain": "Tekrar Dene",
+  "seedLabel": "Seed: {code}",
+  "@seedLabel": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "speedLabel": "{speed}×",
+  "@speedLabel": {
+    "placeholders": {
+      "speed": {
+        "type": "int"
+      }
+    }
+  },
+  "tapToSkip": "Atlamak için dokun",
+  "emptyKutSlot": "Boş",
+  "tilesLeft": "Deste: {count}",
+  "@tilesLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tooManyTiles": "En fazla {max} taş",
+  "@tooManyTiles": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "handSingle": "Tek Taş",
+  "handPair": "Çift",
+  "handTwoPair": "İki Çift",
+  "handRun3": "Seri-3",
+  "handGroup3": "Grup-3",
+  "handThreePairs": "Üç Çift",
+  "handRun4": "Seri-4",
+  "handRainbowRun": "Alaca Seri",
+  "handRun5": "Seri-5",
+  "handGroup4": "Grup-4",
+  "handRun6": "Seri-6",
+  "handSkyMeld": "Gök Per",
+  "kutUmayAnaName": "Umay Ana",
+  "kutUmayAnaDesc": "Her Kırmızı taş sayıldığında +4 Çarpan.",
+  "kutAyAtaName": "Ay Ata",
+  "kutAyAtaDesc": "Her Mavi taş sayıldığında +30 Puan.",
+  "kutGunAnaName": "Gün Ana",
+  "kutGunAnaDesc": "Her Sarı taş sayıldığında +3 Çarpan.",
+  "kutKaraDagName": "Kara Dağ",
+  "kutKaraDagDesc": "Her Siyah taş sayıldığında +20 Puan ve +1 Çarpan.",
+  "kutBozkurtName": "Bozkurt",
+  "kutBozkurtDesc": "Seri içeren ellerde +10 Çarpan.",
+  "kutAsenaName": "Asena",
+  "kutAsenaDesc": "Grup içeren ellerde ×2 Çarpan.",
+  "kutTulparName": "Tulpar",
+  "kutTulparDesc": "Kalan her Değiştir hakkı için +15 Puan.",
+  "kutKopuzName": "Kopuz",
+  "kutKopuzDesc": "3 veya daha az taşla oynanan ellerde +20 Çarpan.",
+  "kutKamDavuluName": "Kam Davulu",
+  "kutKamDavuluDesc": "Her elin ilk sayılan taşı iki kez tetiklenir.",
+  "kutErlikPazarligiName": "Erlik'in Pazarlığı",
+  "kutErlikPazarligiDesc": "×3 Çarpan, ama El hakkı 1 azalır.",
+  "kutUlgenIsigiName": "Ülgen'in Işığı",
+  "kutUlgenIsigiDesc": "Okey per içinde joker olarak kullanılırsa ×3 Çarpan.",
+  "kutKayraHanName": "Kayra Han",
+  "kutKayraHanDesc": "Her Destan kullanıldığında kalıcı olarak ×0.25 Çarpan kazanır.",
+  "kutZumruduankaName": "Zümrüdüanka",
+  "kutZumruduankaDesc": "Kaybedecekken hedefin %25'ine ulaştıysan bir kez kurtarır, sonra yok olur.",
+  "kutOguzKaganName": "Oğuz Kağan",
+  "kutOguzKaganDesc": "Seri-5 ve üstü ellerde +50 Puan, +5 Çarpan.",
+  "kutDedeKorkutName": "Dede Korkut",
+  "kutDedeKorkutDesc": "Tur sonunda kalan her El hakkı için +2 Akçe.",
+  "kutKervanName": "Kervan",
+  "kutKervanDesc": "Pazar'daki ilk yenileme ücretsiz.",
+  "kutYadaTasiName": "Yada Taşı",
+  "kutYadaTasiDesc": "Bu tur atılan her taş için +1 Çarpan birikir.",
+  "kutNazarBoncuguName": "Nazar Boncuğu",
+  "kutNazarBoncuguDesc": "Boss turlarında +15 Çarpan.",
+  "kutErgenekonName": "Ergenekon",
+  "kutErgenekonDesc": "İstakada tutulan Demir taşlar ayrıca +20 Puan verir.",
+  "kutGokBoruName": "Gök Börü",
+  "kutGokBoruDesc": "Her Grup-4 oynandığında kalıcı olarak +1 ×Çarpan kazanır.",
+  "popupChips": "+{value}",
+  "@popupChips": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "popupMult": "+{value} Çarpan",
+  "@popupMult": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "popupXMult": "×{value} Çarpan",
+  "@popupXMult": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "popupMoney": "+{value} Akçe",
+  "@popupMoney": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "popupAgain": "Tekrar!",
+  "popupBroken": "Kırıldı!",
+  "popupDebuffed": "Sayılmadı",
+  "popupBossZero": "Erlik: 0",
+  "popupBossHalf": "×{value} Skor",
+  "@popupBossHalf": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "handScoreTotal": "+{score}",
+  "@handScoreTotal": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "countedColorHint": "Sayılan renk",
+  "playAreaHint": "Taşları sürükleyerek diz, dokunarak seç"
+}

@@ -3,7 +3,7 @@
 Okey taşlarıyla oynanan, Türk mitolojisi temalı, deste kurmalı **roguelike bulmaca oyunu**.
 Flutter (+ ileride Flame), Android öncelikli, dikey ekran.
 
-> Durum: **Faz 1 — Çekirdek motor** tamamlandı (UI yok).
+> Durum: **Faz 2 — Oynanabilir tek tur** tamamlandı.
 
 ## Mimari
 
@@ -20,8 +20,14 @@ lib/
     balance.dart   TÜM denge sayıları (el tablosu, hedefler, ekonomi, Kut değerleri)
     kuts.dart      20 Kut (kut_behaviors.dart'taki parametrik davranışlardan)
     bosses.dart    8 Boss (RoundRules olarak)
-  ui/              (Faz 2)
-  services/        (Faz 5: kayıt, ses, haptik, lokalizasyon)
+  l10n/            ARB dosyaları (app_tr.arb varsayılan, app_en.arb) + üretilen sınıflar
+  services/        AudioService (yer tutucu), HapticsService
+  ui/
+    art/           Kodla çizilen yer tutucular (taş, renk sembolleri, tamgalar, Kut amblemi)
+    theme/         Palette (tüm renkler tek yerde), tema
+    table/         Oyun masası: TableController (Riverpod), TableState, widget'lar
+    widgets/       Ortak efektler (count-up, zıplama, titreme, uçan etiket, ekran sarsıntısı)
+    settings/      Oyun hızı (1×/2×/4×)
 bin/
   simulate.dart    Konsolda tek tur oynatma (etkileşimli veya --auto)
   balance_sim.dart Bot ile toplu kazanma oranı tablosu
@@ -45,7 +51,8 @@ Her adım bir `ScoreEvent` üretir (kaynak, miktar, ara toplamlar) — Faz 2'dek
 
 ```bash
 flutter pub get
-flutter test                                     # tüm unit testler
+flutter run                                      # Android cihaz/emülatör
+flutter test                                     # unit + widget testleri
 dart run bin/simulate.dart                       # etkileşimli tur (rastgele seed)
 dart run bin/simulate.dart --seed TENGRI42 --auto
 dart run bin/simulate.dart --kuts umay_ana,bozkurt --boss kara_kus
@@ -54,6 +61,20 @@ dart run bin/balance_sim.dart --rounds 40        # bot kazanma oranları
 
 Konsol komutları: `p 0 3 5` oyna, `d 1 2` değiştir, `v 0 3 5` önizleme, `m 7 0` taşı taşı,
 `s`/`c` sayıya/renge göre diz, `r 2` kapalı taşı aç, `q` çıkış.
+
+## Faz 2 — Oyun masası
+
+- Masa **Flutter widget'ları** ile yapıldı (Flame yok): istaka, sürükle-bırak ve düzen widget'larla daha
+  sağlam; animasyonlar `TweenAnimationBuilder`/`AnimationController` ile. Parçacıklar gerekirse Faz 4'te.
+- **Riverpod** `TableController` mevcut `Round`'u tutar; oynanan elde çekirdeğin ürettiği `ScoreEvent`
+  listesi adım adım oynatılır (taş zıplar + "+15", Kut kartı titrer + "+10 Çarpan", Puan/Çarpan
+  kutuları sayarak artar, en sonda "+845"). Büyük skorda (hedefin %50'si) ekran sarsılır + güçlü titreşim.
+- Oyun masasına dokunmak animasyonu atlar; HUD'daki **1×/2×/4×** oyun hızını değiştirir.
+- İstakada **dokun = seç** (en fazla 6), **sürükle = yeniden diz**; "Sayı" / "Renk" ile otomatik diz.
+- Faz 2 demo turu: Kat 1 Küçük Sınav (hedef 300), başlangıçta **Umay Ana + Bozkurt** Kut'ları
+  (`demoKutIds`, Faz 3'te koşu döngüsüyle değişecek).
+- Varsayılan dil **Türkçe**; dil seçimi Faz 5 ayarlarında. Web/debug derlemelerinde `?seed=KOD`
+  aynı turu yeniden üretir.
 
 ## Kural kararları (spec'te belirsiz olanlar)
 

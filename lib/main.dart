@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// Phase 1 only contains the pure Dart engine (lib/core) and data (lib/data).
-// The game table UI arrives in Phase 2; this is an empty placeholder app.
+import 'app.dart';
+import 'ui/table/table_controller.dart';
+
 void main() {
-  runApp(const TengriApp());
-}
-
-class TengriApp extends StatelessWidget {
-  const TengriApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(backgroundColor: Color(0xFF0E1428)),
-    );
-  }
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  // `?seed=CODE` (web/debug builds) starts a reproducible round.
+  final seed = Uri.base.queryParameters['seed'];
+  runApp(
+    ProviderScope(
+      overrides: [initialSeedCodeProvider.overrideWithValue(seed)],
+      child: const TengriApp(),
+    ),
+  );
 }
