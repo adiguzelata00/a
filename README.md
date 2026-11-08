@@ -3,7 +3,7 @@
 Okey taşlarıyla oynanan, Türk mitolojisi temalı, deste kurmalı **roguelike bulmaca oyunu**.
 Flutter (+ ileride Flame), Android öncelikli, dikey ekran.
 
-> Durum: **Faz 3 — Koşu döngüsü ve Pazar** tamamlandı.
+> Durum: **Faz 4 — İçerik ve his** tamamlandı.
 
 ## Mimari
 
@@ -35,7 +35,10 @@ lib/
     settings/      Oyun hızı (1×/2×/4×)
 bin/
   simulate.dart    Konsolda tek tur oynatma (etkileşimli veya --auto)
-  balance_sim.dart Bot ile toplu kazanma oranı tablosu
+  balance_sim.dart Bot ile tek tur kazanma oranı tablosu (kat × tur)
+  run_sim.dart     Tam koşu simülasyonu: kazanma oranı, ölüm haritası, Kut tablosu
+tool/
+  gen_placeholder_sounds.py  assets/audio/ yer tutucu seslerini sentezler
 test/              Unit testler (core + data)
 ```
 
@@ -61,7 +64,8 @@ flutter test                                     # unit + widget testleri
 dart run bin/simulate.dart                       # etkileşimli tur (rastgele seed)
 dart run bin/simulate.dart --seed TENGRI42 --auto
 dart run bin/simulate.dart --kuts umay_ana,bozkurt --boss kara_kus
-dart run bin/balance_sim.dart --rounds 40        # bot kazanma oranları
+dart run bin/balance_sim.dart --rounds 40        # tek tur kazanma oranları
+dart run bin/run_sim.dart --runs 300             # tam koşu dengesi
 ```
 
 Konsol komutları: `p 0 3 5` oyna, `d 1 2` değiştir, `v 0 3 5` önizleme, `m 7 0` taşı taşı,
@@ -102,6 +106,35 @@ Akış: **Ana Menü → Tur Seçimi → Masa → Tur Sonucu → Pazar → Tur Se
 - **Kut'lar** sürüklenerek sıralanır (tetiklenme sırası); büyüyen Kut'lar kartta rozet gösterir (×2, +3).
 - 8. Kat Boss'u yenilince koşu kazanılır; **Sonsuz Gök** ile 9. kattan devam edilebilir.
 - Arka plan dünyaya göre değişir: Yeraltı (Kat 1-2), Yeryüzü (3-5), Gökyüzü (6-8, yıldızlı).
+
+## Faz 4 — İçerik, denge ve his
+
+**İçerik:** 24 Kut (yeni: Od Ana, Yer-Su, Ötüken, Kök Tengri), 12 Boss (yeni: Yalmavuz, Abası,
+Şulmus, Kara Kam), 12 Destan, 8 Tılsım, 7 Kupon, 5 geliştirme, 4 Tamga. Tüm içeriğin TR/EN metni
+bir testle denetlenir.
+
+**Denge** (`bin/run_sim.dart`, 300 koşu, açgözlü bot + basit alışveriş):
+
+| | Değer |
+|---|---|
+| Hedefler (Küçük; Büyük ×1.5, Boss ×2) | 250 · 450 · 800 · 1400 · 2500 · 4300 · 7200 · 12000 |
+| Kat büyümesi | 1.67–1.8× |
+| Bot kazanma oranı | ~%10 |
+| 1. Kat'ta biten koşu | ~%11 |
+| Ortalama bitiş katı | ~5.6 |
+
+Bot bilinçli olarak sıradan bir oyuncudur (Tılsım planlamaz, Kut sırası düşünmez); gerçek oyuncunun
+daha yükseğe çıkması beklenir. Tepegöz ve Erlik Han 2. Kat'tan itibaren gelir (Kut'suz ilk kat için
+fazla sertlerdi). Kopuz +15, Oğuz Kağan +60/+8, Ergenekon +30 olarak ayarlandı.
+
+**His:**
+- Gerçek ses: `audioplayers` + sentezlenmiş yer tutucu WAV'lar (taş tıkı, ahşap vuruş, şaman davulu,
+  para, arpejler). Aynı adla gerçek kayıtlarla değiştirilebilir.
+- Puan zincirinde her adım bir öncekinden biraz daha tiz çalar (gerilim).
+- Ekran sarsıntısı skorun hedefe oranıyla güçlenir; büyük ellerde, Tur Sonucu'nda ve koşu
+  kazanılınca altın kıvılcım patlaması.
+- Boss turları tam ekran Boss tanıtımıyla açılır (dokununca geçer).
+- Kese seçenekleri kart gibi sırayla döner. Hepsi sistemin "hareketi azalt" ayarına uyar.
 
 ## Kural kararları (spec'te belirsiz olanlar)
 

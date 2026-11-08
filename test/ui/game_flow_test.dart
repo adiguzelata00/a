@@ -278,6 +278,40 @@ void main() {
       expect(h.run.kuts.map((k) => k.id), ['bozkurt', 'umay_ana']);
     });
 
+    testWidgets('scoring sounds rise in pitch along the chain', (tester) async {
+      final h = Harness(target: 1 << 30);
+      await h.pump(tester);
+      await h.startRound(tester);
+      for (var i = 0; i < 3; i++) {
+        await tester.tap(h.rackTile(i));
+      }
+      await tester.pump();
+      await h.tap(tester, 'play-button');
+      final chipPitches = [
+        for (var i = 0; i < h.audio.history.length; i++)
+          if (h.audio.history[i] == SoundId.chips) h.audio.pitches[i],
+      ];
+      expect(chipPitches, isNotEmpty);
+      expect(chipPitches, [...chipPitches]..sort());
+      expect(h.audio.history, contains(SoundId.tileDraw));
+    });
+
+    testWidgets('boss intro shows on a boss round and fades out', (
+      tester,
+    ) async {
+      final h = Harness(target: 1);
+      await h.pump(tester);
+      h.run.skipRound();
+      if (h.run.phase == RunPhase.packOpen) h.run.skipPack();
+      h.run.skipRound();
+      if (h.run.phase == RunPhase.packOpen) h.run.skipPack();
+      h.controller.startRound();
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(find.byKey(const Key('boss-intro')), findsOneWidget);
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('boss-intro')), findsNothing);
+    });
+
     testWidgets('boss round shows the boss restriction', (tester) async {
       final h = Harness(target: 1);
       await h.pump(tester);

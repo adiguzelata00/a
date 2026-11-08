@@ -6,6 +6,7 @@ import '../../l10n_ext.dart';
 import '../../theme/palette.dart';
 import '../../widgets/effects.dart';
 import '../../widgets/kut_row.dart';
+import '../../widgets/particles.dart';
 import '../../widgets/tile_view.dart';
 import '../event_labels.dart';
 import '../../game/game_controller.dart';
@@ -40,7 +41,11 @@ class PlayArea extends ConsumerWidget {
           Expanded(
             child: Center(
               child: playback != null
-                  ? _PlayedTiles(playback: playback, okey: state.round!.okey)
+                  ? _PlayedTiles(
+                      playback: playback,
+                      okey: state.round!.okey,
+                      target: state.round!.target,
+                    )
                   : Text(
                       context.l10n.playAreaHint,
                       textAlign: TextAlign.center,
@@ -273,9 +278,14 @@ class _NumberBox extends StatelessWidget {
 
 /// Played tiles during scoring: counted tiles bright, others dimmed.
 class _PlayedTiles extends StatelessWidget {
-  const _PlayedTiles({required this.playback, required this.okey});
+  const _PlayedTiles({
+    required this.playback,
+    required this.okey,
+    required this.target,
+  });
   final Playback playback;
   final OkeyInfo okey;
+  final int target;
 
   @override
   Widget build(BuildContext context) {
@@ -289,7 +299,7 @@ class _PlayedTiles extends StatelessWidget {
         SizedBox(
           height: 48,
           child: playback.finished
-              ? _HandTotal(score: playback.handScore)
+              ? _HandTotal(score: playback.handScore, target: target)
               : null,
         ),
         const SizedBox(height: 10),
@@ -328,11 +338,25 @@ class _PlayedTiles extends StatelessWidget {
 }
 
 class _HandTotal extends StatelessWidget {
-  const _HandTotal({required this.score});
+  const _HandTotal({required this.score, required this.target});
   final int score;
+  final int target;
 
   @override
   Widget build(BuildContext context) {
+    // More sparks for hands that cover more of the target.
+    final ratio = target <= 0 ? 0.0 : score / target;
+    final count = (8 + 50 * ratio.clamp(0.0, 1.0)).round();
+    return ParticleBurst(
+      trigger: score,
+      burstOnStart: score > 0,
+      count: count,
+      spread: 90 + 80 * ratio.clamp(0.0, 1.0),
+      child: _total(context),
+    );
+  }
+
+  Widget _total(BuildContext context) {
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: 0.4, end: 1),
       duration: const Duration(milliseconds: 380),

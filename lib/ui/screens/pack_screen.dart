@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tengri_taslari/core/core.dart';
@@ -59,11 +61,15 @@ class PackScreen extends ConsumerWidget {
                   padding: const EdgeInsets.all(16),
                   children: [
                     for (var i = 0; i < pack.choices.length; i++)
-                      _ChoiceRow(
-                        key: Key('pack-choice-$i'),
-                        choice: pack.choices[i],
-                        enabled: run.canChoose(i),
-                        onChoose: () => controller.choosePackOption(i),
+                      _FlipIn(
+                        key: ValueKey('flip-${identityHashCode(pack)}-$i'),
+                        index: i,
+                        child: _ChoiceRow(
+                          key: Key('pack-choice-$i'),
+                          choice: pack.choices[i],
+                          enabled: run.canChoose(i),
+                          onChoose: () => controller.choosePackOption(i),
+                        ),
                       ),
                   ],
                 ),
@@ -174,6 +180,36 @@ class _ChoiceRow extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Pack options turn over one after another like cards.
+class _FlipIn extends StatelessWidget {
+  const _FlipIn({super.key, required this.index, required this.child});
+  final int index;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: Duration(milliseconds: 380 + 140 * index),
+      curve: Curves.easeOutBack,
+      builder: (context, t, c) {
+        final v = t.clamp(0.0, 1.0);
+        return Opacity(
+          opacity: v,
+          child: Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.002)
+              ..rotateY((1 - v) * math.pi / 2),
+            child: c,
+          ),
+        );
+      },
+      child: child,
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:tengri_taslari/core/core.dart';
 import '../game/game_controller.dart';
 import '../l10n_ext.dart';
 import '../theme/palette.dart';
+import '../widgets/particles.dart';
 import '../widgets/world_background.dart';
 
 /// "Koşu Sonu": won or lost, with run statistics.
@@ -59,13 +60,19 @@ class RunEndScreen extends ConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      won ? l10n.runWonTitle : l10n.runLostTitle,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.w900,
-                        color: won ? Palette.gold : Palette.red,
+                    ParticleBurst(
+                      trigger: won ? run.seedCode : null,
+                      burstOnStart: won,
+                      count: 70,
+                      spread: 220,
+                      child: Text(
+                        won ? l10n.runWonTitle : l10n.runLostTitle,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w900,
+                          color: won ? Palette.gold : Palette.red,
+                        ),
                       ),
                     ),
                     if (!won && run.lastSummary != null) ...[

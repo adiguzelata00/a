@@ -73,6 +73,7 @@ class GameState {
     this.selectedIds = const {},
     this.playback,
     this.shakeCount = 0,
+    this.shakeStrength = 7,
     this.error,
     this.errorCount = 0,
   });
@@ -87,6 +88,9 @@ class GameState {
 
   /// Incremented for every big hit; the table shakes when it changes.
   final int shakeCount;
+
+  /// Shake amplitude in logical pixels for the latest big hit.
+  final double shakeStrength;
 
   /// Last rejected action (shown as a message), with a counter so the same
   /// error twice is shown twice.
@@ -157,6 +161,7 @@ class GameState {
     Playback? playback,
     bool clearPlayback = false,
     int? shakeCount,
+    double? shakeStrength,
     RunError? error,
   }) => GameState(
     run: run ?? this.run,
@@ -166,6 +171,7 @@ class GameState {
     selectedIds: selectedIds ?? this.selectedIds,
     playback: clearPlayback ? null : (playback ?? this.playback),
     shakeCount: shakeCount ?? this.shakeCount,
+    shakeStrength: shakeStrength ?? this.shakeStrength,
     error: error ?? this.error,
     errorCount: error != null ? errorCount + 1 : errorCount,
   );

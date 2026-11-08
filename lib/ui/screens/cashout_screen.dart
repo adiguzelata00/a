@@ -7,6 +7,7 @@ import '../l10n_ext.dart';
 import '../theme/app_theme.dart';
 import '../theme/palette.dart';
 import '../widgets/cards.dart';
+import '../widgets/particles.dart';
 import '../widgets/world_background.dart';
 import 'run_header.dart';
 
@@ -51,13 +52,18 @@ class CashoutScreen extends ConsumerWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          l10n.cashoutTitle,
-                          key: const Key('cashout-title'),
-                          style: const TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.w900,
-                            color: Palette.gold,
+                        ParticleBurst(
+                          trigger: identityHashCode(summary),
+                          burstOnStart: true,
+                          count: 36,
+                          child: Text(
+                            l10n.cashoutTitle,
+                            key: const Key('cashout-title'),
+                            style: const TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.w900,
+                              color: Palette.gold,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 4),

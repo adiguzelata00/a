@@ -153,9 +153,17 @@ class FloatingLabel extends StatelessWidget {
 
 /// Shakes its child whenever [trigger] changes.
 class ScreenShake extends StatefulWidget {
-  const ScreenShake({super.key, required this.trigger, required this.child});
+  const ScreenShake({
+    super.key,
+    required this.trigger,
+    required this.child,
+    this.strength = 7,
+  });
 
   final int trigger;
+
+  /// Amplitude in logical pixels.
+  final double strength;
   final Widget child;
 
   @override
@@ -187,7 +195,7 @@ class _ScreenShakeState extends State<ScreenShake>
       animation: _c,
       builder: (context, child) {
         final t = _c.value;
-        final amp = 7 * (1 - t);
+        final amp = widget.strength * (1 - t);
         return Transform.translate(
           offset: _c.isAnimating
               ? Offset(

@@ -201,12 +201,18 @@ class GameController extends Notifier<GameState> {
     state = state.copyWith(selectedIds: const <int>{}, playback: playback);
 
     await _wait(PlaybackTiming.intro);
+    var streak = 0;
     for (var i = 0; i < playback.events.length; i++) {
       if (!ref.mounted) return;
       final event = playback.events[i];
       playback = playback.copyWith(step: i);
       state = state.copyWith(playback: playback);
-      _soundFor(event);
+      if (event.kind == ScoreEventKind.chips ||
+          event.kind == ScoreEventKind.mult ||
+          event.kind == ScoreEventKind.xMult) {
+        streak++;
+      }
+      _soundFor(event, streak);
       await _wait(_durationFor(event));
     }
     if (!ref.mounted) return;
@@ -215,10 +221,13 @@ class GameController extends Notifier<GameState> {
       step: playback.events.length - 1,
       finished: true,
     );
-    final big = playback.handScore >= round.target * bigHitShare;
+    final ratio = playback.handScore / round.target;
+    final big = ratio >= bigHitShare;
     state = state.copyWith(
       playback: playback,
       shakeCount: big ? state.shakeCount + 1 : null,
+      // Bigger hands shake harder (capped).
+      shakeStrength: big ? 5 + 6 * ratio.clamp(0.0, 1.5) : null,
     );
     _audio.play(SoundId.handScored);
     if (big) _haptics.trigger(HapticKind.bigScore);
@@ -230,6 +239,8 @@ class GameController extends Notifier<GameState> {
         round.phase == RoundPhase.won ? SoundId.roundWon : SoundId.roundLost,
       );
       _run.finishRound();
+    } else {
+      _audio.play(SoundId.tileDraw);
     }
     state = state.copyWith(clearPlayback: true);
   }
@@ -252,15 +263,20 @@ class GameController extends Notifier<GameState> {
     _ => PlaybackTiming.tileEvent,
   };
 
-  void _soundFor(ScoreEvent e) {
+  /// Pitch rises with each consecutive scoring step ([streak]) so a long
+  /// chain sounds like it is building up.
+  static double pitchFor(int streak) => 1.0 + 0.05 * (streak - 1).clamp(0, 12);
+
+  void _soundFor(ScoreEvent e, int streak) {
     if (e.source == ScoreSourceKind.kut) _audio.play(SoundId.kutTrigger);
+    final pitch = pitchFor(streak);
     switch (e.kind) {
       case ScoreEventKind.chips:
-        _audio.play(SoundId.chips);
+        _audio.play(SoundId.chips, pitch: pitch);
       case ScoreEventKind.mult:
-        _audio.play(SoundId.mult);
+        _audio.play(SoundId.mult, pitch: pitch);
       case ScoreEventKind.xMult:
-        _audio.play(SoundId.xMult);
+        _audio.play(SoundId.xMult, pitch: pitch);
       case ScoreEventKind.money:
         _audio.play(SoundId.money);
       default:
