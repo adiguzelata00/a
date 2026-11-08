@@ -30,8 +30,28 @@ Future<void> shareDailyResult(
     result,
     seed,
   );
-  await Clipboard.setData(ClipboardData(text: text));
-  messenger.showSnackBar(SnackBar(content: Text(l10n.dailyCopied)));
+  try {
+    await Clipboard.setData(ClipboardData(text: text));
+    messenger.showSnackBar(SnackBar(content: Text(l10n.dailyCopied)));
+  } catch (_) {
+    // Some environments refuse clipboard access: show the text instead so
+    // it can be selected and copied by hand.
+    if (!context.mounted) return;
+    await showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Palette.night,
+        title: Text(l10n.dailyShare),
+        content: SelectableText(text),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(l10n.back),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 /// "Günlük Meydan Okuma": today's starting Kut and blessing, one attempt,
