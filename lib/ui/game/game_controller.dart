@@ -3,9 +3,13 @@ import 'package:tengri_taslari/core/core.dart';
 import 'package:tengri_taslari/data/run_setup.dart' as setup;
 import 'package:tengri_taslari/services/audio_service.dart';
 import 'package:tengri_taslari/services/haptics_service.dart';
+import 'package:tengri_taslari/services/music_service.dart';
+import 'package:tengri_taslari/services/save_service.dart';
+import 'package:tengri_taslari/services/settings_service.dart';
 
 import '../settings/settings_providers.dart';
 import 'game_state.dart';
+import 'profile_controller.dart';
 
 /// A hand scoring at least this share of the target counts as a "big hit"
 /// (screen shake + strong haptic).
@@ -24,12 +28,40 @@ abstract final class PlaybackTiming {
 class GameController extends Notifier<GameState> {
   bool _skipRequested = false;
 
+  /// Run whose end (won) was already recorded in the profile.
+  RunState? _recordedWin;
+
   @override
   GameState build() {
+    listenSelf((previous, next) {
+      if (previous == null) {
+        // First state: save after the widget tree finished building.
+        Future.microtask(() {
+          if (ref.mounted) _persist(state);
+        });
+      } else {
+        _persist(next);
+      }
+    });
     final seed = ref.read(initialSeedCodeProvider);
     // A seed passed in (tests, `?seed=`) starts a run right away.
     if (seed != null) return _newRunState(seed);
-    return const GameState();
+    // Otherwise show the menu; "Devam Et" resumes a saved run if any.
+    final saved = ref.read(runLoaderProvider)(ref.read(saveServiceProvider));
+    return GameState(run: saved);
+  }
+
+  /// Autosave + profile bookkeeping after every change.
+  void _persist(GameState s) {
+    final run = s.run;
+    if (run == null) return;
+    ref.read(saveServiceProvider).saveRun(run);
+    final profile = ref.read(profileProvider.notifier);
+    profile.observe(run);
+    if (run.phase == RunPhase.won && !identical(_recordedWin, run)) {
+      _recordedWin = run;
+      profile.runWon();
+    }
   }
 
   static String randomSeedCode() =>
@@ -60,13 +92,24 @@ class GameController extends Notifier<GameState> {
 
   void newRun({String? seedCode}) {
     _skipRequested = false;
+    ref.read(profileProvider.notifier).runStarted();
+    ref.read(musicServiceProvider).start();
     state = _newRunState(seedCode ?? randomSeedCode());
   }
 
   void toMenu() => state = state.copyWith(showMenu: true);
 
+  /// Back to the running (or saved) run.
   void resume() {
-    if (state.run != null) state = state.copyWith(showMenu: false);
+    if (state.run == null) return;
+    ref.read(musicServiceProvider).start();
+    state = state.copyWith(showMenu: false);
+  }
+
+  /// A finished run can not be continued.
+  bool get canResume {
+    final p = state.run?.phase;
+    return p != null && p != RunPhase.lost;
   }
 
   // -------------------------------------------------------- round select
@@ -250,7 +293,7 @@ class GameController extends Notifier<GameState> {
 
   Future<void> _wait(Duration base) async {
     if (_skipRequested) return;
-    final speed = ref.read(gameSpeedProvider);
+    final speed = ref.read(settingsProvider).gameSpeed;
     await ref.read(delayProvider)(base ~/ speed);
   }
 
@@ -328,6 +371,15 @@ final initialSeedCodeProvider = Provider<String?>((ref) => null);
 /// Creates a run for a seed code. Overridden in tests (e.g. easy targets).
 final runFactoryProvider = Provider<RunState Function(String seed)>(
   (ref) => setup.newRun,
+);
+
+/// Loads the saved run (null = none). Overridable in tests.
+final runLoaderProvider = Provider<RunState? Function(SaveService save)>(
+  (ref) =>
+      (save) => save.loadRun(
+        rules: setup.defaultRunRules,
+        catalog: setup.defaultCatalog,
+      ),
 );
 
 final gameControllerProvider = NotifierProvider<GameController, GameState>(

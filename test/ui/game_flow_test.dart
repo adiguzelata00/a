@@ -8,6 +8,8 @@ import 'package:tengri_taslari/data/kuts.dart';
 import 'package:tengri_taslari/data/run_setup.dart';
 import 'package:tengri_taslari/services/audio_service.dart';
 import 'package:tengri_taslari/services/haptics_service.dart';
+import 'package:tengri_taslari/services/music_service.dart';
+import 'package:tengri_taslari/services/storage.dart';
 import 'package:tengri_taslari/ui/game/game_controller.dart';
 import 'package:tengri_taslari/ui/game/game_state.dart';
 import 'package:tengri_taslari/ui/settings/settings_providers.dart';
@@ -15,7 +17,11 @@ import 'package:tengri_taslari/ui/settings/settings_providers.dart';
 class FakeHaptics implements HapticsService {
   final List<HapticKind> calls = [];
   @override
-  void trigger(HapticKind kind) => calls.add(kind);
+  bool enabled = true;
+  @override
+  void trigger(HapticKind kind) {
+    if (enabled) calls.add(kind);
+  }
 }
 
 class Harness {
@@ -27,8 +33,11 @@ class Harness {
     int? target,
     int? money,
     bool realDelays = false,
+    MemoryStore? store,
   }) : audio = PlaceholderAudioService(),
-       haptics = FakeHaptics() {
+       haptics = FakeHaptics(),
+       music = SilentMusicService(),
+       store = store ?? MemoryStore() {
     final rules = defaultRunRules.copyWith(
       targetFor: target == null ? null : (f, r) => target,
       startingMoney: money,
@@ -44,12 +53,16 @@ class Harness {
         ),
         audioServiceProvider.overrideWithValue(audio),
         hapticsServiceProvider.overrideWithValue(haptics),
+        musicServiceProvider.overrideWithValue(music),
+        storageProvider.overrideWithValue(this.store),
       ],
     );
   }
 
   final PlaceholderAudioService audio;
   final FakeHaptics haptics;
+  final SilentMusicService music;
+  final MemoryStore store;
   late final ProviderContainer container;
 
   GameController get controller =>

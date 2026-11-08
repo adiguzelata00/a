@@ -4,6 +4,10 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'haptics_service.dart';
+import 'music_service.dart';
+import 'settings_service.dart';
+
 /// Every sound the game can play. The asset is
 /// `assets/audio/<enum name in snake_case>.wav` (placeholders synthesized by
 /// `tool/gen_placeholder_sounds.py`; replace with real recordings later).
@@ -117,4 +121,24 @@ final audioServiceProvider = Provider<AudioService>((ref) {
   final service = AssetAudioService();
   ref.onDispose(service.dispose);
   return service;
+});
+
+/// Keeps the sound / music / vibration services in sync with the settings.
+/// Watched once by the app root.
+final audioSettingsBinding = Provider<void>((ref) {
+  ref.listen(
+    settingsProvider.select((s) => s.sound),
+    (_, on) => ref.read(audioServiceProvider).enabled = on,
+    fireImmediately: true,
+  );
+  ref.listen(
+    settingsProvider.select((s) => s.music),
+    (_, on) => ref.read(musicServiceProvider).enabled = on,
+    fireImmediately: true,
+  );
+  ref.listen(
+    settingsProvider.select((s) => s.vibration),
+    (_, on) => ref.read(hapticsServiceProvider).enabled = on,
+    fireImmediately: true,
+  );
 });

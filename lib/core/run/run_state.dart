@@ -105,6 +105,43 @@ class RunState {
     _startFloor();
   }
 
+  /// Restores a run saved with [toJson] (between rounds).
+  ///
+  /// RULE DECISION: runs are saved between rounds only. A run closed in the
+  /// middle of a round resumes at the start of that round (same seed, so the
+  /// same tiles are drawn).
+  factory RunState.fromJson(
+    Map<String, dynamic> json, {
+    required RunRules rules,
+    required RunCatalog catalog,
+  }) {
+    if (json['v'] != saveVersion) {
+      throw FormatException('Unsupported save version ${json['v']}');
+    }
+    final r = RunState._restored(
+      seedCode: json['seed'] as String,
+      rules: rules,
+      catalog: catalog,
+      deck: RunDeck.fromJson(_map(json['deck'])),
+      levels: HandLevels.fromJson(rules.handStats, _map(json['levels'])),
+      money: json['money'] as int,
+    );
+    r._readJson(json);
+    return r;
+  }
+
+  RunState._restored({
+    required this.seedCode,
+    required this.rules,
+    required this.catalog,
+    required this.deck,
+    required this.levels,
+    required this.money,
+  }) : _rng = SeededRng.fromCode(seedCode);
+
+  /// Save format version.
+  static const int saveVersion = 1;
+
   final String seedCode;
   final RunRules rules;
   final RunCatalog catalog;
@@ -830,4 +867,242 @@ class RunState {
     ];
     return base.copyWith(seal: rng.pick(seals));
   }
+
+  // --------------------------------------------------------------- save
+
+  /// Serializes the run. Only valid between rounds (see [RunState.fromJson]).
+  Map<String, Object?> toJson() {
+    if (phase == RunPhase.round) {
+      throw StateError('Runs are saved between rounds');
+    }
+    return {
+      'v': saveVersion,
+      'seed': seedCode,
+      'deck': deck.toJson(),
+      'levels': levels.toJson(),
+      'money': money,
+      'kuts': [for (final k in _kuts) k.toJson()],
+      'items': [for (final c in consumables) _itemToJson(c)],
+      'vouchers': [for (final v in vouchers) v.name],
+      'stats': _statsToJson(),
+      'floor': floor,
+      'roundInFloor': roundInFloor,
+      'endless': endless,
+      'phase': phase.name,
+      'boss': boss.id,
+      'tags': [for (final t in floorTags) t.name],
+      'slots': [for (final s in slots) s.name],
+      'voucher': floorVoucher?.id,
+      'summary': lastSummary == null ? null : _summaryToJson(lastSummary!),
+      'shop': shop == null ? null : _shopToJson(shop!),
+      'pack': pack == null ? null : _packToJson(pack!),
+      'packReturn': _packReturn.name,
+      'usedBosses': _usedBosses.toList(),
+      'counter': _counter,
+    };
+  }
+
+  void _readJson(Map<String, dynamic> j) {
+    _kuts = [
+      for (final k in j['kuts'] as List)
+        KutInstance(catalog.kut(_map(k)['id'] as String), {
+          for (final e in _map(_map(k)['state']).entries) e.key: e.value as num,
+        }),
+    ];
+    consumables
+      ..clear()
+      ..addAll([for (final c in j['items'] as List) _itemFromJson(_map(c))]);
+    vouchers
+      ..clear()
+      ..addAll([
+        for (final v in j['vouchers'] as List)
+          VoucherEffect.values.byName(v as String),
+      ]);
+    _statsFromJson(_map(j['stats']));
+    floor = j['floor'] as int;
+    roundInFloor = j['roundInFloor'] as int;
+    endless = j['endless'] as bool;
+    phase = RunPhase.values.byName(j['phase'] as String);
+    boss = catalog.bosses.firstWhere((b) => b.id == j['boss']);
+    floorTags = [
+      for (final t in j['tags'] as List) SkipTag.values.byName(t as String),
+    ];
+    slots = [
+      for (final s in j['slots'] as List)
+        RoundSlotStatus.values.byName(s as String),
+    ];
+    final v = j['voucher'] as String?;
+    floorVoucher = v == null
+        ? null
+        : catalog.vouchers.firstWhere((x) => x.id == v);
+    final summary = j['summary'];
+    lastSummary = summary == null ? null : _summaryFromJson(_map(summary));
+    final sh = j['shop'];
+    shop = sh == null ? null : _shopFromJson(_map(sh));
+    final pk = j['pack'];
+    pack = pk == null ? null : _packFromJson(_map(pk));
+    _packReturn = RunPhase.values.byName(j['packReturn'] as String);
+    _usedBosses
+      ..clear()
+      ..addAll([for (final b in j['usedBosses'] as List) b as String]);
+    _counter = j['counter'] as int;
+  }
+
+  static Map<String, dynamic> _map(Object? o) =>
+      Map<String, dynamic>.from(o! as Map);
+
+  Map<String, Object?> _itemToJson(ConsumableInstance c) => {
+    'id': c.id,
+    if (c.color != null) 'color': c.color!.name,
+  };
+
+  ConsumableInstance _itemFromJson(Map<String, dynamic> j) =>
+      ConsumableInstance(
+        catalog.consumables.firstWhere((c) => c.id == j['id']),
+        color: j['color'] == null
+            ? null
+            : TileColor.values.byName(j['color'] as String),
+      );
+
+  Map<String, Object?> _statsToJson() => {
+    'hands': stats.handsPlayed,
+    'discards': stats.discardsUsed,
+    'best': stats.bestHand,
+    'bestType': stats.bestHandType?.name,
+    'total': stats.totalScore,
+    'rounds': stats.roundsWon,
+    'money': stats.moneyEarned,
+    'handCounts': {
+      for (final e in stats.handCounts.entries) e.key.name: e.value,
+    },
+    'kutTriggers': stats.kutTriggers,
+  };
+
+  void _statsFromJson(Map<String, dynamic> j) {
+    stats
+      ..handsPlayed = j['hands'] as int
+      ..discardsUsed = j['discards'] as int
+      ..bestHand = j['best'] as int
+      ..bestHandType = j['bestType'] == null
+          ? null
+          : HandType.values.byName(j['bestType'] as String)
+      ..totalScore = j['total'] as int
+      ..roundsWon = j['rounds'] as int
+      ..moneyEarned = j['money'] as int;
+    stats.handCounts
+      ..clear()
+      ..addAll({
+        for (final e in _map(j['handCounts']).entries)
+          HandType.values.byName(e.key): e.value as int,
+      });
+    stats.kutTriggers
+      ..clear()
+      ..addAll({
+        for (final e in _map(j['kutTriggers']).entries) e.key: e.value as int,
+      });
+  }
+
+  Map<String, Object?> _summaryToJson(RoundSummary s) => {
+    'floor': s.floor,
+    'round': s.roundInFloor,
+    'score': s.score,
+    'target': s.target,
+    'savedBy': s.savedBy,
+    'lines': [
+      for (final l in s.lines)
+        {'kind': l.kind.name, 'amount': l.amount, 'kut': l.kutId},
+    ],
+  };
+
+  RoundSummary _summaryFromJson(Map<String, dynamic> j) => RoundSummary(
+    floor: j['floor'] as int,
+    roundInFloor: j['round'] as int,
+    score: j['score'] as int,
+    target: j['target'] as int,
+    savedBy: j['savedBy'] as String?,
+    lines: [
+      for (final l in j['lines'] as List)
+        CashoutLine(
+          CashoutKind.values.byName(_map(l)['kind'] as String),
+          _map(l)['amount'] as int,
+          kutId: _map(l)['kut'] as String?,
+        ),
+    ],
+  );
+
+  Map<String, Object?>? _offerToJson(ShopOffer? o) => switch (o) {
+    null => null,
+    KutOffer(:final kut) => {'t': 'kut', 'id': kut.id, 'price': o.price},
+    ConsumableOffer(:final item) => {
+      't': 'item',
+      ..._itemToJson(item),
+      'price': o.price,
+    },
+    PackOffer(:final kind) => {
+      't': 'pack',
+      'kind': kind.name,
+      'price': o.price,
+    },
+    VoucherOffer(:final voucher) => {
+      't': 'voucher',
+      'id': voucher.id,
+      'price': o.price,
+    },
+  };
+
+  ShopOffer? _offerFromJson(Object? raw) {
+    if (raw == null) return null;
+    final j = _map(raw);
+    final price = j['price'] as int;
+    return switch (j['t']) {
+      'kut' => KutOffer(catalog.kut(j['id'] as String), price),
+      'item' => ConsumableOffer(_itemFromJson(j), price),
+      'pack' => PackOffer(PackKind.values.byName(j['kind'] as String), price),
+      _ => VoucherOffer(
+        catalog.vouchers.firstWhere((v) => v.id == j['id']),
+        price,
+      ),
+    };
+  }
+
+  Map<String, Object?> _shopToJson(Shop s) => {
+    'items': [for (final o in s.items) _offerToJson(o)],
+    'packs': [for (final o in s.packs) _offerToJson(o)],
+    'rerolls': s.rerolls,
+    'freeReroll': s.freeRerollUsed,
+  };
+
+  Shop _shopFromJson(Map<String, dynamic> j) =>
+      Shop(
+          items: [for (final o in j['items'] as List) _offerFromJson(o)],
+          packs: [
+            for (final o in j['packs'] as List) _offerFromJson(o) as PackOffer?,
+          ],
+        )
+        ..rerolls = j['rerolls'] as int
+        ..freeRerollUsed = j['freeReroll'] as bool;
+
+  Map<String, Object?> _packToJson(PackOpening p) => {
+    'kind': p.kind.name,
+    'choices': [
+      for (final c in p.choices)
+        switch (c) {
+          KutChoice(:final kut) => {'t': 'kut', 'id': kut.id},
+          ConsumableChoice(:final item) => {'t': 'item', ..._itemToJson(item)},
+          TileChoice(:final tile) => {'t': 'tile', 'tile': tile.toJson()},
+        },
+    ],
+  };
+
+  PackOpening _packFromJson(Map<String, dynamic> j) => PackOpening(
+    kind: PackKind.values.byName(j['kind'] as String),
+    choices: [
+      for (final raw in j['choices'] as List)
+        switch (_map(raw)['t']) {
+          'kut' => KutChoice(catalog.kut(_map(raw)['id'] as String)),
+          'item' => ConsumableChoice(_itemFromJson(_map(raw))),
+          _ => TileChoice(Tile.fromJson(_map(_map(raw)['tile']))),
+        },
+    ],
+  );
 }

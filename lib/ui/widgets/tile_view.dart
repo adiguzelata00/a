@@ -38,9 +38,24 @@ class TileView extends StatelessWidget {
             faceDown: faceDown,
             highlight: highlight,
             dimmed: dimmed,
+            colorBlind: TileStyle.colorBlindOf(context),
           ),
         ),
       ),
     );
   }
+}
+
+/// Provides tile drawing options (color-blind mode) to every [TileView].
+class TileStyle extends InheritedWidget {
+  const TileStyle({super.key, required this.colorBlind, required super.child});
+
+  final bool colorBlind;
+
+  static bool colorBlindOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<TileStyle>()?.colorBlind ??
+      false;
+
+  @override
+  bool updateShouldNotify(TileStyle old) => old.colorBlind != colorBlind;
 }

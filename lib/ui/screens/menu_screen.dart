@@ -3,10 +3,14 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:tengri_taslari/core/core.dart';
+
 import '../game/game_controller.dart';
 import '../l10n_ext.dart';
 import '../theme/app_theme.dart';
 import '../theme/palette.dart';
+import 'collection_screen.dart';
+import 'settings_screen.dart';
 
 /// Main menu: slowly turning starry sky and a Göktürk-style motif ring.
 class MenuScreen extends ConsumerWidget {
@@ -15,10 +19,42 @@ class MenuScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final hasRun = ref.watch(
-      gameControllerProvider.select((s) => s.run != null),
+    // A run that is not over can be continued (also after an app restart).
+    final saved = ref.watch(
+      gameControllerProvider.select((s) {
+        final r = s.run;
+        if (r == null || r.phase == RunPhase.lost) return null;
+        return (floor: r.floor, money: r.money);
+      }),
     );
+    final hasRun = saved != null;
     final controller = ref.read(gameControllerProvider.notifier);
+
+    Future<void> startNew() async {
+      if (hasRun) {
+        final ok = await showDialog<bool>(
+          context: context,
+          builder: (context) => AlertDialog(
+            backgroundColor: Palette.night,
+            title: Text(l10n.newRunConfirmTitle),
+            content: Text(l10n.newRunConfirmBody),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: Text(l10n.cancel),
+              ),
+              FilledButton(
+                key: const Key('confirm-new-run'),
+                onPressed: () => Navigator.pop(context, true),
+                child: Text(l10n.confirmNewRun),
+              ),
+            ],
+          ),
+        );
+        if (ok != true) return;
+      }
+      controller.newRun();
+    }
 
     return Scaffold(
       body: Stack(
@@ -59,23 +95,38 @@ class MenuScreen extends ConsumerWidget {
                         primary: true,
                         onPressed: controller.resume,
                       ),
+                      const SizedBox(height: 4),
+                      Text(
+                        l10n.savedRunInfo(saved.floor, saved.money),
+                        style: const TextStyle(color: Palette.textMuted),
+                      ),
                       const SizedBox(height: 12),
                     ],
                     _MenuButton(
                       key: const Key('menu-new-run'),
                       label: l10n.menuNewRun,
                       primary: !hasRun,
-                      onPressed: () => controller.newRun(),
+                      onPressed: startNew,
                     ),
                     const SizedBox(height: 12),
                     _MenuButton(
-                      label: '${l10n.menuCollection} · ${l10n.comingSoon}',
-                      onPressed: null,
+                      key: const Key('menu-collection'),
+                      label: l10n.menuCollection,
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (_) => const CollectionScreen(),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 12),
                     _MenuButton(
-                      label: '${l10n.menuSettings} · ${l10n.comingSoon}',
-                      onPressed: null,
+                      key: const Key('menu-settings'),
+                      label: l10n.menuSettings,
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (_) => const SettingsScreen(),
+                        ),
+                      ),
                     ),
                   ],
                 ),

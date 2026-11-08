@@ -14,6 +14,7 @@ class TileLook {
     this.faceDown = false,
     this.highlight = false,
     this.dimmed = false,
+    this.colorBlind = false,
   });
 
   final Tile tile;
@@ -25,6 +26,9 @@ class TileLook {
   final bool highlight;
   final bool dimmed;
 
+  /// High-contrast colors and larger color symbols.
+  final bool colorBlind;
+
   @override
   bool operator ==(Object other) =>
       other is TileLook &&
@@ -33,11 +37,12 @@ class TileLook {
       other.isWild == isWild &&
       other.faceDown == faceDown &&
       other.highlight == highlight &&
-      other.dimmed == dimmed;
+      other.dimmed == dimmed &&
+      other.colorBlind == colorBlind;
 
   @override
   int get hashCode =>
-      Object.hash(tile, face, isWild, faceDown, highlight, dimmed);
+      Object.hash(tile, face, isWild, faceDown, highlight, dimmed, colorBlind);
 }
 
 /// Bakelite-style okey tile placeholder drawn with Canvas.
@@ -131,7 +136,7 @@ class TilePainter extends CustomPainter {
 
   void _paintFace(Canvas canvas, Rect body, TileFace face) {
     final w = body.width;
-    final color = Palette.tileColor(face.color);
+    final color = Palette.tileColorFor(face.color, colorBlind: look.colorBlind);
     final onDark = look.tile.enhancement == Enhancement.skyStone;
     if (onDark) {
       canvas.drawCircle(
@@ -158,7 +163,17 @@ class TilePainter extends CustomPainter {
       Offset(body.center.dx - tp.width / 2, body.height * 0.42 - tp.height / 2),
     );
 
-    final symbolSize = w * 0.3;
+    final symbolSize = w * (look.colorBlind ? 0.4 : 0.3);
+    if (look.colorBlind && look.tile.seal == Seal.none) {
+      // Second symbol in the corner, so the color reads at a glance.
+      final s = w * 0.22;
+      drawColorSymbol(
+        canvas,
+        face.color,
+        Rect.fromLTWH(w * 0.08, body.height * 0.05, s, s),
+        Paint()..color = color,
+      );
+    }
     drawColorSymbol(
       canvas,
       face.color,
@@ -183,7 +198,10 @@ class TilePainter extends CustomPainter {
       Palette.goldDark,
     );
     // Small okey face it represents.
-    final color = Palette.tileColor(okeyFace.color);
+    final color = Palette.tileColorFor(
+      okeyFace.color,
+      colorBlind: look.colorBlind,
+    );
     final tp = TextPainter(
       text: TextSpan(
         text: '${okeyFace.number}',

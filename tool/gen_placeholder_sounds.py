@@ -109,3 +109,51 @@ write('hand_scored', seq([392, 523, 659, 784], 0.045, 0.18, 0.06), 0.5)
 write('round_won', seq([523, 659, 784, 1046, 1318], 0.09, 0.4, 0.15), 0.55)
 # Round lost: descending minor.
 write('round_lost', seq([392, 311, 262, 196], 0.14, 0.45, 0.2), 0.5)
+
+
+# ---------------------------------------------------------------- music
+# 16 s seamless loop: drone on D with slowly sweeping overtones (throat-
+# singing like) and plucked kopuz notes (Karplus-Strong) on a D minor
+# pentatonic scale. Lower sample rate keeps the file small.
+def music_loop():
+    sr = 11025
+    seconds = 16
+    n = sr * seconds
+    base = 73.5  # 73.5 Hz × 16 s = whole cycles, so the loop is seamless
+    out = [0.0] * n
+    for i in range(n):
+        t = i / sr
+        v = 0.0
+        for h, w in ((1, 1.0), (2, 0.6), (3, 0.35), (4, 0.2)):
+            v += w * math.sin(2 * math.pi * base * h * t)
+        # Overtone "melody": harmonics 6-12 rise and fall twice per loop.
+        sweep = 9 + 3 * math.sin(2 * math.pi * t / 8)
+        for h in range(6, 13):
+            g = math.exp(-((h - sweep) ** 2) / 0.8)
+            v += 0.25 * g * math.sin(2 * math.pi * base * h * t)
+        out[i] = 0.35 * v
+    rng = random.Random(11)
+    scale = [146.8, 174.6, 196.0, 220.0, 261.6, 293.7]
+    t = 0.5
+    while t < seconds - 1.5:
+        f = rng.choice(scale)
+        period = int(sr / f)
+        buf = [rng.uniform(-1, 1) for _ in range(period)]
+        start = int(t * sr)
+        length = int(1.4 * sr)
+        for k in range(length):
+            idx = k % period
+            nxt = (idx + 1) % period
+            buf[idx] = 0.996 * 0.5 * (buf[idx] + buf[nxt])
+            out[(start + k) % n] += 0.5 * buf[idx]
+        t += rng.choice([0.5, 0.5, 1.0, 1.5])
+    peak = max(abs(s) for s in out)
+    with wave.open('assets/audio/music_steppe.wav', 'wb') as w:
+        w.setnchannels(1)
+        w.setsampwidth(2)
+        w.setframerate(sr)
+        w.writeframes(b''.join(
+            struct.pack('<h', int(32767 * 0.5 * s / peak)) for s in out))
+
+
+music_loop()

@@ -848,4 +848,93 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get bossKaraKamDesc => 'En soldaki Kut bu turda çalışmaz.';
+
+  @override
+  String get settingsTitle => 'Ayarlar';
+
+  @override
+  String get settingSound => 'Ses efektleri';
+
+  @override
+  String get settingMusic => 'Müzik';
+
+  @override
+  String get settingVibration => 'Titreşim';
+
+  @override
+  String get settingLanguage => 'Dil';
+
+  @override
+  String get settingSpeed => 'Oyun hızı';
+
+  @override
+  String get settingSpeedDesc => 'Puan animasyonlarının hızı';
+
+  @override
+  String get settingColorBlind => 'Renk körü modu';
+
+  @override
+  String get settingColorBlindDesc =>
+      'Yüksek kontrastlı renkler ve büyük renk sembolleri';
+
+  @override
+  String get languageTr => 'Türkçe';
+
+  @override
+  String get languageEn => 'English';
+
+  @override
+  String get colorBlindPreview => 'Örnek taşlar';
+
+  @override
+  String get collectionTitle => 'Koleksiyon';
+
+  @override
+  String collectionKuts(int found, int total) {
+    return 'Kut\'lar · $found/$total';
+  }
+
+  @override
+  String collectionBosses(int found, int total) {
+    return 'Boss\'lar · $found/$total';
+  }
+
+  @override
+  String get collectionLocked => 'Henüz açılmadı';
+
+  @override
+  String get collectionHint =>
+      'Bir koşuda sahip olduğun Kut\'lar burada açılır.';
+
+  @override
+  String get profileRuns => 'Başlanan koşu';
+
+  @override
+  String get profileWins => 'Kazanılan koşu';
+
+  @override
+  String get profileBestHand => 'En yüksek el';
+
+  @override
+  String get profileHighestFloor => 'En yüksek kat';
+
+  @override
+  String get back => 'Geri';
+
+  @override
+  String get newRunConfirmTitle => 'Yeni koşu başlasın mı?';
+
+  @override
+  String get newRunConfirmBody => 'Kayıtlı koşun silinecek.';
+
+  @override
+  String get cancel => 'Vazgeç';
+
+  @override
+  String get confirmNewRun => 'Yeni koşu';
+
+  @override
+  String savedRunInfo(int floor, int money) {
+    return 'Kat $floor · $money Akçe';
+  }
 }

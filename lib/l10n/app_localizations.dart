@@ -1651,6 +1651,168 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'En soldaki Kut bu turda çalışmaz.'**
   String get bossKaraKamDesc;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ayarlar'**
+  String get settingsTitle;
+
+  /// No description provided for @settingSound.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ses efektleri'**
+  String get settingSound;
+
+  /// No description provided for @settingMusic.
+  ///
+  /// In tr, this message translates to:
+  /// **'Müzik'**
+  String get settingMusic;
+
+  /// No description provided for @settingVibration.
+  ///
+  /// In tr, this message translates to:
+  /// **'Titreşim'**
+  String get settingVibration;
+
+  /// No description provided for @settingLanguage.
+  ///
+  /// In tr, this message translates to:
+  /// **'Dil'**
+  String get settingLanguage;
+
+  /// No description provided for @settingSpeed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oyun hızı'**
+  String get settingSpeed;
+
+  /// No description provided for @settingSpeedDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Puan animasyonlarının hızı'**
+  String get settingSpeedDesc;
+
+  /// No description provided for @settingColorBlind.
+  ///
+  /// In tr, this message translates to:
+  /// **'Renk körü modu'**
+  String get settingColorBlind;
+
+  /// No description provided for @settingColorBlindDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yüksek kontrastlı renkler ve büyük renk sembolleri'**
+  String get settingColorBlindDesc;
+
+  /// No description provided for @languageTr.
+  ///
+  /// In tr, this message translates to:
+  /// **'Türkçe'**
+  String get languageTr;
+
+  /// No description provided for @languageEn.
+  ///
+  /// In tr, this message translates to:
+  /// **'English'**
+  String get languageEn;
+
+  /// No description provided for @colorBlindPreview.
+  ///
+  /// In tr, this message translates to:
+  /// **'Örnek taşlar'**
+  String get colorBlindPreview;
+
+  /// No description provided for @collectionTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koleksiyon'**
+  String get collectionTitle;
+
+  /// No description provided for @collectionKuts.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kut\'lar · {found}/{total}'**
+  String collectionKuts(int found, int total);
+
+  /// No description provided for @collectionBosses.
+  ///
+  /// In tr, this message translates to:
+  /// **'Boss\'lar · {found}/{total}'**
+  String collectionBosses(int found, int total);
+
+  /// No description provided for @collectionLocked.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz açılmadı'**
+  String get collectionLocked;
+
+  /// No description provided for @collectionHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir koşuda sahip olduğun Kut\'lar burada açılır.'**
+  String get collectionHint;
+
+  /// No description provided for @profileRuns.
+  ///
+  /// In tr, this message translates to:
+  /// **'Başlanan koşu'**
+  String get profileRuns;
+
+  /// No description provided for @profileWins.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kazanılan koşu'**
+  String get profileWins;
+
+  /// No description provided for @profileBestHand.
+  ///
+  /// In tr, this message translates to:
+  /// **'En yüksek el'**
+  String get profileBestHand;
+
+  /// No description provided for @profileHighestFloor.
+  ///
+  /// In tr, this message translates to:
+  /// **'En yüksek kat'**
+  String get profileHighestFloor;
+
+  /// No description provided for @back.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geri'**
+  String get back;
+
+  /// No description provided for @newRunConfirmTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni koşu başlasın mı?'**
+  String get newRunConfirmTitle;
+
+  /// No description provided for @newRunConfirmBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıtlı koşun silinecek.'**
+  String get newRunConfirmBody;
+
+  /// No description provided for @cancel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Vazgeç'**
+  String get cancel;
+
+  /// No description provided for @confirmNewRun.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni koşu'**
+  String get confirmNewRun;
+
+  /// No description provided for @savedRunInfo.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kat {floor} · {money} Akçe'**
+  String savedRunInfo(int floor, int money);
 }
 
 class _AppLocalizationsDelegate

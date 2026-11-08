@@ -848,4 +848,92 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bossKaraKamDesc => 'Your leftmost Kut does nothing this round.';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingSound => 'Sound effects';
+
+  @override
+  String get settingMusic => 'Music';
+
+  @override
+  String get settingVibration => 'Vibration';
+
+  @override
+  String get settingLanguage => 'Language';
+
+  @override
+  String get settingSpeed => 'Game speed';
+
+  @override
+  String get settingSpeedDesc => 'Speed of scoring animations';
+
+  @override
+  String get settingColorBlind => 'Color-blind mode';
+
+  @override
+  String get settingColorBlindDesc =>
+      'High-contrast colors and bigger color symbols';
+
+  @override
+  String get languageTr => 'Türkçe';
+
+  @override
+  String get languageEn => 'English';
+
+  @override
+  String get colorBlindPreview => 'Sample tiles';
+
+  @override
+  String get collectionTitle => 'Collection';
+
+  @override
+  String collectionKuts(int found, int total) {
+    return 'Kuts · $found/$total';
+  }
+
+  @override
+  String collectionBosses(int found, int total) {
+    return 'Bosses · $found/$total';
+  }
+
+  @override
+  String get collectionLocked => 'Not discovered yet';
+
+  @override
+  String get collectionHint => 'Kuts you own during a run are unlocked here.';
+
+  @override
+  String get profileRuns => 'Runs started';
+
+  @override
+  String get profileWins => 'Runs won';
+
+  @override
+  String get profileBestHand => 'Best hand';
+
+  @override
+  String get profileHighestFloor => 'Highest floor';
+
+  @override
+  String get back => 'Back';
+
+  @override
+  String get newRunConfirmTitle => 'Start a new run?';
+
+  @override
+  String get newRunConfirmBody => 'Your saved run will be deleted.';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get confirmNewRun => 'New run';
+
+  @override
+  String savedRunInfo(int floor, int money) {
+    return 'Floor $floor · $money Akçe';
+  }
 }

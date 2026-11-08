@@ -40,7 +40,7 @@ class RunBot {
     while (run.phase != RunPhase.won &&
         run.phase != RunPhase.lost &&
         steps++ < maxSteps) {
-      _step(run);
+      step(run);
     }
     return RunBotResult(
       won: run.phase == RunPhase.won,
@@ -51,7 +51,8 @@ class RunBot {
     );
   }
 
-  void _step(RunState run) {
+  /// Performs one decision (used by tests to interleave runs).
+  void step(RunState run) {
     switch (run.phase) {
       case RunPhase.roundSelect:
         _useItems(run);

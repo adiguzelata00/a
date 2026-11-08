@@ -446,5 +446,62 @@
   "bossSulmusName": "Şulmus",
   "bossSulmusDesc": "Tek Taş ve Çift puan vermez.",
   "bossKaraKamName": "Kara Kam",
-  "bossKaraKamDesc": "En soldaki Kut bu turda çalışmaz."
+  "bossKaraKamDesc": "En soldaki Kut bu turda çalışmaz.",
+  "settingsTitle": "Ayarlar",
+  "settingSound": "Ses efektleri",
+  "settingMusic": "Müzik",
+  "settingVibration": "Titreşim",
+  "settingLanguage": "Dil",
+  "settingSpeed": "Oyun hızı",
+  "settingSpeedDesc": "Puan animasyonlarının hızı",
+  "settingColorBlind": "Renk körü modu",
+  "settingColorBlindDesc": "Yüksek kontrastlı renkler ve büyük renk sembolleri",
+  "languageTr": "Türkçe",
+  "languageEn": "English",
+  "colorBlindPreview": "Örnek taşlar",
+  "collectionTitle": "Koleksiyon",
+  "collectionKuts": "Kut'lar · {found}/{total}",
+  "@collectionKuts": {
+    "placeholders": {
+      "found": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "collectionBosses": "Boss'lar · {found}/{total}",
+  "@collectionBosses": {
+    "placeholders": {
+      "found": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "collectionLocked": "Henüz açılmadı",
+  "collectionHint": "Bir koşuda sahip olduğun Kut'lar burada açılır.",
+  "profileRuns": "Başlanan koşu",
+  "profileWins": "Kazanılan koşu",
+  "profileBestHand": "En yüksek el",
+  "profileHighestFloor": "En yüksek kat",
+  "back": "Geri",
+  "newRunConfirmTitle": "Yeni koşu başlasın mı?",
+  "newRunConfirmBody": "Kayıtlı koşun silinecek.",
+  "cancel": "Vazgeç",
+  "confirmNewRun": "Yeni koşu",
+  "savedRunInfo": "Kat {floor} · {money} Akçe",
+  "@savedRunInfo": {
+    "placeholders": {
+      "floor": {
+        "type": "int"
+      },
+      "money": {
+        "type": "int"
+      }
+    }
+  }
 }

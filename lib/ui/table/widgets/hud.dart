@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../l10n_ext.dart';
-import '../../settings/settings_providers.dart';
+
+import 'package:tengri_taslari/services/settings_service.dart';
+
 import '../../theme/palette.dart';
 import '../../widgets/effects.dart';
 import '../../game/game_controller.dart';
@@ -31,7 +33,7 @@ class Hud extends ConsumerWidget {
         ),
       ),
     );
-    final speed = ref.watch(gameSpeedProvider);
+    final speed = ref.watch(settingsProvider.select((s) => s.gameSpeed));
     final roundName = s.bossId != null
         ? l10n.bossName(s.bossId!)
         : l10n.roundName(s.roundInFloor);
@@ -67,7 +69,7 @@ class Hud extends ConsumerWidget {
               const SizedBox(width: 8),
               _SpeedChip(
                 label: l10n.speedLabel(speed),
-                onTap: () => ref.read(gameSpeedProvider.notifier).cycle(),
+                onTap: () => ref.read(settingsProvider.notifier).cycleSpeed(),
               ),
             ],
           ),

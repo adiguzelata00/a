@@ -49,6 +49,22 @@ abstract final class Palette {
   static const skyTop = Color(0xFF0B1E4A);
   static const skyBottom = Color(0xFF1B1530);
 
+  // Color-blind friendly tile colors (adapted from the Okabe-Ito palette).
+  static const cbRed = Color(0xFFD55E00);
+  static const cbYellow = Color(0xFF9A7400);
+  static const cbBlue = Color(0xFF0072B2);
+  static const cbBlack = Color(0xFF111111);
+
+  static Color tileColorFor(TileColor c, {bool colorBlind = false}) =>
+      colorBlind
+      ? switch (c) {
+          TileColor.red => cbRed,
+          TileColor.yellow => cbYellow,
+          TileColor.blue => cbBlue,
+          TileColor.black => cbBlack,
+        }
+      : tileColor(c);
+
   static Color tileColor(TileColor c) => switch (c) {
     TileColor.red => red,
     TileColor.yellow => mustard,
