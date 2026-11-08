@@ -3,7 +3,7 @@
 Okey taşlarıyla oynanan, Türk mitolojisi temalı, deste kurmalı **roguelike bulmaca oyunu**.
 Flutter (+ ileride Flame), Android öncelikli, dikey ekran.
 
-> Durum: **Faz 4 — İçerik ve his** tamamlandı.
+> Durum: **Faz 5 — Kalıcılık ve yayın hazırlığı** tamamlandı. Tüm fazlar bitti.
 
 ## Mimari
 
@@ -24,7 +24,8 @@ lib/
     consumables.dart  12 Destan, 8 Tılsım, 7 Kupon
     run_setup.dart    Denge sayılarını ve kataloğu çekirdeğe bağlar
   l10n/            ARB dosyaları (app_tr.arb varsayılan, app_en.arb) + üretilen sınıflar
-  services/        AudioService (yer tutucu), HapticsService
+  services/        Ses, müzik, titreşim, depolama (shared_preferences), kayıt, ayarlar,
+                   MonetizationService (boş arayüz)
   ui/
     art/           Kodla çizilen yer tutucular (taş, renk sembolleri, tamgalar, Kut amblemi)
     theme/         Palette (tüm renkler tek yerde), tema
@@ -38,7 +39,8 @@ bin/
   balance_sim.dart Bot ile tek tur kazanma oranı tablosu (kat × tur)
   run_sim.dart     Tam koşu simülasyonu: kazanma oranı, ölüm haritası, Kut tablosu
 tool/
-  gen_placeholder_sounds.py  assets/audio/ yer tutucu seslerini sentezler
+  gen_placeholder_sounds.py  assets/audio/ yer tutucu ses + müziğini sentezler
+  gen_app_icon.py            Uygulama ikonu yer tutucusu (Android + iOS boyutları)
 test/              Unit testler (core + data)
 ```
 
@@ -135,6 +137,40 @@ fazla sertlerdi). Kopuz +15, Oğuz Kağan +60/+8, Ergenekon +30 olarak ayarland�
   kazanılınca altın kıvılcım patlaması.
 - Boss turları tam ekran Boss tanıtımıyla açılır (dokununca geçer).
 - Kese seçenekleri kart gibi sırayla döner. Hepsi sistemin "hareketi azalt" ayarına uyar.
+
+## Faz 5 — Kalıcılık ve yayın hazırlığı
+
+- **Otomatik kayıt:** Koşu her tur arası değişiklikte cihaz deposuna JSON olarak yazılır
+  (`run_v1`). Ana Menü'de "Devam Et" (Kat ve Akçe bilgisiyle) kaldığı yerden sürdürür. Tur
+  ortasında kapatılan koşu o turun başından devam eder (aynı seed → aynı taşlar). Kaybedilen
+  koşunun kaydı silinir. Bozuk/eski bir kayıt oyunu engellemez, sessizce atılır.
+- **Ayarlar:** ses efektleri, müzik, titreşim, dil (Türkçe varsayılan / English), oyun hızı
+  (1×/2×/4×), renk körü modu (yüksek kontrastlı renkler + büyük ve çift renk sembolü). Hepsi
+  kalıcı ve anında uygulanır.
+- **Koleksiyon:** Bir koşuda sahip olunan Kut'lar ve karşılaşılan Boss'lar açılır; başlanan /
+  kazanılan koşu, en yüksek el ve en yüksek kat kayıtları.
+- **Müzik:** sentezlenmiş 16 sn'lik döngü (gırtlak sesi benzeri dron + kopuz tınıları).
+- **Yayın:** uygulama adı "Tengri'nin Taşları", ikon yer tutucusu, yalnızca dikey ekran
+  (Android + iOS; iPad `UIRequiresFullScreen`), Android release: R8 küçültme, kaynak küçültme,
+  `android/key.properties` ile imzalama (yoksa debug anahtarı). `MonetizationService`
+  arayüzü hazır; reklam/IAP yok.
+
+### Android yayın derlemesi
+
+```bash
+# 1) Bir kez: yükleme anahtarı oluştur (bu dosyayı asla paylaşma/commit etme)
+keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA -keysize 2048 \
+  -validity 10000 -alias upload
+# 2) android/key.properties dosyasını oluştur:
+#    storeFile=/home/<sen>/upload-keystore.jks
+#    storePassword=...
+#    keyAlias=upload
+#    keyPassword=...
+# 3) Derle
+flutter build appbundle --release   # Google Play için .aab
+flutter build apk --release         # doğrudan kurulum için .apk
+```
+Sürüm `pubspec.yaml` içindeki `version: 0.1.0+1` satırından gelir (`+1` = versionCode).
 
 ## Kural kararları (spec'te belirsiz olanlar)
 

@@ -166,7 +166,7 @@ class TilePainter extends CustomPainter {
     final symbolSize = w * (look.colorBlind ? 0.4 : 0.3);
     if (look.colorBlind && look.tile.seal == Seal.none) {
       // Second symbol in the corner, so the color reads at a glance.
-      final s = w * 0.22;
+      final s = w * 0.17;
       drawColorSymbol(
         canvas,
         face.color,
