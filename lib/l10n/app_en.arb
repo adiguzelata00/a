@@ -334,5 +334,15 @@
   "dailyShareWon": " · reached Tengri ★",
   "dailyHistory": "Recent days",
   "dailyNoHistory": "No daily results yet.",
-  "dailyTag": "Daily"
+  "dailyTag": "Daily",
+  "leaderboardTitle": "Today's leaderboard",
+  "leaderboardUnavailable": "No leaderboard in this version. In the shared browser version it shows everyone who can open the page.",
+  "leaderboardEmpty": "No results yet today. Be the first!",
+  "leaderboardError": "The leaderboard can't be loaded right now.",
+  "leaderboardRefresh": "Refresh",
+  "leaderboardYou": "You",
+  "leaderboardSomeone": "A player",
+  "leaderboardYourRank": "You are #{rank} today · {total} players",
+  "leaderboardRow": "Floor {floor} · {score}",
+  "leaderboardOngoing": "climbing"
 }

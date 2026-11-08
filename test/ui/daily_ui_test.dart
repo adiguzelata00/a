@@ -133,6 +133,11 @@ void main() {
     await pumpApp(tester, tomorrow);
     expect(find.text('Bugünün meydan okuması hazır'), findsOneWidget);
     await tap(tester, 'menu-daily');
+    await tester.scrollUntilVisible(
+      find.text('Kat 1 · ${result.score} puan'),
+      200,
+      scrollable: find.byType(Scrollable).last,
+    );
     expect(find.text('Kat 1 · ${result.score} puan'), findsOneWidget);
     await tap(tester, 'daily-play');
     expect(tomorrow.run.dailyDate, '2026-11-09');

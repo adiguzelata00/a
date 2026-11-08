@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tengri_taslari/core/core.dart';
 import 'package:tengri_taslari/data/balance.dart';
 import 'package:tengri_taslari/data/run_setup.dart' as setup;
 import 'package:tengri_taslari/services/audio_service.dart';
 import 'package:tengri_taslari/services/haptics_service.dart';
+import 'package:tengri_taslari/services/leaderboard/leaderboard_service.dart';
 import 'package:tengri_taslari/services/music_service.dart';
 import 'package:tengri_taslari/services/save_service.dart';
 import 'package:tengri_taslari/services/settings_service.dart';
@@ -63,7 +66,7 @@ class GameController extends Notifier<GameState> {
     for (final run in [s.normalRun, s.dailyRun]) {
       if (run == null) continue;
       save.saveRun(run);
-      if (run.isDaily) profile.recordDaily(run);
+      if (run.isDaily && profile.recordDaily(run)) _submitDaily(run);
     }
     final run = s.run;
     if (run == null) return;
@@ -72,6 +75,19 @@ class GameController extends Notifier<GameState> {
       _recordedWin = run;
       profile.runWon();
     }
+  }
+
+  /// Sends a changed daily result to the leaderboard (fire and forget;
+  /// the ranking refreshes when it lands).
+  void _submitDaily(RunState run) {
+    final date = run.dailyDate!;
+    final result = ref.read(profileProvider).dailyResults[date];
+    if (result == null) return;
+    unawaited(
+      ref.read(leaderboardServiceProvider).submit(date, result).then((ok) {
+        if (ok && ref.mounted) ref.invalidate(dailyLeaderboardProvider(date));
+      }),
+    );
   }
 
   static String randomSeedCode() =>

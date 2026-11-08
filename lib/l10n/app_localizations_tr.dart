@@ -1110,4 +1110,39 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get dailyTag => 'Günlük';
+
+  @override
+  String get leaderboardTitle => 'Günün sıralaması';
+
+  @override
+  String get leaderboardUnavailable =>
+      'Sıralama bu sürümde yok. Paylaşılan tarayıcı sürümünde, sayfaya erişimi olan herkesle birlikte görünür.';
+
+  @override
+  String get leaderboardEmpty => 'Bugün henüz sonuç yok. İlk sen ol!';
+
+  @override
+  String get leaderboardError => 'Sıralama şu an alınamadı.';
+
+  @override
+  String get leaderboardRefresh => 'Yenile';
+
+  @override
+  String get leaderboardYou => 'Sen';
+
+  @override
+  String get leaderboardSomeone => 'Bir oyuncu';
+
+  @override
+  String leaderboardYourRank(int rank, int total) {
+    return 'Bugün $rank. sıradasın · $total oyuncu';
+  }
+
+  @override
+  String leaderboardRow(int floor, int score) {
+    return 'Kat $floor · $score';
+  }
+
+  @override
+  String get leaderboardOngoing => 'sürüyor';
 }

@@ -11,6 +11,7 @@ import '../l10n_ext.dart';
 import '../theme/app_theme.dart';
 import '../theme/palette.dart';
 import '../widgets/cards.dart';
+import 'leaderboard_view.dart';
 
 /// Formats a yyyy-MM-dd key as a localized date ("8 Kas 2026").
 String formatDailyDate(BuildContext context, String date) =>
@@ -243,6 +244,8 @@ class DailyScreen extends ConsumerWidget {
               ),
             ),
           ],
+          const SizedBox(height: 20),
+          LeaderboardView(date: challenge.date),
           const SizedBox(height: 20),
           Text(
             l10n.dailyHistory.toUpperCase(),

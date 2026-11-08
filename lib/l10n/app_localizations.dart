@@ -2113,6 +2113,66 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Günlük'**
   String get dailyTag;
+
+  /// No description provided for @leaderboardTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günün sıralaması'**
+  String get leaderboardTitle;
+
+  /// No description provided for @leaderboardUnavailable.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sıralama bu sürümde yok. Paylaşılan tarayıcı sürümünde, sayfaya erişimi olan herkesle birlikte görünür.'**
+  String get leaderboardUnavailable;
+
+  /// No description provided for @leaderboardEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün henüz sonuç yok. İlk sen ol!'**
+  String get leaderboardEmpty;
+
+  /// No description provided for @leaderboardError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sıralama şu an alınamadı.'**
+  String get leaderboardError;
+
+  /// No description provided for @leaderboardRefresh.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yenile'**
+  String get leaderboardRefresh;
+
+  /// No description provided for @leaderboardYou.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sen'**
+  String get leaderboardYou;
+
+  /// No description provided for @leaderboardSomeone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir oyuncu'**
+  String get leaderboardSomeone;
+
+  /// No description provided for @leaderboardYourRank.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün {rank}. sıradasın · {total} oyuncu'**
+  String leaderboardYourRank(int rank, int total);
+
+  /// No description provided for @leaderboardRow.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kat {floor} · {score}'**
+  String leaderboardRow(int floor, int score);
+
+  /// No description provided for @leaderboardOngoing.
+  ///
+  /// In tr, this message translates to:
+  /// **'sürüyor'**
+  String get leaderboardOngoing;
 }
 
 class _AppLocalizationsDelegate

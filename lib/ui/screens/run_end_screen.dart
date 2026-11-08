@@ -7,6 +7,7 @@ import '../l10n_ext.dart';
 import '../theme/palette.dart';
 import '../widgets/particles.dart';
 import 'daily_screen.dart';
+import 'leaderboard_view.dart';
 import '../widgets/world_background.dart';
 
 /// "Koşu Sonu": won or lost, with run statistics.
@@ -137,6 +138,14 @@ class RunEndScreen extends ConsumerWidget {
                             minimumSize: const Size.fromHeight(48),
                           ),
                           child: Text(l10n.continueEndless),
+                        ),
+                      ),
+                    if (run.isDaily)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: LeaderboardView(
+                          date: run.dailyDate!,
+                          maxRows: 5,
                         ),
                       ),
                     if (run.isDaily)

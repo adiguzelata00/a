@@ -602,5 +602,35 @@
   "dailyShareWon": " · Tengri'ye ulaştım ★",
   "dailyHistory": "Son günler",
   "dailyNoHistory": "Henüz günlük sonuç yok.",
-  "dailyTag": "Günlük"
+  "dailyTag": "Günlük",
+  "leaderboardTitle": "Günün sıralaması",
+  "leaderboardUnavailable": "Sıralama bu sürümde yok. Paylaşılan tarayıcı sürümünde, sayfaya erişimi olan herkesle birlikte görünür.",
+  "leaderboardEmpty": "Bugün henüz sonuç yok. İlk sen ol!",
+  "leaderboardError": "Sıralama şu an alınamadı.",
+  "leaderboardRefresh": "Yenile",
+  "leaderboardYou": "Sen",
+  "leaderboardSomeone": "Bir oyuncu",
+  "leaderboardYourRank": "Bugün {rank}. sıradasın · {total} oyuncu",
+  "@leaderboardYourRank": {
+    "placeholders": {
+      "rank": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "leaderboardRow": "Kat {floor} · {score}",
+  "@leaderboardRow": {
+    "placeholders": {
+      "floor": {
+        "type": "int"
+      },
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "leaderboardOngoing": "sürüyor"
 }

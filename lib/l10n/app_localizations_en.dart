@@ -1109,4 +1109,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dailyTag => 'Daily';
+
+  @override
+  String get leaderboardTitle => 'Today\'s leaderboard';
+
+  @override
+  String get leaderboardUnavailable =>
+      'No leaderboard in this version. In the shared browser version it shows everyone who can open the page.';
+
+  @override
+  String get leaderboardEmpty => 'No results yet today. Be the first!';
+
+  @override
+  String get leaderboardError => 'The leaderboard can\'t be loaded right now.';
+
+  @override
+  String get leaderboardRefresh => 'Refresh';
+
+  @override
+  String get leaderboardYou => 'You';
+
+  @override
+  String get leaderboardSomeone => 'A player';
+
+  @override
+  String leaderboardYourRank(int rank, int total) {
+    return 'You are #$rank today · $total players';
+  }
+
+  @override
+  String leaderboardRow(int floor, int score) {
+    return 'Floor $floor · $score';
+  }
+
+  @override
+  String get leaderboardOngoing => 'climbing';
 }

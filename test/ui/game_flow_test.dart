@@ -8,6 +8,7 @@ import 'package:tengri_taslari/data/kuts.dart';
 import 'package:tengri_taslari/data/run_setup.dart';
 import 'package:tengri_taslari/services/audio_service.dart';
 import 'package:tengri_taslari/services/haptics_service.dart';
+import 'package:tengri_taslari/services/leaderboard/leaderboard_service.dart';
 import 'package:tengri_taslari/services/music_service.dart';
 import 'package:tengri_taslari/services/storage.dart';
 import 'package:tengri_taslari/ui/game/game_controller.dart';
@@ -35,6 +36,7 @@ class Harness {
     bool realDelays = false,
     MemoryStore? store,
     DateTime? now,
+    LeaderboardService? leaderboard,
   }) : now = now ?? DateTime(2026, 11, 8, 12),
        audio = PlaceholderAudioService(),
        haptics = FakeHaptics(),
@@ -47,6 +49,8 @@ class Harness {
     container = ProviderContainer(
       overrides: [
         initialSeedCodeProvider.overrideWithValue(seed),
+        if (leaderboard != null)
+          leaderboardServiceProvider.overrideWithValue(leaderboard),
         clockProvider.overrideWithValue(() => this.now),
         dailyFactoryProvider.overrideWithValue(
           (c) => c.start(
