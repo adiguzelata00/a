@@ -936,4 +936,76 @@ class AppLocalizationsEn extends AppLocalizations {
   String savedRunInfo(int floor, int money) {
     return 'Floor $floor · $money Akçe';
   }
+
+  @override
+  String get menuHowToPlay => 'How to Play';
+
+  @override
+  String get howToTitle => 'How to Play';
+
+  @override
+  String get howToGoalTitle => 'Goal';
+
+  @override
+  String get howToGoalBody =>
+      'Each round, play melds from your rack to reach the target score. You have 4 hands; miss the target and the run is over. Clear all 8 floors from the Underworld to the Sky to reach Tengri.';
+
+  @override
+  String get howToTurnTitle => 'How a round works';
+
+  @override
+  String get howToTurnBody =>
+      '• Tap tiles to select 1–6; the middle shows the hand type and its score.\n• Play: the selected tiles score and new tiles are drawn.\n• Discard: throw the selected tiles away and draw new ones (3 per round).\n• Drag tiles to arrange them, or use Number / Color to sort.';
+
+  @override
+  String get howToOkeyTitle => 'Indicator and Okey';
+
+  @override
+  String get howToOkeyBody =>
+      'At the start of a round an Indicator tile is shown. The tile one above it (same color; 1 after 13) is this round\'s Okey, shown with a star and a gold border. The Okey is wild: it can stand in for any tile in a meld and picks the best value itself. The Fake Okey (with the rune) is a normal tile carrying the Okey\'s value.';
+
+  @override
+  String get howToScoreTitle => 'Scoring';
+
+  @override
+  String get howToScoreBody =>
+      'Score = Chips × Mult.\nChips = the hand\'s base chips + the numbers of the tiles in the meld (a 1 counts as 15). Tiles outside the meld are played but score nothing. Kuts, tile enhancements and seals raise Chips and Mult.';
+
+  @override
+  String get howToHandsTitle => 'Hand types';
+
+  @override
+  String get howToHandsBody =>
+      'Run: same color, consecutive numbers (12-13-1 is fine, 13-1-2 is not). Group: same number, different colors. Values are at level 1; Destans level a hand type up.';
+
+  @override
+  String get howToKutTitle => 'Kuts';
+
+  @override
+  String get howToKutBody =>
+      'Kuts are passive mythic powers (up to 5). They trigger left to right every hand; drag cards to change their order. +Mult before ×Mult usually scores more. Tap a card to see what it does.';
+
+  @override
+  String get howToShopTitle => 'Akçe, Bazaar and items';
+
+  @override
+  String get howToShopBody =>
+      'Winning a round pays Akçe: the round reward, +1 per hand left and interest (+1 per 5 Akçe held, up to 5). In the Bazaar you buy Kuts, Destans, Tılsıms, Packs and Vouchers. A Destan levels a hand type up; a Tılsım changes the tiles you select in your rack (Iron, Gold, color, copy...). A Voucher is a permanent upgrade.';
+
+  @override
+  String get howToBossTitle => 'Floors and bosses';
+
+  @override
+  String get howToBossBody =>
+      'Each floor has three rounds: Small Trial, Big Trial and a Boss. You may skip the Small and Big Trial for a small reward. The Boss can\'t be skipped and adds a restriction (e.g. Kara Kuş: the okey is not wild).';
+
+  @override
+  String get howToTipsTitle => 'Tips';
+
+  @override
+  String get howToTipsBody =>
+      '• Keep run and group starts together; discard lonely tiles.\n• Sky Meld (Group-3 + Run-3) and long runs score a lot.\n• Reaching the target with hands left pays extra Akçe.\n• Saving Akçe earns interest; don\'t spend everything at once.';
+
+  @override
+  String get howToHelpTooltip => 'How to play?';
 }

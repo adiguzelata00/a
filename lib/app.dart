@@ -35,8 +35,12 @@ class TengriApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      builder: (context, child) =>
-          TileStyle(colorBlind: colorBlind, child: child!),
+      // Game screens follow the system font size only up to 1.15×, so large
+      // accessibility fonts can not push the table layout apart.
+      builder: (context, child) => MediaQuery.withClampedTextScaling(
+        maxScaleFactor: 1.15,
+        child: TileStyle(colorBlind: colorBlind, child: child!),
+      ),
       home: const GameRoot(),
     );
   }

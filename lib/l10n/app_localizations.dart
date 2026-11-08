@@ -1813,6 +1813,132 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Kat {floor} · {money} Akçe'**
   String savedRunInfo(int floor, int money);
+
+  /// No description provided for @menuHowToPlay.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nasıl Oynanır'**
+  String get menuHowToPlay;
+
+  /// No description provided for @howToTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nasıl Oynanır'**
+  String get howToTitle;
+
+  /// No description provided for @howToGoalTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Amaç'**
+  String get howToGoalTitle;
+
+  /// No description provided for @howToGoalBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Her turda istakadaki okey taşlarıyla per açıp hedef puana ulaş. 4 El hakkın var; hedefe ulaşamazsan koşu biter. Yeraltından Gök\'e 8 Kat\'ı geçersen Tengri\'ye ulaşırsın.'**
+  String get howToGoalBody;
+
+  /// No description provided for @howToTurnTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir tur nasıl geçer'**
+  String get howToTurnTitle;
+
+  /// No description provided for @howToTurnBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'• Taşlara dokunarak 1–6 taş seç; ortada el türünü ve puanını görürsün.\n• Oyna: seçili taşlar puan verir, yerlerine yeni taşlar gelir.\n• Değiştir: seçili taşları atıp yenilerini çekersin (turda 3 hak).\n• Taşları sürükleyerek diz ya da Sayı / Renk ile otomatik diz.'**
+  String get howToTurnBody;
+
+  /// No description provided for @howToOkeyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gösterge ve Okey'**
+  String get howToOkeyTitle;
+
+  /// No description provided for @howToOkeyBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Turun başında bir Gösterge taşı açılır. Onun bir üstü (aynı renk; 13\'ten sonra 1) o turun Okey\'idir; istakada yıldızlı, altın kenarlı görünür. Okey joker\'dir: bir per içinde istediğin taşın yerine geçer ve en iyi değeri kendisi seçer. Göktürk harfli Sahte Okey ise okeyin değerini taşıyan normal bir taştır.'**
+  String get howToOkeyBody;
+
+  /// No description provided for @howToScoreTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Puanlama'**
+  String get howToScoreTitle;
+
+  /// No description provided for @howToScoreBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Skor = Puan × Çarpan.\nPuan = el türünün taban puanı + per\'deki taşların sayıları (1 sayılı taş 15 sayılır). Per\'e girmeyen taşlar oynanır ama puan vermez. Kut\'lar, taş geliştirmeleri ve tamgalar Puan ve Çarpan\'ı artırır.'**
+  String get howToScoreBody;
+
+  /// No description provided for @howToHandsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'El türleri'**
+  String get howToHandsTitle;
+
+  /// No description provided for @howToHandsBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seri: aynı renk, ardışık sayılar (12-13-1 olur, 13-1-2 olmaz). Grup: aynı sayı, farklı renkler. Değerler başlangıç seviyesindedir; Destan\'lar bir el türünü güçlendirir.'**
+  String get howToHandsBody;
+
+  /// No description provided for @howToKutTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kut\'lar'**
+  String get howToKutTitle;
+
+  /// No description provided for @howToKutBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kut\'lar pasif mitolojik güçlerdir (en fazla 5). Her elde soldan sağa tetiklenirler; kartları sürükleyerek sıralarını değiştir. Önce +Çarpan, sonra ×Çarpan veren bir sıra genelde daha çok puan getirir. Karta dokunursan ne yaptığını görürsün.'**
+  String get howToKutBody;
+
+  /// No description provided for @howToShopTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Akçe, Pazar ve eşyalar'**
+  String get howToShopTitle;
+
+  /// No description provided for @howToShopBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Turu kazanınca Akçe alırsın: tur ödülü, kalan her El için +1 ve faiz (elindeki her 5 Akçe için +1, en fazla 5). Pazar\'da Kut, Destan, Tılsım, Kese ve Kupon alırsın. Destan bir el türünün seviyesini artırır; Tılsım istakada seçtiğin taşları değiştirir (Demir, Altın, renk, kopya...). Kupon kalıcı bir geliştirmedir.'**
+  String get howToShopBody;
+
+  /// No description provided for @howToBossTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Katlar ve Boss\'lar'**
+  String get howToBossTitle;
+
+  /// No description provided for @howToBossBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Her Kat\'ta üç tur vardır: Küçük Sınav, Büyük Sınav ve Boss. Küçük ve Büyük Sınav atlanabilir; atlarsan küçük bir ödül alırsın. Boss atlanamaz ve bir kısıtlama getirir (ör. Kara Kuş\'ta okey joker değildir).'**
+  String get howToBossBody;
+
+  /// No description provided for @howToTipsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'İpuçları'**
+  String get howToTipsTitle;
+
+  /// No description provided for @howToTipsBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'• Seri ve grup başlangıçlarını bir arada tut, tek kalan taşları Değiştir ile at.\n• Gök Per (Grup-3 + Seri-3) ve uzun seriler çok puan verir.\n• Hedefe az El ile ulaşırsan kalan El\'ler Akçe olur.\n• Akçe biriktirmek faiz getirir; her şeyi hemen harcama.'**
+  String get howToTipsBody;
+
+  /// No description provided for @howToHelpTooltip.
+  ///
+  /// In tr, this message translates to:
+  /// **'Nasıl oynanır?'**
+  String get howToHelpTooltip;
 }
 
 class _AppLocalizationsDelegate

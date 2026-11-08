@@ -5,6 +5,7 @@ import '../game/game_controller.dart';
 import '../l10n_ext.dart';
 import '../theme/palette.dart';
 import '../widgets/cards.dart';
+import 'how_to_play_screen.dart';
 
 /// Top bar for between-round screens: menu button, floor/world, money.
 class RunHeader extends ConsumerWidget {
@@ -60,6 +61,13 @@ class RunHeader extends ConsumerWidget {
                 ),
               ],
             ),
+          ),
+          IconButton(
+            key: const Key('header-help'),
+            tooltip: l10n.howToHelpTooltip,
+            onPressed: () =>
+                Navigator.of(context).push(HowToPlayScreen.route()),
+            icon: const Icon(Icons.help_outline, color: Palette.gold),
           ),
           MoneyText(s.money, size: 20),
         ],

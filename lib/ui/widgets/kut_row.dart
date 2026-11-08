@@ -42,8 +42,13 @@ class KutRow extends ConsumerWidget {
       builder: (context, constraints) {
         final slots = data.slots;
         const gap = 6.0;
+        // Cards also shrink on short screens.
+        final heightCap = (MediaQuery.sizeOf(context).height * 0.085).clamp(
+          44.0,
+          72.0,
+        );
         final w = ((constraints.maxWidth - 24 - gap * (slots - 1)) / slots)
-            .clamp(40.0, 72.0);
+            .clamp(40.0, heightCap);
         return SizedBox(
           height: w * 1.3 + 8,
           child: Row(

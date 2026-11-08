@@ -22,41 +22,69 @@ class PlayArea extends ConsumerWidget {
     final controller = ref.read(gameControllerProvider.notifier);
     final playback = state.playback;
 
+    final top = Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _OkeyInfoRow(round: state.round!),
+        const SizedBox(height: 6),
+        if (playback != null)
+          _HandHeader(
+            title: context.l10n.handName(playback.hand.type),
+            chips: playback.chips,
+            mult: playback.mult,
+            chipsTrigger: playback.step,
+          )
+        else
+          _PreviewHeader(controller: controller, state: state),
+      ],
+    );
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: playback != null ? controller.skipPlayback : null,
-      child: Column(
-        children: [
-          _OkeyInfoRow(round: state.round!),
-          const SizedBox(height: 8),
-          if (playback != null)
-            _HandHeader(
-              title: context.l10n.handName(playback.hand.type),
-              chips: playback.chips,
-              mult: playback.mult,
-              chipsTrigger: playback.step,
-            )
-          else
-            _PreviewHeader(controller: controller, state: state),
-          Expanded(
-            child: Center(
-              child: playback != null
-                  ? _PlayedTiles(
-                      playback: playback,
-                      okey: state.round!.okey,
-                      target: state.round!.target,
-                    )
-                  : Text(
-                      context.l10n.playAreaHint,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Palette.textMuted,
-                        fontSize: 12,
-                      ),
-                    ),
-            ),
+      // Short screens (or large system fonts) shrink the content instead of
+      // letting it slide under the rack; nothing is ever drawn outside.
+      child: ClipRect(
+        child: LayoutBuilder(
+          builder: (context, c) => Column(
+            children: [
+              ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: c.maxHeight * 0.75),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.topCenter,
+                  child: SizedBox(width: c.maxWidth, child: top),
+                ),
+              ),
+              Expanded(
+                child: Center(
+                  child: playback != null
+                      ? FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: _PlayedTiles(
+                            playback: playback,
+                            okey: state.round!.okey,
+                            target: state.round!.target,
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(
+                            context.l10n.playAreaHint,
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: Palette.textMuted,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

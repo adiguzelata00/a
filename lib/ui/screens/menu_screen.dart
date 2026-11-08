@@ -10,6 +10,7 @@ import '../l10n_ext.dart';
 import '../theme/app_theme.dart';
 import '../theme/palette.dart';
 import 'collection_screen.dart';
+import 'how_to_play_screen.dart';
 import 'settings_screen.dart';
 
 /// Main menu: slowly turning starry sky and a Göktürk-style motif ring.
@@ -62,8 +63,11 @@ class MenuScreen extends ConsumerWidget {
           const Positioned.fill(child: _TurningSky()),
           SafeArea(
             child: Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 16,
+                ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -107,6 +111,13 @@ class MenuScreen extends ConsumerWidget {
                       label: l10n.menuNewRun,
                       primary: !hasRun,
                       onPressed: startNew,
+                    ),
+                    const SizedBox(height: 12),
+                    _MenuButton(
+                      key: const Key('menu-how-to'),
+                      label: l10n.menuHowToPlay,
+                      onPressed: () =>
+                          Navigator.of(context).push(HowToPlayScreen.route()),
                     ),
                     const SizedBox(height: 12),
                     _MenuButton(

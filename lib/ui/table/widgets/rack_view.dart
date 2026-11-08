@@ -43,9 +43,13 @@ class RackView extends ConsumerWidget {
             ? capacity
             : (capacity / 2).ceil();
         final rowCount = (capacity / perRow).ceil();
+        // Short screens get slightly smaller tiles so the play area keeps
+        // room for the hand preview.
+        final screenHeight = MediaQuery.sizeOf(context).height;
+        final heightCap = (screenHeight * 0.068).clamp(40.0, maxTileWidth);
         final tileWidth = ((inner - gap * (perRow - 1)) / perRow).clamp(
           24.0,
-          maxTileWidth,
+          heightCap,
         );
         final rows = <List<int>>[
           for (var start = 0; start < tiles.length; start += perRow)

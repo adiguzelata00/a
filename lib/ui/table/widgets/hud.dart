@@ -5,6 +5,7 @@ import '../../l10n_ext.dart';
 
 import 'package:tengri_taslari/services/settings_service.dart';
 
+import '../../screens/how_to_play_screen.dart';
 import '../../theme/palette.dart';
 import '../../widgets/effects.dart';
 import '../../game/game_controller.dart';
@@ -66,7 +67,15 @@ class Hud extends ConsumerWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: 4),
+              IconButton(
+                key: const Key('hud-help'),
+                tooltip: l10n.howToHelpTooltip,
+                visualDensity: VisualDensity.compact,
+                onPressed: () =>
+                    Navigator.of(context).push(HowToPlayScreen.route()),
+                icon: const Icon(Icons.help_outline, color: Palette.gold),
+              ),
               _SpeedChip(
                 label: l10n.speedLabel(speed),
                 onTap: () => ref.read(settingsProvider.notifier).cycleSpeed(),

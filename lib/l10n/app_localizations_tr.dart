@@ -937,4 +937,76 @@ class AppLocalizationsTr extends AppLocalizations {
   String savedRunInfo(int floor, int money) {
     return 'Kat $floor · $money Akçe';
   }
+
+  @override
+  String get menuHowToPlay => 'Nasıl Oynanır';
+
+  @override
+  String get howToTitle => 'Nasıl Oynanır';
+
+  @override
+  String get howToGoalTitle => 'Amaç';
+
+  @override
+  String get howToGoalBody =>
+      'Her turda istakadaki okey taşlarıyla per açıp hedef puana ulaş. 4 El hakkın var; hedefe ulaşamazsan koşu biter. Yeraltından Gök\'e 8 Kat\'ı geçersen Tengri\'ye ulaşırsın.';
+
+  @override
+  String get howToTurnTitle => 'Bir tur nasıl geçer';
+
+  @override
+  String get howToTurnBody =>
+      '• Taşlara dokunarak 1–6 taş seç; ortada el türünü ve puanını görürsün.\n• Oyna: seçili taşlar puan verir, yerlerine yeni taşlar gelir.\n• Değiştir: seçili taşları atıp yenilerini çekersin (turda 3 hak).\n• Taşları sürükleyerek diz ya da Sayı / Renk ile otomatik diz.';
+
+  @override
+  String get howToOkeyTitle => 'Gösterge ve Okey';
+
+  @override
+  String get howToOkeyBody =>
+      'Turun başında bir Gösterge taşı açılır. Onun bir üstü (aynı renk; 13\'ten sonra 1) o turun Okey\'idir; istakada yıldızlı, altın kenarlı görünür. Okey joker\'dir: bir per içinde istediğin taşın yerine geçer ve en iyi değeri kendisi seçer. Göktürk harfli Sahte Okey ise okeyin değerini taşıyan normal bir taştır.';
+
+  @override
+  String get howToScoreTitle => 'Puanlama';
+
+  @override
+  String get howToScoreBody =>
+      'Skor = Puan × Çarpan.\nPuan = el türünün taban puanı + per\'deki taşların sayıları (1 sayılı taş 15 sayılır). Per\'e girmeyen taşlar oynanır ama puan vermez. Kut\'lar, taş geliştirmeleri ve tamgalar Puan ve Çarpan\'ı artırır.';
+
+  @override
+  String get howToHandsTitle => 'El türleri';
+
+  @override
+  String get howToHandsBody =>
+      'Seri: aynı renk, ardışık sayılar (12-13-1 olur, 13-1-2 olmaz). Grup: aynı sayı, farklı renkler. Değerler başlangıç seviyesindedir; Destan\'lar bir el türünü güçlendirir.';
+
+  @override
+  String get howToKutTitle => 'Kut\'lar';
+
+  @override
+  String get howToKutBody =>
+      'Kut\'lar pasif mitolojik güçlerdir (en fazla 5). Her elde soldan sağa tetiklenirler; kartları sürükleyerek sıralarını değiştir. Önce +Çarpan, sonra ×Çarpan veren bir sıra genelde daha çok puan getirir. Karta dokunursan ne yaptığını görürsün.';
+
+  @override
+  String get howToShopTitle => 'Akçe, Pazar ve eşyalar';
+
+  @override
+  String get howToShopBody =>
+      'Turu kazanınca Akçe alırsın: tur ödülü, kalan her El için +1 ve faiz (elindeki her 5 Akçe için +1, en fazla 5). Pazar\'da Kut, Destan, Tılsım, Kese ve Kupon alırsın. Destan bir el türünün seviyesini artırır; Tılsım istakada seçtiğin taşları değiştirir (Demir, Altın, renk, kopya...). Kupon kalıcı bir geliştirmedir.';
+
+  @override
+  String get howToBossTitle => 'Katlar ve Boss\'lar';
+
+  @override
+  String get howToBossBody =>
+      'Her Kat\'ta üç tur vardır: Küçük Sınav, Büyük Sınav ve Boss. Küçük ve Büyük Sınav atlanabilir; atlarsan küçük bir ödül alırsın. Boss atlanamaz ve bir kısıtlama getirir (ör. Kara Kuş\'ta okey joker değildir).';
+
+  @override
+  String get howToTipsTitle => 'İpuçları';
+
+  @override
+  String get howToTipsBody =>
+      '• Seri ve grup başlangıçlarını bir arada tut, tek kalan taşları Değiştir ile at.\n• Gök Per (Grup-3 + Seri-3) ve uzun seriler çok puan verir.\n• Hedefe az El ile ulaşırsan kalan El\'ler Akçe olur.\n• Akçe biriktirmek faiz getirir; her şeyi hemen harcama.';
+
+  @override
+  String get howToHelpTooltip => 'Nasıl oynanır?';
 }
