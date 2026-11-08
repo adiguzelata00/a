@@ -6,6 +6,7 @@ import '../game/game_controller.dart';
 import '../l10n_ext.dart';
 import '../theme/palette.dart';
 import '../widgets/particles.dart';
+import 'daily_screen.dart';
 import '../widgets/world_background.dart';
 
 /// "Koşu Sonu": won or lost, with run statistics.
@@ -75,6 +76,14 @@ class RunEndScreen extends ConsumerWidget {
                         ),
                       ),
                     ),
+                    if (run.isDaily) ...[
+                      const SizedBox(height: 4),
+                      Text(
+                        '${l10n.dailyTitle} · '
+                        '${formatDailyDate(context, run.dailyDate!)}',
+                        style: const TextStyle(color: Palette.gold),
+                      ),
+                    ],
                     if (!won && run.lastSummary != null) ...[
                       const SizedBox(height: 4),
                       Text(
@@ -130,18 +139,40 @@ class RunEndScreen extends ConsumerWidget {
                           child: Text(l10n.continueEndless),
                         ),
                       ),
-                    FilledButton(
-                      key: const Key('new-run'),
-                      onPressed: () => controller.newRun(),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: won
-                            ? Palette.nightLighter
-                            : Palette.gold,
-                        foregroundColor: won ? Palette.cream : Palette.night,
-                        minimumSize: const Size.fromHeight(48),
+                    if (run.isDaily)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: OutlinedButton.icon(
+                          key: const Key('daily-share-end'),
+                          onPressed: () => shareDailyResult(
+                            context,
+                            run.dailyDate!,
+                            DailyResult.of(run),
+                            run.seedCode,
+                          ),
+                          icon: const Icon(Icons.ios_share),
+                          label: Text(l10n.dailyShare),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: Palette.gold,
+                            minimumSize: const Size.fromHeight(48),
+                          ),
+                        ),
                       ),
-                      child: Text(l10n.menuNewRun),
-                    ),
+                    // A daily run ends here; a new normal run would replace
+                    // the saved one, so it is only offered for normal runs.
+                    if (!run.isDaily)
+                      FilledButton(
+                        key: const Key('new-run'),
+                        onPressed: () => controller.newRun(),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: won
+                              ? Palette.nightLighter
+                              : Palette.gold,
+                          foregroundColor: won ? Palette.cream : Palette.night,
+                          minimumSize: const Size.fromHeight(48),
+                        ),
+                        child: Text(l10n.menuNewRun),
+                      ),
                     const SizedBox(height: 10),
                     TextButton(
                       key: const Key('end-to-menu'),

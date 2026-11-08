@@ -8,6 +8,7 @@ export 'round/rack_sort.dart';
 export 'round/round.dart';
 export 'round/round_rules.dart';
 export 'run/boss.dart';
+export 'run/daily.dart';
 export 'run/items.dart';
 export 'run/profile.dart';
 export 'run/run_config.dart';

@@ -199,3 +199,18 @@ extension RunTexts on AppLocalizations {
     _ => errGeneric,
   };
 }
+
+extension DailyTexts on AppLocalizations {
+  String dailyBonusText(DailyBonus bonus, int money) => switch (bonus) {
+    DailyBonus.money => dailyBonusMoney(money),
+    DailyBonus.extraHand => dailyBonusExtraHand,
+    DailyBonus.extraDiscard => dailyBonusExtraDiscard,
+    DailyBonus.extraHandSize => dailyBonusExtraHandSize,
+    DailyBonus.discount => dailyBonusDiscount,
+    DailyBonus.interestCap => dailyBonusInterest,
+  };
+
+  /// Text copied by "Sonucu paylaş".
+  String dailyShareMessage(String date, DailyResult r, String seed) =>
+      dailyShareText(date, r.floor, r.score, r.won ? dailyShareWon : '', seed);
+}

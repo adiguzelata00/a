@@ -172,6 +172,16 @@ flutter build apk --release         # doğrudan kurulum için .apk
 ```
 Sürüm `pubspec.yaml` içindeki `version: 0.1.0+1` satırından gelir (`+1` = versionCode).
 
+## Günlük Meydan Okuma
+
+- Seed günün tarihinden gelir (`GUN20261108`); o gün herkes aynı taşları, Boss'ları ve Pazar'ı görür.
+- Her günün bir **başlangıç Kut'u** (Yaygın/Nadir) ve bir **günün lütfu** vardır (+10 Akçe, +1 El,
+  +1 Değiştir, +1 istaka, Pazar'da %25 indirim veya faiz sınırı +5) — ikisi de seed'den seçilir.
+- Günde tek deneme. Sonuç (ulaşılan kat, toplam skor) profilde saklanır; menüde durum, Günlük
+  ekranında son günlerin listesi görünür. "Sonucu paylaş" sonucu panoya kopyalar.
+- Günlük koşu ayrı bir kayıt yuvasındadır (`daily_run_v1`); normal koşuyu ezmez.
+- Gün, cihazın yerel tarihine göre değişir (yerel gece yarısı).
+
 ## Kural kararları (spec'te belirsiz olanlar)
 
 - **Alaca Seri** tam 4 taştır: "hepsi farklı renk" + 4 renk ⇒ en fazla 4.

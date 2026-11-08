@@ -524,5 +524,83 @@
   "howToBossBody": "Her Kat'ta üç tur vardır: Küçük Sınav, Büyük Sınav ve Boss. Küçük ve Büyük Sınav atlanabilir; atlarsan küçük bir ödül alırsın. Boss atlanamaz ve bir kısıtlama getirir (ör. Kara Kuş'ta okey joker değildir).",
   "howToTipsTitle": "İpuçları",
   "howToTipsBody": "• Seri ve grup başlangıçlarını bir arada tut, tek kalan taşları Değiştir ile at.\n• Gök Per (Grup-3 + Seri-3) ve uzun seriler çok puan verir.\n• Hedefe az El ile ulaşırsan kalan El'ler Akçe olur.\n• Akçe biriktirmek faiz getirir; her şeyi hemen harcama.",
-  "howToHelpTooltip": "Nasıl oynanır?"
+  "howToHelpTooltip": "Nasıl oynanır?",
+  "menuDaily": "Günlük Meydan Okuma",
+  "dailyTitle": "Günlük Meydan Okuma",
+  "dailyIntro": "Bugün herkes aynı taşlarla, aynı Boss'larla ve aynı Pazar'la oynar. Tek hakkın var; en yükseğe sen çık.",
+  "dailyMenuAvailable": "Bugünün meydan okuması hazır",
+  "dailyMenuInProgress": "Devam ediyor · Kat {floor}",
+  "@dailyMenuInProgress": {
+    "placeholders": {
+      "floor": {
+        "type": "int"
+      }
+    }
+  },
+  "dailyMenuDone": "Bugün tamamlandı · Kat {floor}",
+  "@dailyMenuDone": {
+    "placeholders": {
+      "floor": {
+        "type": "int"
+      }
+    }
+  },
+  "dailyStartingKut": "Başlangıç Kut'u",
+  "dailyBonusTitle": "Günün lütfu",
+  "dailyBonusMoney": "+{amount} Akçe ile başla",
+  "@dailyBonusMoney": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "dailyBonusExtraHand": "Her turda +1 El",
+  "dailyBonusExtraDiscard": "Her turda +1 Değiştir",
+  "dailyBonusExtraHandSize": "İstakaya +1 taş",
+  "dailyBonusDiscount": "Pazar'da her şey %25 indirimli",
+  "dailyBonusInterest": "Faiz sınırı +5",
+  "dailyStart": "Başla",
+  "dailyContinue": "Devam Et",
+  "dailyDoneButton": "Yarın yeni meydan okuma",
+  "dailyResultTitle": "Bugünkü sonucun",
+  "dailyResultLine": "Kat {floor} · {score} puan",
+  "@dailyResultLine": {
+    "placeholders": {
+      "floor": {
+        "type": "int"
+      },
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "dailyResultWon": "Tengri'ye ulaştın!",
+  "dailyResultOngoing": "devam ediyor",
+  "dailyShare": "Sonucu paylaş",
+  "dailyCopied": "Sonuç panoya kopyalandı",
+  "dailyShareText": "Tengri'nin Taşları · Günlük {date}\nKat {floor} · {score} puan{won}\n{seed}",
+  "@dailyShareText": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "floor": {
+        "type": "int"
+      },
+      "score": {
+        "type": "int"
+      },
+      "won": {
+        "type": "String"
+      },
+      "seed": {
+        "type": "String"
+      }
+    }
+  },
+  "dailyShareWon": " · Tengri'ye ulaştım ★",
+  "dailyHistory": "Son günler",
+  "dailyNoHistory": "Henüz günlük sonuç yok.",
+  "dailyTag": "Günlük"
 }

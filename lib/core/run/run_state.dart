@@ -143,6 +143,12 @@ class RunState {
   static const int saveVersion = 1;
 
   final String seedCode;
+
+  /// Date (yyyy-MM-dd) of the daily challenge this run belongs to, or null
+  /// for a normal run.
+  String? dailyDate;
+
+  bool get isDaily => dailyDate != null;
   final RunRules rules;
   final RunCatalog catalog;
   final SeededRng _rng;
@@ -899,6 +905,7 @@ class RunState {
       'packReturn': _packReturn.name,
       'usedBosses': _usedBosses.toList(),
       'counter': _counter,
+      'daily': dailyDate,
     };
   }
 
@@ -946,6 +953,7 @@ class RunState {
       ..clear()
       ..addAll([for (final b in j['usedBosses'] as List) b as String]);
     _counter = j['counter'] as int;
+    dailyDate = j['daily'] as String?;
   }
 
   static Map<String, dynamic> _map(Object? o) =>

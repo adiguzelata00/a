@@ -34,7 +34,9 @@ class Harness {
     int? money,
     bool realDelays = false,
     MemoryStore? store,
-  }) : audio = PlaceholderAudioService(),
+    DateTime? now,
+  }) : now = now ?? DateTime(2026, 11, 8, 12),
+       audio = PlaceholderAudioService(),
        haptics = FakeHaptics(),
        music = SilentMusicService(),
        store = store ?? MemoryStore() {
@@ -45,6 +47,14 @@ class Harness {
     container = ProviderContainer(
       overrides: [
         initialSeedCodeProvider.overrideWithValue(seed),
+        clockProvider.overrideWithValue(() => this.now),
+        dailyFactoryProvider.overrideWithValue(
+          (c) => c.start(
+            rules: rules,
+            catalog: defaultCatalog,
+            bonusMoney: Balance.dailyBonusMoney,
+          ),
+        ),
         runFactoryProvider.overrideWithValue(
           (s) => RunState(seedCode: s, rules: rules, catalog: defaultCatalog),
         ),
@@ -63,6 +73,9 @@ class Harness {
   final FakeHaptics haptics;
   final SilentMusicService music;
   final MemoryStore store;
+
+  /// Fixed "today" for the daily challenge.
+  DateTime now;
   late final ProviderContainer container;
 
   GameController get controller =>

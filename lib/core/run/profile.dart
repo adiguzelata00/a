@@ -1,3 +1,4 @@
+import 'daily.dart';
 import 'run_state.dart';
 
 /// Persistent player profile across runs: Kut collection and records.
@@ -9,8 +10,30 @@ class Profile {
     this.runsWon = 0,
     this.bestHand = 0,
     this.highestFloor = 0,
+    Map<String, DailyResult>? dailyResults,
   }) : discoveredKuts = discoveredKuts ?? {},
-       seenBosses = seenBosses ?? {};
+       seenBosses = seenBosses ?? {},
+       dailyResults = dailyResults ?? {};
+
+  /// Daily challenge results by date (yyyy-MM-dd).
+  final Map<String, DailyResult> dailyResults;
+
+  /// Stores the current state of a daily run. Returns true if changed.
+  bool recordDaily(RunState run) {
+    final date = run.dailyDate;
+    if (date == null) return false;
+    final next = DailyResult.of(run);
+    final prev = dailyResults[date];
+    if (prev != null &&
+        prev.floor == next.floor &&
+        prev.score == next.score &&
+        prev.won == next.won &&
+        prev.finished == next.finished) {
+      return false;
+    }
+    dailyResults[date] = next;
+    return true;
+  }
 
   /// Kuts the player has owned at least once ("açılan Kut'lar").
   final Set<String> discoveredKuts;
@@ -50,6 +73,7 @@ class Profile {
     'won': runsWon,
     'best': bestHand,
     'floor': highestFloor,
+    'daily': {for (final e in dailyResults.entries) e.key: e.value.toJson()},
   };
 
   factory Profile.fromJson(Map<String, dynamic> j) => Profile(
@@ -63,5 +87,11 @@ class Profile {
     runsWon: j['won'] as int? ?? 0,
     bestHand: j['best'] as int? ?? 0,
     highestFloor: j['floor'] as int? ?? 0,
+    dailyResults: {
+      for (final e in Map<String, dynamic>.from(
+        j['daily'] as Map? ?? const {},
+      ).entries)
+        e.key: DailyResult.fromJson(Map<String, dynamic>.from(e.value as Map)),
+    },
   );
 }

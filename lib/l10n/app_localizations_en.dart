@@ -1008,4 +1008,105 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get howToHelpTooltip => 'How to play?';
+
+  @override
+  String get menuDaily => 'Daily Challenge';
+
+  @override
+  String get dailyTitle => 'Daily Challenge';
+
+  @override
+  String get dailyIntro =>
+      'Today everyone plays with the same tiles, bosses and Bazaar. You get one attempt; climb as high as you can.';
+
+  @override
+  String get dailyMenuAvailable => 'Today\'s challenge is ready';
+
+  @override
+  String dailyMenuInProgress(int floor) {
+    return 'In progress · Floor $floor';
+  }
+
+  @override
+  String dailyMenuDone(int floor) {
+    return 'Done today · Floor $floor';
+  }
+
+  @override
+  String get dailyStartingKut => 'Starting Kut';
+
+  @override
+  String get dailyBonusTitle => 'Today\'s blessing';
+
+  @override
+  String dailyBonusMoney(int amount) {
+    return 'Start with +$amount Akçe';
+  }
+
+  @override
+  String get dailyBonusExtraHand => '+1 hand every round';
+
+  @override
+  String get dailyBonusExtraDiscard => '+1 discard every round';
+
+  @override
+  String get dailyBonusExtraHandSize => '+1 rack size';
+
+  @override
+  String get dailyBonusDiscount => 'Everything in the Bazaar is 25% off';
+
+  @override
+  String get dailyBonusInterest => 'Interest cap +5';
+
+  @override
+  String get dailyStart => 'Start';
+
+  @override
+  String get dailyContinue => 'Continue';
+
+  @override
+  String get dailyDoneButton => 'New challenge tomorrow';
+
+  @override
+  String get dailyResultTitle => 'Your result today';
+
+  @override
+  String dailyResultLine(int floor, int score) {
+    return 'Floor $floor · $score points';
+  }
+
+  @override
+  String get dailyResultWon => 'You reached Tengri!';
+
+  @override
+  String get dailyResultOngoing => 'in progress';
+
+  @override
+  String get dailyShare => 'Share result';
+
+  @override
+  String get dailyCopied => 'Result copied to clipboard';
+
+  @override
+  String dailyShareText(
+    String date,
+    int floor,
+    int score,
+    String won,
+    String seed,
+  ) {
+    return 'Stones of Tengri · Daily $date\nFloor $floor · $score points$won\n$seed';
+  }
+
+  @override
+  String get dailyShareWon => ' · reached Tengri ★';
+
+  @override
+  String get dailyHistory => 'Recent days';
+
+  @override
+  String get dailyNoHistory => 'No daily results yet.';
+
+  @override
+  String get dailyTag => 'Daily';
 }

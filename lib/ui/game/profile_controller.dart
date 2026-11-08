@@ -17,6 +17,11 @@ class ProfileController extends Notifier<Profile> {
     if (state.observe(run)) _commit();
   }
 
+  /// Stores the progress / result of a daily challenge run.
+  void recordDaily(RunState run) {
+    if (state.recordDaily(run)) _commit();
+  }
+
   void runStarted() {
     state.runsStarted++;
     _commit();

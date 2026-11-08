@@ -192,6 +192,9 @@ abstract final class Balance {
   /// "Akçe" skip tag reward.
   static const int skipMoney = 5;
 
+  /// Daily challenge: Akçe given by the "money" bonus.
+  static const int dailyBonusMoney = 10;
+
   // ---------------------------------------------------------------------
   // Kut prices & slots
   // ---------------------------------------------------------------------

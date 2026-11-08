@@ -1009,4 +1009,105 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get howToHelpTooltip => 'Nasıl oynanır?';
+
+  @override
+  String get menuDaily => 'Günlük Meydan Okuma';
+
+  @override
+  String get dailyTitle => 'Günlük Meydan Okuma';
+
+  @override
+  String get dailyIntro =>
+      'Bugün herkes aynı taşlarla, aynı Boss\'larla ve aynı Pazar\'la oynar. Tek hakkın var; en yükseğe sen çık.';
+
+  @override
+  String get dailyMenuAvailable => 'Bugünün meydan okuması hazır';
+
+  @override
+  String dailyMenuInProgress(int floor) {
+    return 'Devam ediyor · Kat $floor';
+  }
+
+  @override
+  String dailyMenuDone(int floor) {
+    return 'Bugün tamamlandı · Kat $floor';
+  }
+
+  @override
+  String get dailyStartingKut => 'Başlangıç Kut\'u';
+
+  @override
+  String get dailyBonusTitle => 'Günün lütfu';
+
+  @override
+  String dailyBonusMoney(int amount) {
+    return '+$amount Akçe ile başla';
+  }
+
+  @override
+  String get dailyBonusExtraHand => 'Her turda +1 El';
+
+  @override
+  String get dailyBonusExtraDiscard => 'Her turda +1 Değiştir';
+
+  @override
+  String get dailyBonusExtraHandSize => 'İstakaya +1 taş';
+
+  @override
+  String get dailyBonusDiscount => 'Pazar\'da her şey %25 indirimli';
+
+  @override
+  String get dailyBonusInterest => 'Faiz sınırı +5';
+
+  @override
+  String get dailyStart => 'Başla';
+
+  @override
+  String get dailyContinue => 'Devam Et';
+
+  @override
+  String get dailyDoneButton => 'Yarın yeni meydan okuma';
+
+  @override
+  String get dailyResultTitle => 'Bugünkü sonucun';
+
+  @override
+  String dailyResultLine(int floor, int score) {
+    return 'Kat $floor · $score puan';
+  }
+
+  @override
+  String get dailyResultWon => 'Tengri\'ye ulaştın!';
+
+  @override
+  String get dailyResultOngoing => 'devam ediyor';
+
+  @override
+  String get dailyShare => 'Sonucu paylaş';
+
+  @override
+  String get dailyCopied => 'Sonuç panoya kopyalandı';
+
+  @override
+  String dailyShareText(
+    String date,
+    int floor,
+    int score,
+    String won,
+    String seed,
+  ) {
+    return 'Tengri\'nin Taşları · Günlük $date\nKat $floor · $score puan$won\n$seed';
+  }
+
+  @override
+  String get dailyShareWon => ' · Tengri\'ye ulaştım ★';
+
+  @override
+  String get dailyHistory => 'Son günler';
+
+  @override
+  String get dailyNoHistory => 'Henüz günlük sonuç yok.';
+
+  @override
+  String get dailyTag => 'Günlük';
 }

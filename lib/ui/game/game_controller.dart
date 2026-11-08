@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tengri_taslari/core/core.dart';
+import 'package:tengri_taslari/data/balance.dart';
 import 'package:tengri_taslari/data/run_setup.dart' as setup;
 import 'package:tengri_taslari/services/audio_service.dart';
 import 'package:tengri_taslari/services/haptics_service.dart';
@@ -46,17 +47,26 @@ class GameController extends Notifier<GameState> {
     final seed = ref.read(initialSeedCodeProvider);
     // A seed passed in (tests, `?seed=`) starts a run right away.
     if (seed != null) return _newRunState(seed);
-    // Otherwise show the menu; "Devam Et" resumes a saved run if any.
-    final saved = ref.read(runLoaderProvider)(ref.read(saveServiceProvider));
-    return GameState(run: saved);
+    // Otherwise show the menu; saved runs (normal and daily) can resume.
+    final save = ref.read(saveServiceProvider);
+    final load = ref.read(runLoaderProvider);
+    return GameState(
+      normalRun: load(save, daily: false),
+      dailyRun: load(save, daily: true),
+    );
   }
 
   /// Autosave + profile bookkeeping after every change.
   void _persist(GameState s) {
+    final save = ref.read(saveServiceProvider);
+    final profile = ref.read(profileProvider.notifier);
+    for (final run in [s.normalRun, s.dailyRun]) {
+      if (run == null) continue;
+      save.saveRun(run);
+      if (run.isDaily) profile.recordDaily(run);
+    }
     final run = s.run;
     if (run == null) return;
-    ref.read(saveServiceProvider).saveRun(run);
-    final profile = ref.read(profileProvider.notifier);
     profile.observe(run);
     if (run.phase == RunPhase.won && !identical(_recordedWin, run)) {
       _recordedWin = run;
@@ -67,8 +77,11 @@ class GameController extends Notifier<GameState> {
   static String randomSeedCode() =>
       generateSeedCode(SeededRng(DateTime.now().microsecondsSinceEpoch));
 
-  GameState _newRunState(String seed) =>
-      GameState(run: ref.read(runFactoryProvider)(seed), showMenu: false);
+  GameState _newRunState(String seed) => GameState(
+    normalRun: ref.read(runFactoryProvider)(seed),
+    dailyRun: stateOrNull?.dailyRun,
+    showMenu: false,
+  );
 
   AudioService get _audio => ref.read(audioServiceProvider);
   HapticsService get _haptics => ref.read(hapticsServiceProvider);
@@ -99,17 +112,61 @@ class GameController extends Notifier<GameState> {
 
   void toMenu() => state = state.copyWith(showMenu: true);
 
-  /// Back to the running (or saved) run.
+  /// Back to the normal run (running or saved).
   void resume() {
-    if (state.run == null) return;
+    if (state.normalRun == null) return;
     ref.read(musicServiceProvider).start();
-    state = state.copyWith(showMenu: false);
+    state = state.copyWith(showMenu: false, dailyActive: false);
   }
 
   /// A finished run can not be continued.
   bool get canResume {
-    final p = state.run?.phase;
+    final p = state.normalRun?.phase;
     return p != null && p != RunPhase.lost;
+  }
+
+  // ---------------------------------------------------------------- daily
+
+  /// Today's challenge.
+  DailyChallenge get todaysChallenge =>
+      DailyChallenge.forDay(ref.read(clockProvider)(), setup.defaultCatalog);
+
+  /// What the daily button should offer today.
+  DailyStatus dailyStatus() {
+    final today = todaysChallenge.date;
+    final run = state.dailyRun;
+    if (run != null && run.dailyDate == today && run.phase != RunPhase.lost) {
+      return DailyStatus.inProgress;
+    }
+    final result = ref.read(profileProvider).dailyResults[today];
+    if (result != null) return DailyStatus.done;
+    return DailyStatus.available;
+  }
+
+  /// Starts today's challenge, or continues it. Only one attempt per day.
+  void playDaily() {
+    final status = dailyStatus();
+    if (status == DailyStatus.done) return;
+    _skipRequested = false;
+    ref.read(musicServiceProvider).start();
+    if (status == DailyStatus.inProgress) {
+      state = state.copyWith(showMenu: false, dailyActive: true);
+      return;
+    }
+    // A run from an earlier day that was never finished is left behind;
+    // its last progress stays in the results.
+    final old = state.dailyRun;
+    if (old != null && old.phase != RunPhase.lost) {
+      ref.read(profileProvider.notifier).recordDaily(old);
+    }
+    final run = ref.read(dailyFactoryProvider)(todaysChallenge);
+    ref.read(profileProvider.notifier).runStarted();
+    state = state.copyWith(
+      run: run,
+      dailyActive: true,
+      showMenu: false,
+      selectedIds: const <int>{},
+    );
   }
 
   // -------------------------------------------------------- round select
@@ -373,14 +430,31 @@ final runFactoryProvider = Provider<RunState Function(String seed)>(
   (ref) => setup.newRun,
 );
 
-/// Loads the saved run (null = none). Overridable in tests.
-final runLoaderProvider = Provider<RunState? Function(SaveService save)>(
+/// Loads a saved run (null = none). Overridable in tests.
+final runLoaderProvider =
+    Provider<RunState? Function(SaveService save, {required bool daily})>(
+      (ref) =>
+          (save, {required daily}) => save.loadRun(
+            rules: setup.defaultRunRules,
+            catalog: setup.defaultCatalog,
+            daily: daily,
+          ),
+    );
+
+/// Starts the run of a daily challenge. Overridable in tests.
+final dailyFactoryProvider = Provider<RunState Function(DailyChallenge c)>(
   (ref) =>
-      (save) => save.loadRun(
+      (c) => c.start(
         rules: setup.defaultRunRules,
         catalog: setup.defaultCatalog,
+        bonusMoney: Balance.dailyBonusMoney,
       ),
 );
+
+/// Current time (the daily challenge's day). Overridable in tests.
+final clockProvider = Provider<DateTime Function()>((ref) => DateTime.now);
+
+enum DailyStatus { available, inProgress, done }
 
 final gameControllerProvider = NotifierProvider<GameController, GameState>(
   GameController.new,

@@ -28,6 +28,7 @@ class Hud extends ConsumerWidget {
           floor: s.run!.floor,
           roundInFloor: s.run!.roundInFloor,
           seed: s.run!.seedCode,
+          daily: s.run!.isDaily,
           deck: s.round!.drawPileCount,
           bossId: s.round!.isBossRound ? s.run!.boss.id : null,
           endless: s.run!.endless,
@@ -58,7 +59,9 @@ class Hud extends ConsumerWidget {
               ),
               Flexible(
                 child: Text(
-                  l10n.seedLabel(s.seed),
+                  s.daily
+                      ? '${l10n.dailyTag} · ${s.seed}'
+                      : l10n.seedLabel(s.seed),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(

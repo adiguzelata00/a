@@ -22,11 +22,13 @@ class RunHeader extends ConsumerWidget {
           floor: s.run!.floor,
           world: s.run!.world,
           endless: s.run!.endless,
+          daily: s.run!.isDaily,
           money: s.run!.money,
         ),
       ),
     );
-    final worldText = s.endless ? l10n.endlessLabel : l10n.worldName(s.world);
+    final world = s.endless ? l10n.endlessLabel : l10n.worldName(s.world);
+    final worldText = s.daily ? '${l10n.dailyTag} · $world' : world;
     return Padding(
       padding: const EdgeInsets.fromLTRB(4, 4, 16, 4),
       child: Row(

@@ -66,7 +66,9 @@ enum GameScreen { menu, roundSelect, table, cashout, shop, pack, runEnd }
 /// still animating out never see a missing round.
 class GameState {
   const GameState({
-    this.run,
+    this.normalRun,
+    this.dailyRun,
+    this.dailyActive = false,
     this.round,
     this.showMenu = true,
     this.version = 0,
@@ -78,7 +80,15 @@ class GameState {
     this.errorCount = 0,
   });
 
-  final RunState? run;
+  /// Saved / running normal run and daily challenge run (separate slots).
+  final RunState? normalRun;
+  final RunState? dailyRun;
+
+  /// Which slot is being played.
+  final bool dailyActive;
+
+  /// The run being played.
+  RunState? get run => dailyActive ? dailyRun : normalRun;
   final Round? round;
   final bool showMenu;
   final int version;
@@ -155,6 +165,8 @@ class GameState {
 
   GameState copyWith({
     RunState? run,
+    RunState? dailyRun,
+    bool? dailyActive,
     Round? round,
     bool? showMenu,
     Set<int>? selectedIds,
@@ -164,7 +176,14 @@ class GameState {
     double? shakeStrength,
     RunError? error,
   }) => GameState(
-    run: run ?? this.run,
+    // `run` replaces the slot that is (or becomes) active.
+    normalRun: !(dailyActive ?? this.dailyActive) && run != null
+        ? run
+        : normalRun,
+    dailyRun: (dailyActive ?? this.dailyActive) && run != null
+        ? run
+        : (dailyRun ?? this.dailyRun),
+    dailyActive: dailyActive ?? this.dailyActive,
     round: round ?? this.round,
     showMenu: showMenu ?? this.showMenu,
     version: version + 1,

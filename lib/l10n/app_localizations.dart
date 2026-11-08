@@ -1939,6 +1939,180 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Nasıl oynanır?'**
   String get howToHelpTooltip;
+
+  /// No description provided for @menuDaily.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük Meydan Okuma'**
+  String get menuDaily;
+
+  /// No description provided for @dailyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük Meydan Okuma'**
+  String get dailyTitle;
+
+  /// No description provided for @dailyIntro.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün herkes aynı taşlarla, aynı Boss\'larla ve aynı Pazar\'la oynar. Tek hakkın var; en yükseğe sen çık.'**
+  String get dailyIntro;
+
+  /// No description provided for @dailyMenuAvailable.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugünün meydan okuması hazır'**
+  String get dailyMenuAvailable;
+
+  /// No description provided for @dailyMenuInProgress.
+  ///
+  /// In tr, this message translates to:
+  /// **'Devam ediyor · Kat {floor}'**
+  String dailyMenuInProgress(int floor);
+
+  /// No description provided for @dailyMenuDone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün tamamlandı · Kat {floor}'**
+  String dailyMenuDone(int floor);
+
+  /// No description provided for @dailyStartingKut.
+  ///
+  /// In tr, this message translates to:
+  /// **'Başlangıç Kut\'u'**
+  String get dailyStartingKut;
+
+  /// No description provided for @dailyBonusTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günün lütfu'**
+  String get dailyBonusTitle;
+
+  /// No description provided for @dailyBonusMoney.
+  ///
+  /// In tr, this message translates to:
+  /// **'+{amount} Akçe ile başla'**
+  String dailyBonusMoney(int amount);
+
+  /// No description provided for @dailyBonusExtraHand.
+  ///
+  /// In tr, this message translates to:
+  /// **'Her turda +1 El'**
+  String get dailyBonusExtraHand;
+
+  /// No description provided for @dailyBonusExtraDiscard.
+  ///
+  /// In tr, this message translates to:
+  /// **'Her turda +1 Değiştir'**
+  String get dailyBonusExtraDiscard;
+
+  /// No description provided for @dailyBonusExtraHandSize.
+  ///
+  /// In tr, this message translates to:
+  /// **'İstakaya +1 taş'**
+  String get dailyBonusExtraHandSize;
+
+  /// No description provided for @dailyBonusDiscount.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pazar\'da her şey %25 indirimli'**
+  String get dailyBonusDiscount;
+
+  /// No description provided for @dailyBonusInterest.
+  ///
+  /// In tr, this message translates to:
+  /// **'Faiz sınırı +5'**
+  String get dailyBonusInterest;
+
+  /// No description provided for @dailyStart.
+  ///
+  /// In tr, this message translates to:
+  /// **'Başla'**
+  String get dailyStart;
+
+  /// No description provided for @dailyContinue.
+  ///
+  /// In tr, this message translates to:
+  /// **'Devam Et'**
+  String get dailyContinue;
+
+  /// No description provided for @dailyDoneButton.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yarın yeni meydan okuma'**
+  String get dailyDoneButton;
+
+  /// No description provided for @dailyResultTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugünkü sonucun'**
+  String get dailyResultTitle;
+
+  /// No description provided for @dailyResultLine.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kat {floor} · {score} puan'**
+  String dailyResultLine(int floor, int score);
+
+  /// No description provided for @dailyResultWon.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tengri\'ye ulaştın!'**
+  String get dailyResultWon;
+
+  /// No description provided for @dailyResultOngoing.
+  ///
+  /// In tr, this message translates to:
+  /// **'devam ediyor'**
+  String get dailyResultOngoing;
+
+  /// No description provided for @dailyShare.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sonucu paylaş'**
+  String get dailyShare;
+
+  /// No description provided for @dailyCopied.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sonuç panoya kopyalandı'**
+  String get dailyCopied;
+
+  /// No description provided for @dailyShareText.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tengri\'nin Taşları · Günlük {date}\nKat {floor} · {score} puan{won}\n{seed}'**
+  String dailyShareText(
+    String date,
+    int floor,
+    int score,
+    String won,
+    String seed,
+  );
+
+  /// No description provided for @dailyShareWon.
+  ///
+  /// In tr, this message translates to:
+  /// **' · Tengri\'ye ulaştım ★'**
+  String get dailyShareWon;
+
+  /// No description provided for @dailyHistory.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son günler'**
+  String get dailyHistory;
+
+  /// No description provided for @dailyNoHistory.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz günlük sonuç yok.'**
+  String get dailyNoHistory;
+
+  /// No description provided for @dailyTag.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük'**
+  String get dailyTag;
 }
 
 class _AppLocalizationsDelegate

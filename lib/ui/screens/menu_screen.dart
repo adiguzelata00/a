@@ -6,10 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tengri_taslari/core/core.dart';
 
 import '../game/game_controller.dart';
+import '../game/profile_controller.dart';
 import '../l10n_ext.dart';
 import '../theme/app_theme.dart';
 import '../theme/palette.dart';
 import 'collection_screen.dart';
+import 'daily_screen.dart';
 import 'how_to_play_screen.dart';
 import 'settings_screen.dart';
 
@@ -23,13 +25,26 @@ class MenuScreen extends ConsumerWidget {
     // A run that is not over can be continued (also after an app restart).
     final saved = ref.watch(
       gameControllerProvider.select((s) {
-        final r = s.run;
+        final r = s.normalRun;
         if (r == null || r.phase == RunPhase.lost) return null;
         return (floor: r.floor, money: r.money);
       }),
     );
     final hasRun = saved != null;
     final controller = ref.read(gameControllerProvider.notifier);
+    // Daily challenge status line (rebuilds when the run or profile changes).
+    ref.watch(gameControllerProvider.select((s) => s.dailyRun?.floor));
+    final today = controller.todaysChallenge.date;
+    final todayResult = ref.watch(
+      profileProvider.select((p) => p.dailyResults[today]),
+    );
+    final dailyLine = switch (controller.dailyStatus()) {
+      DailyStatus.available => l10n.dailyMenuAvailable,
+      DailyStatus.inProgress => l10n.dailyMenuInProgress(
+        todayResult?.floor ?? 1,
+      ),
+      DailyStatus.done => l10n.dailyMenuDone(todayResult?.floor ?? 1),
+    };
 
     Future<void> startNew() async {
       if (hasRun) {
@@ -111,6 +126,19 @@ class MenuScreen extends ConsumerWidget {
                       label: l10n.menuNewRun,
                       primary: !hasRun,
                       onPressed: startNew,
+                    ),
+                    const SizedBox(height: 12),
+                    _MenuButton(
+                      key: const Key('menu-daily'),
+                      label: l10n.menuDaily,
+                      onPressed: () =>
+                          Navigator.of(context).push(DailyScreen.route()),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      dailyLine,
+                      key: const Key('menu-daily-status'),
+                      style: const TextStyle(color: Palette.textMuted),
                     ),
                     const SizedBox(height: 12),
                     _MenuButton(
