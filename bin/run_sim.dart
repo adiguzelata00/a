@@ -6,7 +6,6 @@
 //
 // Developer tool for balancing (texts are inline).
 
-import 'package:tengri_taslari/core/core.dart';
 import 'package:tengri_taslari/core/sim/run_bot.dart';
 import 'package:tengri_taslari/data/balance.dart';
 import 'package:tengri_taslari/data/run_setup.dart';

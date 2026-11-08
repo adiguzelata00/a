@@ -229,4 +229,9 @@ abstract final class Balance {
   static const int nazarBoncuguMult = 15;
   static const int ergenekonChips = 30;
   static const double gokBoruXMultPerGroup4 = 1;
+  static const int odAnaMult = 8;
+  static const int yerSuMultPerTile = 1;
+  static const int otukenAkcePerStep = 5;
+  static const int otukenMultPerStep = 1;
+  static const double kokTengriXMultPerHand = 0.5;
 }

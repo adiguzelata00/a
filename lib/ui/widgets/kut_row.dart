@@ -29,6 +29,9 @@ class KutRow extends ConsumerWidget {
           event: e != null && e.source == ScoreSourceKind.kut ? e : null,
           step: p?.step ?? -1,
           version: s.version,
+          firstDisabled:
+              s.run?.phase == RunPhase.round &&
+              (s.round?.rules.firstKutDisabled ?? false),
         );
       }),
     );
@@ -51,6 +54,7 @@ class KutRow extends ConsumerWidget {
                 if (i < data.kuts.length)
                   _KutSlot(
                     key: ValueKey('kut-${data.kuts[i].id}'),
+                    disabled: data.firstDisabled && i == 0,
                     kut: data.kuts[i],
                     index: i,
                     width: w,
@@ -84,8 +88,10 @@ class _KutSlot extends StatelessWidget {
     required this.label,
     required this.onMove,
     required this.onTap,
+    this.disabled = false,
   });
 
+  final bool disabled;
   final KutInstance kut;
   final int index;
   final double width;
@@ -97,10 +103,9 @@ class _KutSlot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final card = KutCard(
-      definition: kut.definition,
-      instance: kut,
-      width: width,
+    final card = Opacity(
+      opacity: disabled ? 0.35 : 1,
+      child: KutCard(definition: kut.definition, instance: kut, width: width),
     );
     final body = Stack(
       clipBehavior: Clip.none,

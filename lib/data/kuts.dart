@@ -130,6 +130,26 @@ final List<KutDefinition> allKuts = [
     Rarity.legendary,
     const HandTypeScalingKut(HandType.group4, Balance.gokBoruXMultPerGroup4),
   ),
+  // Phase 4 additions.
+  _kut(
+    'od_ana',
+    Rarity.common,
+    const ConditionalHandKut(handHasPairs, mult: Balance.odAnaMult),
+  ),
+  _kut('yer_su', Rarity.common, const PerHeldTileKut(Balance.yerSuMultPerTile)),
+  _kut(
+    'otuken',
+    Rarity.rare,
+    const MoneyMultKut(
+      per: Balance.otukenAkcePerStep,
+      mult: Balance.otukenMultPerStep,
+    ),
+  ),
+  _kut(
+    'kok_tengri',
+    Rarity.legendary,
+    const HandsLeftXMultKut(Balance.kokTengriXMultPerHand),
+  ),
 ];
 
 final Map<String, KutDefinition> kutsById = {for (final k in allKuts) k.id: k};

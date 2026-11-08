@@ -1,5 +1,6 @@
 // Boss catalogue. Names / descriptions are localized by `id`.
 
+import '../core/hands/hand_type.dart';
 import '../core/round/round_rules.dart';
 import '../core/run/boss.dart';
 
@@ -29,6 +30,27 @@ const List<BossDefinition> allBosses = [
     id: 'kara_kus',
     rules: RoundRules(okeyIsWild: false),
     minFloor: 2,
+  ),
+  // Phase 4 additions.
+  BossDefinition(
+    id: 'yalmavuz',
+    rules: RoundRules(faceTilesDontCount: true),
+    minFloor: 2,
+  ),
+  BossDefinition(
+    id: 'abasi',
+    rules: RoundRules(handSizeDelta: -2),
+    minFloor: 3,
+  ),
+  BossDefinition(
+    id: 'sulmus',
+    rules: RoundRules(zeroScoreHands: {HandType.single, HandType.pair}),
+    minFloor: 3,
+  ),
+  BossDefinition(
+    id: 'kara_kam',
+    rules: RoundRules(firstKutDisabled: true),
+    minFloor: 4,
   ),
 ];
 

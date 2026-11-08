@@ -40,6 +40,7 @@ class ScoringInput {
     this.handNumber = 0,
     this.isBossRound = false,
     this.countedColor,
+    this.money = 0,
     this.rng,
   });
 
@@ -60,6 +61,9 @@ class ScoringInput {
 
   /// Tepegöz: only counted tiles matching this color score (null = all).
   final TileColor? countedColor;
+
+  /// Akçe the player holds (Ötüken).
+  final int money;
 
   /// Used for random effects (crystal shatter). `null` = preview mode:
   /// no random effect happens.
@@ -116,8 +120,11 @@ class ScoringEngine {
     acc.mult = input.levels.multOf(hand.type).toDouble();
     acc.emit(ScoreEventKind.handBase, ScoreSourceKind.hand, -1, acc.chips);
 
+    // Kara Kam: the leftmost Kut is disabled (it keeps its index for
+    // events, but none of its hooks run).
     final contexts = [
-      for (var i = 0; i < kuts.length; i++) _KutCtx(acc, kuts[i], i),
+      for (var i = 0; i < kuts.length; i++)
+        if (!(input.rules.firstKutDisabled && i == 0)) _KutCtx(acc, kuts[i], i),
     ];
 
     // 1. State updates before scoring.
@@ -130,8 +137,10 @@ class ScoringEngine {
     for (var pos = 0; pos < hand.counted.length; pos++) {
       final tile = hand.counted[pos];
       final idx = tile.playedIndex;
-      if (input.countedColor != null &&
-          !tile.matchesColor(input.countedColor!)) {
+      final faceDebuff = input.rules.faceTilesDontCount && tile.number >= 11;
+      if (faceDebuff ||
+          (input.countedColor != null &&
+              !tile.matchesColor(input.countedColor!))) {
         acc.emit(
           ScoreEventKind.tileDebuffed,
           ScoreSourceKind.playedTile,
@@ -196,6 +205,10 @@ class ScoringEngine {
         -1,
         input.rules.runScoreFactor,
       );
+    }
+    if (input.rules.zeroScoreHands.contains(hand.type)) {
+      score = 0;
+      acc.emit(ScoreEventKind.bossPenalty, ScoreSourceKind.boss, -1, 0);
     }
     if (input.rules.firstHandScoresZero && input.handNumber == 0) {
       score = 0;
@@ -315,6 +328,8 @@ class _KutCtx extends KutHandContext {
   bool get isBossRound => _in.isBossRound;
   @override
   int get handNumber => _in.handNumber;
+  @override
+  int get money => _in.money;
 
   @override
   void addChips(num amount) =>

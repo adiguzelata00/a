@@ -262,7 +262,7 @@ class RunState {
       kuts: _kuts,
       isBossRound: isBossRound,
       tuning: rules.tileEffects,
-    );
+    )..money = money;
     phase = RunPhase.round;
   }
 

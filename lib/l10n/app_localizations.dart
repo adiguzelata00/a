@@ -1555,6 +1555,102 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Desteye eklenir'**
   String get tileAdded;
+
+  /// No description provided for @kutOdAnaName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Od Ana'**
+  String get kutOdAnaName;
+
+  /// No description provided for @kutOdAnaDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çift içeren ellerde (Çift, İki Çift, Üç Çift) +8 Çarpan.'**
+  String get kutOdAnaDesc;
+
+  /// No description provided for @kutYerSuName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yer-Su'**
+  String get kutYerSuName;
+
+  /// No description provided for @kutYerSuDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'İstakada tutulan her taş için +1 Çarpan.'**
+  String get kutYerSuDesc;
+
+  /// No description provided for @kutOtukenName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ötüken'**
+  String get kutOtukenName;
+
+  /// No description provided for @kutOtukenDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Elindeki her 5 Akçe için +1 Çarpan.'**
+  String get kutOtukenDesc;
+
+  /// No description provided for @kutKokTengriName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kök Tengri'**
+  String get kutKokTengriName;
+
+  /// No description provided for @kutKokTengriDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu elden sonra kalan her El hakkı için +0,5 ×Çarpan.'**
+  String get kutKokTengriDesc;
+
+  /// No description provided for @bossYalmavuzName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yalmavuz'**
+  String get bossYalmavuzName;
+
+  /// No description provided for @bossYalmavuzDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'11, 12 ve 13 sayılı taşlar sayılmaz.'**
+  String get bossYalmavuzDesc;
+
+  /// No description provided for @bossAbasiName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Abası'**
+  String get bossAbasiName;
+
+  /// No description provided for @bossAbasiDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'İstakaya 2 taş eksik gelir.'**
+  String get bossAbasiDesc;
+
+  /// No description provided for @bossSulmusName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şulmus'**
+  String get bossSulmusName;
+
+  /// No description provided for @bossSulmusDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tek Taş ve Çift puan vermez.'**
+  String get bossSulmusDesc;
+
+  /// No description provided for @bossKaraKamName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kara Kam'**
+  String get bossKaraKamName;
+
+  /// No description provided for @bossKaraKamDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'En soldaki Kut bu turda çalışmaz.'**
+  String get bossKaraKamDesc;
 }
 
 class _AppLocalizationsDelegate

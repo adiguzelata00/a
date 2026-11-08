@@ -48,6 +48,10 @@ extension GameTexts on AppLocalizations {
     'nazar_boncugu' => (kutNazarBoncuguName, kutNazarBoncuguDesc),
     'ergenekon' => (kutErgenekonName, kutErgenekonDesc),
     'gok_boru' => (kutGokBoruName, kutGokBoruDesc),
+    'od_ana' => (kutOdAnaName, kutOdAnaDesc),
+    'yer_su' => (kutYerSuName, kutYerSuDesc),
+    'otuken' => (kutOtukenName, kutOtukenDesc),
+    'kok_tengri' => (kutKokTengriName, kutKokTengriDesc),
     _ => null,
   };
 }
@@ -65,6 +69,10 @@ extension RunTexts on AppLocalizations {
     'albasti' => (bossAlbastiName, bossAlbastiDesc),
     'demirkiyak' => (bossDemirkiyakName, bossDemirkiyakDesc),
     'kara_kus' => (bossKaraKusName, bossKaraKusDesc),
+    'yalmavuz' => (bossYalmavuzName, bossYalmavuzDesc),
+    'abasi' => (bossAbasiName, bossAbasiDesc),
+    'sulmus' => (bossSulmusName, bossSulmusDesc),
+    'kara_kam' => (bossKaraKamName, bossKaraKamDesc),
     _ => null,
   };
 

@@ -343,4 +343,80 @@ void main() {
       expect(score(ts('R5 R5'), rules: rules).score, 40);
     });
   });
+
+  group('Phase 4 content', () {
+    test('Od Ana: +mult only for hands with pairs', () {
+      expect(score(ts('R5 R5'), kuts: ['od_ana']).mult, 2 + Balance.odAnaMult);
+      expect(score(ts('R4 R5 R6'), kuts: ['od_ana']).mult, 3);
+    });
+
+    test('Yer-Su: +mult per held tile', () {
+      final r = score(ts('R5 R5'), held: ts('K1 K2 K3'), kuts: ['yer_su']);
+      expect(r.mult, 2 + 3 * Balance.yerSuMultPerTile);
+    });
+
+    test('Kök Tengri: ×(1 + 0.5 × hands left)', () {
+      final lv = levels();
+      final hand = evaluator.evaluate(ts('R5 R5'), neutralOkey, lv)!;
+      final r = engine.score(
+        ScoringInput(
+          hand: hand,
+          heldTiles: const [],
+          levels: lv,
+          kuts: [KutInstance(kutById('kok_tengri'))],
+          handsLeft: 2,
+        ),
+      );
+      expect(r.mult, 2 * (1 + Balance.kokTengriXMultPerHand * 2));
+    });
+
+    test('Ötüken: +mult per 5 Akçe held', () {
+      final lv = levels();
+      final hand = evaluator.evaluate(ts('R5 R5'), neutralOkey, lv)!;
+      final r = engine.score(
+        ScoringInput(
+          hand: hand,
+          heldTiles: const [],
+          levels: lv,
+          kuts: [KutInstance(kutById('otuken'))],
+          money: 17,
+        ),
+      );
+      expect(r.mult, 2 + 3 * Balance.otukenMultPerStep);
+    });
+
+    test('Yalmavuz: tiles 11-13 do not count', () {
+      const rules = RoundRules(faceTilesDontCount: true);
+      final r = score(ts('K11 K12 K13'), rules: rules);
+      expect(r.chips, 25);
+      expect(
+        r.events.where((e) => e.kind == ScoreEventKind.tileDebuffed),
+        hasLength(3),
+      );
+    });
+
+    test('Şulmus: Tek Taş and Çift score nothing', () {
+      const rules = RoundRules(
+        zeroScoreHands: {HandType.single, HandType.pair},
+      );
+      expect(score(ts('R5 R5'), rules: rules).score, 0);
+      expect(score(ts('R4 R5 R6'), rules: rules).score, 120);
+    });
+
+    test('Kara Kam: leftmost Kut does nothing', () {
+      const rules = RoundRules(firstKutDisabled: true);
+      final r = score(
+        ts('R4 R5 R6'),
+        kuts: ['bozkurt', 'umay_ana'],
+        rules: rules,
+      );
+      expect(r.mult, 3 + 4 * 3, reason: 'only Umay Ana triggers');
+      expect(
+        r.events.where(
+          (e) => e.source == ScoreSourceKind.kut && e.sourceIndex == 0,
+        ),
+        isEmpty,
+      );
+    });
+  });
 }

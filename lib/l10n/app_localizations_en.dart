@@ -798,4 +798,54 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tileAdded => 'Added to your deck';
+
+  @override
+  String get kutOdAnaName => 'Od Ana';
+
+  @override
+  String get kutOdAnaDesc =>
+      '+8 Mult for hands with pairs (Pair, Two Pair, Three Pairs).';
+
+  @override
+  String get kutYerSuName => 'Yer-Su';
+
+  @override
+  String get kutYerSuDesc => '+1 Mult for each tile held in the rack.';
+
+  @override
+  String get kutOtukenName => 'Ötüken';
+
+  @override
+  String get kutOtukenDesc => '+1 Mult for every 5 Akçe you hold.';
+
+  @override
+  String get kutKokTengriName => 'Kök Tengri';
+
+  @override
+  String get kutKokTengriDesc =>
+      '+0.5 ×Mult for each hand left after this one.';
+
+  @override
+  String get bossYalmavuzName => 'Yalmavuz';
+
+  @override
+  String get bossYalmavuzDesc => 'Tiles numbered 11, 12 and 13 do not count.';
+
+  @override
+  String get bossAbasiName => 'Abası';
+
+  @override
+  String get bossAbasiDesc => 'The rack holds 2 fewer tiles.';
+
+  @override
+  String get bossSulmusName => 'Şulmus';
+
+  @override
+  String get bossSulmusDesc => 'High Tile and Pair score nothing.';
+
+  @override
+  String get bossKaraKamName => 'Kara Kam';
+
+  @override
+  String get bossKaraKamDesc => 'Your leftmost Kut does nothing this round.';
 }

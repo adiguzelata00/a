@@ -50,6 +50,10 @@ class ConditionalHandKut extends KutBehavior {
 }
 
 bool always(KutHandContext ctx) => true;
+bool handHasPairs(KutHandContext ctx) =>
+    ctx.handType == HandType.pair ||
+    ctx.handType == HandType.twoPair ||
+    ctx.handType == HandType.threePairs;
 bool handHasRun(KutHandContext ctx) => ctx.handType.isRun;
 bool handHasGroup(KutHandContext ctx) => ctx.handType.isGroup;
 bool isBossRound(KutHandContext ctx) => ctx.isBossRound;
@@ -184,4 +188,40 @@ class LastChanceKut extends KutBehavior {
   @override
   bool preventsLoss(KutInstance self, int roundScore, int target) =>
       roundScore >= target * threshold;
+}
+
+/// Yer-Su: +mult for every tile held in the rack.
+class PerHeldTileKut extends KutBehavior {
+  const PerHeldTileKut(this.multPerTile);
+  final num multPerTile;
+
+  @override
+  void onHandScored(KutHandContext ctx) {
+    final n = ctx.heldTiles.length;
+    if (n > 0) ctx.addMult(multPerTile * n);
+  }
+}
+
+/// Ötüken: +mult for every [per] Akçe held.
+class MoneyMultKut extends KutBehavior {
+  const MoneyMultKut({required this.per, required this.mult});
+  final int per;
+  final num mult;
+
+  @override
+  void onHandScored(KutHandContext ctx) {
+    final steps = ctx.money ~/ per;
+    if (steps > 0) ctx.addMult(mult * steps);
+  }
+}
+
+/// Kök Tengri: ×(1 + step × hands left after this one).
+class HandsLeftXMultKut extends KutBehavior {
+  const HandsLeftXMultKut(this.step);
+  final double step;
+
+  @override
+  void onHandScored(KutHandContext ctx) {
+    if (ctx.handsLeft > 0) ctx.multiplyMult(1 + step * ctx.handsLeft);
+  }
 }

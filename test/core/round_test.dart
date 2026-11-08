@@ -219,6 +219,13 @@ void main() {
       expect(newRound().countedColor, isNull);
     });
 
+    test('Abası: rack is 2 tiles smaller and refills to that size', () {
+      final r = newRound(rules: boss('abasi'), target: 1 << 30);
+      expect(r.rack, hasLength(8));
+      r.play([0, 1]);
+      expect(r.rack, hasLength(8));
+    });
+
     test('Kara Kuş: okey not wild', () {
       expect(newRound(rules: boss('kara_kus')).okey.okeyIsWild, isFalse);
     });

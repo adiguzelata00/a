@@ -798,4 +798,54 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tileAdded => 'Desteye eklenir';
+
+  @override
+  String get kutOdAnaName => 'Od Ana';
+
+  @override
+  String get kutOdAnaDesc =>
+      'Çift içeren ellerde (Çift, İki Çift, Üç Çift) +8 Çarpan.';
+
+  @override
+  String get kutYerSuName => 'Yer-Su';
+
+  @override
+  String get kutYerSuDesc => 'İstakada tutulan her taş için +1 Çarpan.';
+
+  @override
+  String get kutOtukenName => 'Ötüken';
+
+  @override
+  String get kutOtukenDesc => 'Elindeki her 5 Akçe için +1 Çarpan.';
+
+  @override
+  String get kutKokTengriName => 'Kök Tengri';
+
+  @override
+  String get kutKokTengriDesc =>
+      'Bu elden sonra kalan her El hakkı için +0,5 ×Çarpan.';
+
+  @override
+  String get bossYalmavuzName => 'Yalmavuz';
+
+  @override
+  String get bossYalmavuzDesc => '11, 12 ve 13 sayılı taşlar sayılmaz.';
+
+  @override
+  String get bossAbasiName => 'Abası';
+
+  @override
+  String get bossAbasiDesc => 'İstakaya 2 taş eksik gelir.';
+
+  @override
+  String get bossSulmusName => 'Şulmus';
+
+  @override
+  String get bossSulmusDesc => 'Tek Taş ve Çift puan vermez.';
+
+  @override
+  String get bossKaraKamName => 'Kara Kam';
+
+  @override
+  String get bossKaraKamDesc => 'En soldaki Kut bu turda çalışmaz.';
 }

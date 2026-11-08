@@ -27,6 +27,9 @@ abstract class KutHandContext {
   /// 0-based index of this hand within the round.
   int get handNumber;
 
+  /// Akçe the player holds.
+  int get money;
+
   void addChips(num amount);
   void addMult(num amount);
   void multiplyMult(num factor);

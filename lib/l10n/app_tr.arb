@@ -430,5 +430,21 @@
   "sealGold": "Altın Tamga: sayılınca +3 Akçe",
   "sealSky": "Gök Tamga: tur sonunda Destan yaratır",
   "sealPurple": "Mor Tamga: atılınca Tılsım yaratır",
-  "tileAdded": "Desteye eklenir"
+  "tileAdded": "Desteye eklenir",
+  "kutOdAnaName": "Od Ana",
+  "kutOdAnaDesc": "Çift içeren ellerde (Çift, İki Çift, Üç Çift) +8 Çarpan.",
+  "kutYerSuName": "Yer-Su",
+  "kutYerSuDesc": "İstakada tutulan her taş için +1 Çarpan.",
+  "kutOtukenName": "Ötüken",
+  "kutOtukenDesc": "Elindeki her 5 Akçe için +1 Çarpan.",
+  "kutKokTengriName": "Kök Tengri",
+  "kutKokTengriDesc": "Bu elden sonra kalan her El hakkı için +0,5 ×Çarpan.",
+  "bossYalmavuzName": "Yalmavuz",
+  "bossYalmavuzDesc": "11, 12 ve 13 sayılı taşlar sayılmaz.",
+  "bossAbasiName": "Abası",
+  "bossAbasiDesc": "İstakaya 2 taş eksik gelir.",
+  "bossSulmusName": "Şulmus",
+  "bossSulmusDesc": "Tek Taş ve Çift puan vermez.",
+  "bossKaraKamName": "Kara Kam",
+  "bossKaraKamDesc": "En soldaki Kut bu turda çalışmaz."
 }

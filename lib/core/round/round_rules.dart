@@ -1,3 +1,5 @@
+import '../hands/hand_type.dart';
+
 /// Rule modifiers of a round. Normal rounds use [RoundRules.normal];
 /// boss rounds get their restrictions from boss definitions in `lib/data`.
 class RoundRules {
@@ -10,6 +12,10 @@ class RoundRules {
     this.noDiscards = false,
     this.maxTilesPerPlay,
     this.okeyIsWild = true,
+    this.faceTilesDontCount = false,
+    this.handSizeDelta = 0,
+    this.firstKutDisabled = false,
+    this.zeroScoreHands = const {},
   });
 
   static const RoundRules normal = RoundRules();
@@ -37,4 +43,16 @@ class RoundRules {
 
   /// Kara Kuş: okey is not a joker this round.
   final bool okeyIsWild;
+
+  /// Yalmavuz: counted tiles numbered 11-13 do not score.
+  final bool faceTilesDontCount;
+
+  /// Abası: rack size change (negative = fewer tiles).
+  final int handSizeDelta;
+
+  /// Kara Kam: the leftmost Kut does nothing this round.
+  final bool firstKutDisabled;
+
+  /// Şulmus: these hand types score nothing.
+  final Set<HandType> zeroScoreHands;
 }

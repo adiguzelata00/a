@@ -123,7 +123,7 @@ class Round {
     }
     handsLeft = hands < 1 ? 1 : hands;
     discardsLeft = rules.noDiscards ? 0 : (discards < 0 ? 0 : discards);
-    _rack.addAll(_pile.draw(config.handSize));
+    _rack.addAll(_pile.draw(handSize));
     _rollCountedColor();
   }
 
@@ -168,6 +168,15 @@ class Round {
 
   /// Tiles destroyed this round (crystal shatters); remove from run deck.
   List<Tile> get destroyedTiles => List.unmodifiable(_destroyed);
+
+  /// Rack size this round (boss rules may shrink it).
+  int get handSize {
+    final n = config.handSize + rules.handSizeDelta;
+    return n < 1 ? 1 : n;
+  }
+
+  /// Akçe the player holds (set by the run; used by Ötüken).
+  int money = 0;
 
   int get maxTilesPerPlay => rules.maxTilesPerPlay ?? config.maxTilesPerAction;
 
@@ -354,12 +363,13 @@ class Round {
       handNumber: handsPlayed,
       isBossRound: isBossRound,
       countedColor: countedColor,
+      money: money,
       rng: rng,
     );
   }
 
   List<Tile> _refill() {
-    final drawn = _pile.draw(config.handSize - _rack.length);
+    final drawn = _pile.draw(handSize - _rack.length);
     _rack.addAll(drawn);
     return drawn;
   }

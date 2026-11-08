@@ -6,7 +6,7 @@ import 'package:tengri_taslari/data/kuts.dart';
 
 void main() {
   test('at least 20 Kuts with unique ids and sensible prices', () {
-    expect(allKuts.length, greaterThanOrEqualTo(20));
+    expect(allKuts.length, greaterThanOrEqualTo(24));
     expect(allKuts.map((k) => k.id).toSet(), hasLength(allKuts.length));
     for (final k in allKuts) {
       expect(k.sellValue, k.price ~/ 2);
@@ -15,7 +15,7 @@ void main() {
   });
 
   test('at least 8 bosses with unique ids', () {
-    expect(allBosses.length, greaterThanOrEqualTo(8));
+    expect(allBosses.length, greaterThanOrEqualTo(12));
     expect(bossesById, hasLength(allBosses.length));
   });
 

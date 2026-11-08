@@ -242,5 +242,21 @@
   "sealGold": "Gold Seal: +3 Akçe when counted",
   "sealSky": "Sky Seal: creates a Destan at round end",
   "sealPurple": "Purple Seal: creates a Tılsım when discarded",
-  "tileAdded": "Added to your deck"
+  "tileAdded": "Added to your deck",
+  "kutOdAnaName": "Od Ana",
+  "kutOdAnaDesc": "+8 Mult for hands with pairs (Pair, Two Pair, Three Pairs).",
+  "kutYerSuName": "Yer-Su",
+  "kutYerSuDesc": "+1 Mult for each tile held in the rack.",
+  "kutOtukenName": "Ötüken",
+  "kutOtukenDesc": "+1 Mult for every 5 Akçe you hold.",
+  "kutKokTengriName": "Kök Tengri",
+  "kutKokTengriDesc": "+0.5 ×Mult for each hand left after this one.",
+  "bossYalmavuzName": "Yalmavuz",
+  "bossYalmavuzDesc": "Tiles numbered 11, 12 and 13 do not count.",
+  "bossAbasiName": "Abası",
+  "bossAbasiDesc": "The rack holds 2 fewer tiles.",
+  "bossSulmusName": "Şulmus",
+  "bossSulmusDesc": "High Tile and Pair score nothing.",
+  "bossKaraKamName": "Kara Kam",
+  "bossKaraKamDesc": "Your leftmost Kut does nothing this round."
 }

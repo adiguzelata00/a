@@ -35,9 +35,9 @@ class RackView extends ConsumerWidget {
         final inner = constraints.maxWidth - 28;
         // Layout is based on the full rack size (not the current tile count)
         // so the rack does not jump between one and two rows while scoring.
-        final capacity = tiles.length > round.config.handSize
+        final capacity = tiles.length > round.handSize
             ? tiles.length
-            : round.config.handSize;
+            : round.handSize;
         final singleRowWidth = (inner - gap * (capacity - 1)) / capacity;
         final perRow = singleRowWidth >= minSingleRowTileWidth
             ? capacity
