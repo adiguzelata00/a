@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Online daily leaderboard (Firebase). -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="Tengri'nin Taşları"
         android:name="${applicationName}"

@@ -336,7 +336,7 @@
   "dailyNoHistory": "No daily results yet.",
   "dailyTag": "Daily",
   "leaderboardTitle": "Today's leaderboard",
-  "leaderboardUnavailable": "No leaderboard in this version. In the shared browser version it shows everyone who can open the page.",
+  "leaderboardUnavailable": "The online leaderboard is off in this build.",
   "leaderboardEmpty": "No results yet today. Be the first!",
   "leaderboardError": "The leaderboard can't be loaded right now.",
   "leaderboardRefresh": "Refresh",
@@ -344,5 +344,8 @@
   "leaderboardSomeone": "A player",
   "leaderboardYourRank": "You are #{rank} today · {total} players",
   "leaderboardRow": "Floor {floor} · {score}",
-  "leaderboardOngoing": "climbing"
+  "leaderboardOngoing": "climbing",
+  "settingPlayerName": "Player name",
+  "settingPlayerNameDesc": "Name other players see on the daily leaderboard (up to 20 letters). Left empty, you show as \"A player\".",
+  "leaderboardNameHint": "Set a player name in Settings to show it on the leaderboard."
 }

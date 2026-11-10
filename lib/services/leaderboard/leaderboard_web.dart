@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:js_interop';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tengri_taslari/core/core.dart';
 
 import 'leaderboard_service.dart';
@@ -16,7 +17,8 @@ extension type _Bridge(JSObject _) implements JSObject {
   external JSPromise<JSAny?> top(JSString date);
 }
 
-LeaderboardService createPlatformLeaderboard() => WebLeaderboardService();
+LeaderboardService createPlatformLeaderboard(Ref ref) =>
+    WebLeaderboardService();
 
 class WebLeaderboardService implements LeaderboardService {
   @override

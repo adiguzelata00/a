@@ -1115,7 +1115,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get leaderboardUnavailable =>
-      'No leaderboard in this version. In the shared browser version it shows everyone who can open the page.';
+      'The online leaderboard is off in this build.';
 
   @override
   String get leaderboardEmpty => 'No results yet today. Be the first!';
@@ -1144,4 +1144,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get leaderboardOngoing => 'climbing';
+
+  @override
+  String get settingPlayerName => 'Player name';
+
+  @override
+  String get settingPlayerNameDesc =>
+      'Name other players see on the daily leaderboard (up to 20 letters). Left empty, you show as \"A player\".';
+
+  @override
+  String get leaderboardNameHint =>
+      'Set a player name in Settings to show it on the leaderboard.';
 }

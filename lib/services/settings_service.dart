@@ -13,6 +13,7 @@ class Settings {
     this.languageCode = 'tr',
     this.gameSpeed = 1,
     this.colorBlind = false,
+    this.playerName = '',
   });
 
   final bool sound;
@@ -28,6 +29,9 @@ class Settings {
   /// High-contrast tile colors and bigger color symbols.
   final bool colorBlind;
 
+  /// Name shown on the online daily leaderboard ('' = anonymous).
+  final String playerName;
+
   static const speeds = [1, 2, 4];
   static const languages = ['tr', 'en'];
 
@@ -38,6 +42,7 @@ class Settings {
     String? languageCode,
     int? gameSpeed,
     bool? colorBlind,
+    String? playerName,
   }) => Settings(
     sound: sound ?? this.sound,
     music: music ?? this.music,
@@ -45,6 +50,7 @@ class Settings {
     languageCode: languageCode ?? this.languageCode,
     gameSpeed: gameSpeed ?? this.gameSpeed,
     colorBlind: colorBlind ?? this.colorBlind,
+    playerName: playerName ?? this.playerName,
   );
 
   Map<String, Object> toJson() => {
@@ -54,6 +60,7 @@ class Settings {
     'lang': languageCode,
     'speed': gameSpeed,
     'colorBlind': colorBlind,
+    'name': playerName,
   };
 
   factory Settings.fromJson(Map<String, dynamic> j) {
@@ -67,6 +74,7 @@ class Settings {
       languageCode: languages.contains(lang) ? lang! : d.languageCode,
       gameSpeed: speeds.contains(speed) ? speed! : d.gameSpeed,
       colorBlind: j['colorBlind'] as bool? ?? d.colorBlind,
+      playerName: j['name'] as String? ?? d.playerName,
     );
   }
 }

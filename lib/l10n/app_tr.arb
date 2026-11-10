@@ -604,7 +604,7 @@
   "dailyNoHistory": "Henüz günlük sonuç yok.",
   "dailyTag": "Günlük",
   "leaderboardTitle": "Günün sıralaması",
-  "leaderboardUnavailable": "Sıralama bu sürümde yok. Paylaşılan tarayıcı sürümünde, sayfaya erişimi olan herkesle birlikte görünür.",
+  "leaderboardUnavailable": "Çevrimiçi sıralama bu sürümde kapalı.",
   "leaderboardEmpty": "Bugün henüz sonuç yok. İlk sen ol!",
   "leaderboardError": "Sıralama şu an alınamadı.",
   "leaderboardRefresh": "Yenile",
@@ -632,5 +632,8 @@
       }
     }
   },
-  "leaderboardOngoing": "sürüyor"
+  "leaderboardOngoing": "sürüyor",
+  "settingPlayerName": "Oyuncu adı",
+  "settingPlayerNameDesc": "Günlük sıralamada diğer oyunculara görünen ad (en çok 20 harf). Boş bırakırsan \"Bir oyuncu\" görünür.",
+  "leaderboardNameHint": "Sıralamada adının görünmesi için Ayarlar'dan oyuncu adı belirle."
 }

@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:tengri_taslari/app.dart';
 import 'package:tengri_taslari/core/core.dart';
 import 'package:tengri_taslari/services/leaderboard/leaderboard_service.dart';
+import 'package:tengri_taslari/services/settings_service.dart';
 import 'package:tengri_taslari/ui/game/game_state.dart';
 
 import 'game_flow_test.dart' show Harness;
@@ -96,7 +97,7 @@ void main() {
     await pumpApp(tester, h);
     await tap(tester, 'menu-daily');
     await tester.ensureVisible(find.byKey(const Key('leaderboard')));
-    expect(find.textContaining('Sıralama bu sürümde yok'), findsOneWidget);
+    expect(find.textContaining('Çevrimiçi sıralama'), findsOneWidget);
   });
 
   testWidgets('daily results are submitted and ranked with other players', (
@@ -138,5 +139,21 @@ void main() {
     await tester.ensureVisible(find.byKey(const Key('leaderboard')));
     expect(find.text('Sen'), findsOneWidget);
     expect(find.text('Bugün 2. sıradasın · 2 oyuncu'), findsOneWidget);
+    // No player name yet: the board says where to set one.
+    expect(find.byKey(const Key('leaderboard-name-hint')), findsOneWidget);
+  });
+
+  testWidgets('the player name is set in Settings and kept', (tester) async {
+    final h = Harness(seed: null);
+    await pumpApp(tester, h);
+    await tap(tester, 'menu-settings');
+    await tester.ensureVisible(find.byKey(const Key('setting-name')));
+    await tester.enterText(
+      find.byKey(const Key('setting-name')),
+      '  Tomris   Hatun ',
+    );
+    await frames(tester);
+    expect(h.container.read(settingsProvider).playerName, 'Tomris Hatun');
+    expect(h.store.getString(SettingsController.key), contains('Tomris'));
   });
 }

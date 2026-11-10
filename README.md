@@ -182,6 +182,20 @@ Sürüm `pubspec.yaml` içindeki `version: 0.1.0+1` satırından gelir (`+1` = v
 - Günlük koşu ayrı bir kayıt yuvasındadır (`daily_run_v1`); normal koşuyu ezmez.
 - Gün, cihazın yerel tarihine göre değişir (yerel gece yarısı).
 
+### Günün sıralaması (mobil: Firebase)
+
+- Uygulama, Firebase'e REST üzerinden bağlanır (yerel eklenti ve `google-services.json` gerekmez):
+  anonim giriş (Identity Toolkit) + Firestore'da `daily/<tarih>/scores/<uid>` belgesi.
+- Sonuç her değiştiğinde gönderilir; çevrimdışıyken sessizce atlanır, bir sonraki değişiklikte
+  tekrar gönderilir. Oyuncu adı **Ayarlar → Oyuncu adı**'ndan belirlenir (boşsa "Bir oyuncu").
+- Kurulum: Firebase konsolunda proje aç → Authentication'da **Anonim** girişi aç → Firestore
+  veritabanı oluştur → Kurallar sekmesine `firebase/firestore.rules` içeriğini yapıştır →
+  Proje ayarlarından **Proje kimliği** ve **Web API anahtarı**nı `lib/data/online_config.dart`
+  içine yaz (veya `--dart-define=FIREBASE_PROJECT_ID=... --dart-define=FIREBASE_API_KEY=...`).
+  Bu değerler gizli değildir; erişimi kurallar belirler.
+- İki değer de boşken sıralama kapalıdır ("Çevrimiçi sıralama bu sürümde kapalı").
+- Tarayıcı sürümü (claude.ai sayfası) sayfanın paylaşılan veritabanını kullanır.
+
 ## Kural kararları (spec'te belirsiz olanlar)
 
 - **Alaca Seri** tam 4 taştır: "hepsi farklı renk" + 4 renk ⇒ en fazla 4.
