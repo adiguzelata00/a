@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tengri_taslari/services/leaderboard/leaderboard_service.dart';
 import 'package:tengri_taslari/services/settings_service.dart';
 
+import '../game/game_controller.dart';
 import '../l10n_ext.dart';
 import '../theme/palette.dart';
 

@@ -66,11 +66,3 @@ class UnavailableLeaderboardService implements LeaderboardService {
 final leaderboardServiceProvider = Provider<LeaderboardService>(
   createPlatformLeaderboard,
 );
-
-/// Ranked rows of a day (null = leaderboard unavailable here).
-final dailyLeaderboardProvider = FutureProvider.autoDispose
-    .family<List<LeaderboardEntry>?, String>((ref, date) async {
-      final rows = await ref.watch(leaderboardServiceProvider).top(date);
-      if (rows == null) return null;
-      return [...rows]..sort(LeaderboardEntry.compare);
-    });

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -5,6 +7,7 @@ import 'package:tengri_taslari/app.dart';
 import 'package:tengri_taslari/core/core.dart';
 import 'package:tengri_taslari/services/leaderboard/leaderboard_service.dart';
 import 'package:tengri_taslari/services/settings_service.dart';
+import 'package:tengri_taslari/services/storage.dart';
 import 'package:tengri_taslari/ui/game/game_state.dart';
 
 import 'game_flow_test.dart' show Harness;
@@ -141,6 +144,43 @@ void main() {
     expect(find.text('Bugün 2. sıradasın · 2 oyuncu'), findsOneWidget);
     // No player name yet: the board says where to set one.
     expect(find.byKey(const Key('leaderboard-name-hint')), findsOneWidget);
+  });
+
+  testWidgets('a result the server missed is resent when the board opens', (
+    tester,
+  ) async {
+    // Played earlier (offline, or before the leaderboard existed): the
+    // result is only in the profile.
+    final store = MemoryStore();
+    await store.setString(
+      'profile_v1',
+      jsonEncode(
+        Profile(
+          dailyResults: {
+            '2026-11-08': const DailyResult(
+              floor: 3,
+              won: false,
+              score: 700,
+              finished: true,
+            ),
+          },
+        ).toJson(),
+      ),
+    );
+    final server = FakeServer();
+    final board = FakeLeaderboard(server, 'me');
+    final h = Harness(seed: null, store: store, leaderboard: board);
+    await pumpApp(tester, h);
+    await tap(tester, 'menu-daily');
+    expect(find.byKey(const Key('daily-result')), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.text('Sen'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(board.submitted, ['2026-11-08']);
+    expect(server.rows['me']!['2026-11-08']!.score, 700);
+    expect(find.text('Sen'), findsOneWidget);
   });
 
   testWidgets('the player name is set in Settings and kept', (tester) async {
