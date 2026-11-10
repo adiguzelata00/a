@@ -9,12 +9,12 @@
 abstract final class OnlineConfig {
   static const String firebaseProjectId = String.fromEnvironment(
     'FIREBASE_PROJECT_ID',
-    defaultValue: '',
+    defaultValue: 'tengri-taslari',
   );
 
   static const String firebaseApiKey = String.fromEnvironment(
     'FIREBASE_API_KEY',
-    defaultValue: '',
+    defaultValue: 'AIzaSyDeLDTq5luq8XozyL3I6ogBBErEH2wYDeY',
   );
 
   /// The leaderboard is offline until both values are set.
