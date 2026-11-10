@@ -1,0 +1,38 @@
+name: tengri_taslari
+description: "Tengri'nin Taşları — okey taşlarıyla oynanan, Türk mitolojisi temalı roguelike bulmaca oyunu."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.13.7
+
+dependencies:
+  audioplayers: ^6.8.1
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_riverpod: ^3.5.0
+  intl: any
+  shared_preferences: ^2.5.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  assets:
+    - assets/audio/
+
+  fonts:
+    - family: Rubik
+      fonts:
+        - asset: assets/fonts/Rubik-400.ttf
+        - asset: assets/fonts/Rubik-700.ttf
+          weight: 700
+        - asset: assets/fonts/Rubik-900.ttf
+          weight: 900
