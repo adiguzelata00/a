@@ -45,7 +45,8 @@ jobs:
       # Without android/key.properties the release build is signed with the
       # debug key: installable for testing, not for Google Play.
       - name: Build release APK
-        run: flutter build apk --release
+        # Test ads in this sideloaded test APK (see lib/data/ads_config.dart).
+        run: flutter build apk --release --dart-define=ADMOB_TEST_ADS=true
 
       - uses: actions/upload-artifact@v5
         with:

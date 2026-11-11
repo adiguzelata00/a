@@ -205,11 +205,12 @@ Sürüm `pubspec.yaml` içindeki `version: 0.1.0+1` satırından gelir (`+1` = v
   devam eder; reklam sırasında müzik durur.
 - İlk açılışta, yasanın gerektirdiği yerlerde (AB, Birleşik Krallık…) Google'ın izin formu (UMP)
   çıkar; bu bölgelerde Ayarlar'da **Reklam gizlilik seçenekleri** de görünür.
-- Şu an Google'ın **test kimlikleri** kullanılıyor (her reklamda "Test Ad" yazar, gelir getirmez).
-  Gerçek kimliklere geçmek için: `android/app/src/main/AndroidManifest.xml` içindeki
-  `com.google.android.gms.ads.APPLICATION_ID` (ve iOS'ta `Info.plist` → `GADApplicationIdentifier`)
-  ile `lib/data/ads_config.dart` içindeki reklam birimi (veya
-  `--dart-define=ADMOB_INTERSTITIAL_ID=...`).
+- Kimlikler: uygulama `ca-app-pub-7273709401055080~2304804446` (AndroidManifest), geçiş reklamı
+  birimi `boss_sonrasi` = `ca-app-pub-7273709401055080/3969560705` (`lib/data/ads_config.dart`).
+- GitHub Actions'ın ürettiği test APK'sı `--dart-define=ADMOB_TEST_ADS=true` ile derlenir ve
+  Google'ın "Test Ad" reklamlarını gösterir; mağaza derlemesi (bayraksız) gerçek reklam gösterir.
+  Kendi uygulamanın gerçek reklamlarına tıklama: AdMob bunu geçersiz tıklama sayar.
+- iOS için henüz gerçek reklam birimi yok; iOS'ta yalnızca test reklamı ve test uygulama kimliği var.
 - Web ve masaüstü sürümlerinde reklam yoktur (`NoMonetizationService`).
 
 ## Kural kararları (spec'te belirsiz olanlar)

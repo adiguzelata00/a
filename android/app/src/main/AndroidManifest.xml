@@ -5,11 +5,10 @@
         android:label="Gök Taşları"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-        <!-- AdMob app id. This is Google's TEST id; replace it with the
-             real one (ca-app-pub-...~...) from the AdMob console. -->
+        <!-- AdMob app id ("Gök Taşları"). -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="ca-app-pub-7273709401055080~2304804446"/>
         <activity
             android:screenOrientation="portrait"
             android:name=".MainActivity"
