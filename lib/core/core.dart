@@ -1,4 +1,4 @@
-/// Pure Dart game logic of Tengri'nin Taşları. Must never import Flutter.
+/// Pure Dart game logic of Gök Taşları. Must never import Flutter.
 library;
 
 export 'hands/hand_evaluator.dart';

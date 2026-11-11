@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In tr, this message translates to:
-  /// **'Tengri\'nin Taşları'**
+  /// **'Gök Taşları'**
   String get appTitle;
 
   /// No description provided for @target.
@@ -2081,7 +2081,7 @@ abstract class AppLocalizations {
   /// No description provided for @dailyShareText.
   ///
   /// In tr, this message translates to:
-  /// **'Tengri\'nin Taşları · Günlük {date}\nKat {floor} · {score} puan{won}\n{seed}'**
+  /// **'Gök Taşları · Günlük {date}\nKat {floor} · {score} puan{won}\n{seed}'**
   String dailyShareText(
     String date,
     int floor,

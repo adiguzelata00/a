@@ -145,7 +145,7 @@ void main() {
         ),
       );
       await tester.pump(const Duration(seconds: 1));
-      expect(find.text("Tengri'nin Taşları"), findsOneWidget);
+      expect(find.text('Gök Taşları'), findsOneWidget);
       expect(find.byKey(const Key('menu-continue')), findsNothing);
       await tester.tap(find.byKey(const Key('menu-new-run')));
       await tester.pumpAndSettle();

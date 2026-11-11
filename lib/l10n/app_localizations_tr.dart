@@ -10,7 +10,7 @@ class AppLocalizationsTr extends AppLocalizations {
   AppLocalizationsTr([String locale = 'tr']) : super(locale);
 
   @override
-  String get appTitle => 'Tengri\'nin Taşları';
+  String get appTitle => 'Gök Taşları';
 
   @override
   String get target => 'Hedef';
@@ -1096,7 +1096,7 @@ class AppLocalizationsTr extends AppLocalizations {
     String won,
     String seed,
   ) {
-    return 'Tengri\'nin Taşları · Günlük $date\nKat $floor · $score puan$won\n$seed';
+    return 'Gök Taşları · Günlük $date\nKat $floor · $score puan$won\n$seed';
   }
 
   @override

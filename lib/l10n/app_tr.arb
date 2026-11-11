@@ -1,6 +1,6 @@
 {
   "@@locale": "tr",
-  "appTitle": "Tengri'nin Taşları",
+  "appTitle": "Gök Taşları",
   "target": "Hedef",
   "score": "Skor",
   "hands": "El",
@@ -579,7 +579,7 @@
   "dailyResultOngoing": "devam ediyor",
   "dailyShare": "Sonucu paylaş",
   "dailyCopied": "Sonuç panoya kopyalandı",
-  "dailyShareText": "Tengri'nin Taşları · Günlük {date}\nKat {floor} · {score} puan{won}\n{seed}",
+  "dailyShareText": "Gök Taşları · Günlük {date}\nKat {floor} · {score} puan{won}\n{seed}",
   "@dailyShareText": {
     "placeholders": {
       "date": {
