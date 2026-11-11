@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tengri_taslari/core/core.dart';
+import 'package:tengri_taslari/services/leaderboard/firebase_leaderboard.dart';
 import 'package:tengri_taslari/services/settings_service.dart';
 
 import '../l10n_ext.dart';
 import '../theme/palette.dart';
 import '../widgets/tile_view.dart';
 
-/// "Ayarlar": sound, music, vibration, language, game speed, color-blind.
+/// "Ayarlar": sound, music, vibration, language, game speed, color-blind,
+/// leaderboard name.
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
@@ -81,7 +84,7 @@ class SettingsScreen extends ConsumerWidget {
             onChanged: (v) => c.update((s) => s.copyWith(colorBlind: v)),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -113,10 +116,63 @@ class SettingsScreen extends ConsumerWidget {
               ],
             ),
           ),
+          const Divider(),
+          _Choice(
+            title: l10n.settingPlayerName,
+            subtitle: l10n.settingPlayerNameDesc,
+            child: _NameField(
+              initial: s.playerName,
+              onChanged: (v) => c.update(
+                (s) => s.copyWith(
+                  playerName: FirebaseLeaderboardService.cleanName(v),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
         ],
       ),
     );
   }
+}
+
+class _NameField extends StatefulWidget {
+  const _NameField({required this.initial, required this.onChanged});
+
+  final String initial;
+  final ValueChanged<String> onChanged;
+
+  @override
+  State<_NameField> createState() => _NameFieldState();
+}
+
+class _NameFieldState extends State<_NameField> {
+  late final _controller = TextEditingController(text: widget.initial);
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => TextField(
+    key: const Key('setting-name'),
+    controller: _controller,
+    maxLength: FirebaseLeaderboardService.maxNameLength,
+    inputFormatters: [
+      LengthLimitingTextInputFormatter(
+        FirebaseLeaderboardService.maxNameLength,
+      ),
+    ],
+    textCapitalization: TextCapitalization.words,
+    decoration: InputDecoration(
+      hintText: context.l10n.leaderboardSomeone,
+      border: const OutlineInputBorder(),
+      isDense: true,
+    ),
+    onChanged: widget.onChanged,
+  );
 }
 
 class _Choice extends StatelessWidget {

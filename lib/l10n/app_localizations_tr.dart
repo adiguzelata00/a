@@ -1115,8 +1115,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get leaderboardTitle => 'Günün sıralaması';
 
   @override
-  String get leaderboardUnavailable =>
-      'Sıralama bu sürümde yok. Paylaşılan tarayıcı sürümünde, sayfaya erişimi olan herkesle birlikte görünür.';
+  String get leaderboardUnavailable => 'Çevrimiçi sıralama bu sürümde kapalı.';
 
   @override
   String get leaderboardEmpty => 'Bugün henüz sonuç yok. İlk sen ol!';
@@ -1145,4 +1144,15 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get leaderboardOngoing => 'sürüyor';
+
+  @override
+  String get settingPlayerName => 'Oyuncu adı';
+
+  @override
+  String get settingPlayerNameDesc =>
+      'Günlük sıralamada diğer oyunculara görünen ad (en çok 20 harf). Boş bırakırsan \"Bir oyuncu\" görünür.';
+
+  @override
+  String get leaderboardNameHint =>
+      'Sıralamada adının görünmesi için Ayarlar\'dan oyuncu adı belirle.';
 }

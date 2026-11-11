@@ -36,9 +36,8 @@ class LeaderboardEntry {
 /// Daily challenge leaderboard backend.
 ///
 /// The web build published on claude.ai uses the page's shared database
-/// (see `leaderboard_web.dart` and the bridge in the page). Other builds
-/// have none yet: an online backend (e.g. Firebase) can implement this
-/// interface later and be provided through [leaderboardServiceProvider].
+/// (see `leaderboard_web.dart` and the bridge in the page); the mobile app
+/// uses Firebase (`firebase_leaderboard.dart`) when it is configured.
 abstract class LeaderboardService {
   /// Whether rankings can be read in this build / view.
   Future<bool> isAvailable();
@@ -65,13 +64,5 @@ class UnavailableLeaderboardService implements LeaderboardService {
 }
 
 final leaderboardServiceProvider = Provider<LeaderboardService>(
-  (ref) => createPlatformLeaderboard(),
+  createPlatformLeaderboard,
 );
-
-/// Ranked rows of a day (null = leaderboard unavailable here).
-final dailyLeaderboardProvider = FutureProvider.autoDispose
-    .family<List<LeaderboardEntry>?, String>((ref, date) async {
-      final rows = await ref.watch(leaderboardServiceProvider).top(date);
-      if (rows == null) return null;
-      return [...rows]..sort(LeaderboardEntry.compare);
-    });

@@ -2123,7 +2123,7 @@ abstract class AppLocalizations {
   /// No description provided for @leaderboardUnavailable.
   ///
   /// In tr, this message translates to:
-  /// **'Sıralama bu sürümde yok. Paylaşılan tarayıcı sürümünde, sayfaya erişimi olan herkesle birlikte görünür.'**
+  /// **'Çevrimiçi sıralama bu sürümde kapalı.'**
   String get leaderboardUnavailable;
 
   /// No description provided for @leaderboardEmpty.
@@ -2173,6 +2173,24 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'sürüyor'**
   String get leaderboardOngoing;
+
+  /// No description provided for @settingPlayerName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oyuncu adı'**
+  String get settingPlayerName;
+
+  /// No description provided for @settingPlayerNameDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük sıralamada diğer oyunculara görünen ad (en çok 20 harf). Boş bırakırsan \"Bir oyuncu\" görünür.'**
+  String get settingPlayerNameDesc;
+
+  /// No description provided for @leaderboardNameHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sıralamada adının görünmesi için Ayarlar\'dan oyuncu adı belirle.'**
+  String get leaderboardNameHint;
 }
 
 class _AppLocalizationsDelegate

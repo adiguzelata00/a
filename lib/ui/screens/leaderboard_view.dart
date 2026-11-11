@@ -1,12 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tengri_taslari/services/leaderboard/leaderboard_service.dart';
+import 'package:tengri_taslari/services/settings_service.dart';
 
+import '../game/game_controller.dart';
 import '../l10n_ext.dart';
 import '../theme/palette.dart';
 
-/// "Günün sıralaması": ranked daily results of everyone who can open the
-/// shared page (browser version), or a note where there is no backend.
+/// "Günün sıralaması": ranked daily results of everyone (online in the
+/// mobile app, the shared page in the browser version), or a note where
+/// there is no backend.
 class LeaderboardView extends ConsumerWidget {
   const LeaderboardView({super.key, required this.date, this.maxRows = 50});
 
@@ -17,6 +21,10 @@ class LeaderboardView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final rows = ref.watch(dailyLeaderboardProvider(date));
+    // The browser version takes names from the page; the app from Settings.
+    final noName =
+        !kIsWeb &&
+        ref.watch(settingsProvider.select((s) => s.playerName.isEmpty));
 
     Widget note(String text) => Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -81,6 +89,15 @@ class LeaderboardView extends ConsumerWidget {
                   ),
                 for (var i = 0; i < list.length && i < maxRows; i++)
                   _Row(rank: i + 1, entry: list[i]),
+                if (noName && myIndex >= 0)
+                  Text(
+                    l10n.leaderboardNameHint,
+                    key: const Key('leaderboard-name-hint'),
+                    style: const TextStyle(
+                      color: Palette.textMuted,
+                      fontSize: 12,
+                    ),
+                  ),
               ],
             );
           },

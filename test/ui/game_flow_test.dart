@@ -49,8 +49,10 @@ class Harness {
     container = ProviderContainer(
       overrides: [
         initialSeedCodeProvider.overrideWithValue(seed),
-        if (leaderboard != null)
-          leaderboardServiceProvider.overrideWithValue(leaderboard),
+        // Never the real (online) backend in tests.
+        leaderboardServiceProvider.overrideWithValue(
+          leaderboard ?? const UnavailableLeaderboardService(),
+        ),
         clockProvider.overrideWithValue(() => this.now),
         dailyFactoryProvider.overrideWithValue(
           (c) => c.start(

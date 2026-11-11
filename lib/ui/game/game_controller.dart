@@ -475,3 +475,18 @@ enum DailyStatus { available, inProgress, done }
 final gameControllerProvider = NotifierProvider<GameController, GameState>(
   GameController.new,
 );
+
+/// Ranked rows of a day (null = leaderboard unavailable here).
+///
+/// Each load first resends this player's own result for the day (the write
+/// is idempotent). That repairs a send that failed offline, a result played
+/// before the leaderboard existed, and a player name changed afterwards.
+final dailyLeaderboardProvider = FutureProvider.autoDispose
+    .family<List<LeaderboardEntry>?, String>((ref, date) async {
+      final service = ref.watch(leaderboardServiceProvider);
+      final mine = ref.read(profileProvider).dailyResults[date];
+      if (mine != null) await service.submit(date, mine);
+      final rows = await service.top(date);
+      if (rows == null) return null;
+      return [...rows]..sort(LeaderboardEntry.compare);
+    });
