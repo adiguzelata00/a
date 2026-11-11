@@ -1155,4 +1155,11 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get leaderboardNameHint =>
       'Sıralamada adının görünmesi için Ayarlar\'dan oyuncu adı belirle.';
+
+  @override
+  String get settingPrivacyOptions => 'Reklam gizlilik seçenekleri';
+
+  @override
+  String get settingPrivacyOptionsDesc =>
+      'Kişiselleştirilmiş reklam iznini değiştir';
 }

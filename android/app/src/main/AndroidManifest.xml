@@ -1,10 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Online daily leaderboard (Firebase). -->
+    <!-- Online daily leaderboard (Firebase) and ads (AdMob). -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="Gök Taşları"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- AdMob app id. This is Google's TEST id; replace it with the
+             real one (ca-app-pub-...~...) from the AdMob console. -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713"/>
         <activity
             android:screenOrientation="portrait"
             android:name=".MainActivity"

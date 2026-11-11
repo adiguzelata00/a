@@ -198,6 +198,20 @@ Sürüm `pubspec.yaml` içindeki `version: 0.1.0+1` satırından gelir (`+1` = v
 - İki değer de boşken sıralama kapalıdır ("Çevrimiçi sıralama bu sürümde kapalı").
 - Tarayıcı sürümü (claude.ai sayfası) sayfanın paylaşılan veritabanını kullanır.
 
+## Reklamlar (AdMob)
+
+- Android/iOS'ta **her boss yenildikten sonra**, Bozdurma'da "Topla"ya basınca tam ekran geçiş
+  reklamı gösterilir (tur sırasında asla). Hazır reklam yoksa ya da internet yoksa oyun beklemeden
+  devam eder; reklam sırasında müzik durur.
+- İlk açılışta, yasanın gerektirdiği yerlerde (AB, Birleşik Krallık…) Google'ın izin formu (UMP)
+  çıkar; bu bölgelerde Ayarlar'da **Reklam gizlilik seçenekleri** de görünür.
+- Şu an Google'ın **test kimlikleri** kullanılıyor (her reklamda "Test Ad" yazar, gelir getirmez).
+  Gerçek kimliklere geçmek için: `android/app/src/main/AndroidManifest.xml` içindeki
+  `com.google.android.gms.ads.APPLICATION_ID` (ve iOS'ta `Info.plist` → `GADApplicationIdentifier`)
+  ile `lib/data/ads_config.dart` içindeki reklam birimi (veya
+  `--dart-define=ADMOB_INTERSTITIAL_ID=...`).
+- Web ve masaüstü sürümlerinde reklam yoktur (`NoMonetizationService`).
+
 ## Kural kararları (spec'te belirsiz olanlar)
 
 - **Alaca Seri** tam 4 taştır: "hepsi farklı renk" + 4 renk ⇒ en fazla 4.

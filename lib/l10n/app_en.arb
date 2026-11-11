@@ -347,5 +347,7 @@
   "leaderboardOngoing": "climbing",
   "settingPlayerName": "Player name",
   "settingPlayerNameDesc": "Name other players see on the daily leaderboard (up to 20 letters). Left empty, you show as \"A player\".",
-  "leaderboardNameHint": "Set a player name in Settings to show it on the leaderboard."
+  "leaderboardNameHint": "Set a player name in Settings to show it on the leaderboard.",
+  "settingPrivacyOptions": "Ad privacy options",
+  "settingPrivacyOptionsDesc": "Change your personalized ads consent"
 }

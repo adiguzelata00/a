@@ -1,11 +1,30 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Hook for future ads / in-app purchases. NOTHING is implemented on
-/// purpose: the game ships without ads or IAP. A real implementation can be
-/// provided later by overriding [monetizationServiceProvider].
+import 'ads/monetization_none.dart'
+    if (dart.library.io) 'ads/admob_monetization.dart';
+
+/// Ads and in-app purchases.
+///
+/// Android/iOS builds use AdMob (`ads/admob_monetization.dart`); the web
+/// build and tests have none ([NoMonetizationService]).
 abstract class MonetizationService {
   /// Whether ads may be shown (e.g. false after a "remove ads" purchase).
   bool get adsEnabled;
+
+  /// Asks for ad consent where the law requires it and starts the ad SDK.
+  /// Safe to call more than once.
+  Future<void> initialize();
+
+  /// Shows a full-screen ad between levels (after a boss). Completes when
+  /// the ad is closed, or at once when no ad is ready: never blocks play.
+  Future<void> showInterstitial(String placement);
+
+  /// Whether the player must be able to reopen the ad consent choices
+  /// (Settings shows a "Privacy options" button then).
+  Future<bool> privacyOptionsRequired();
+
+  /// Reopens the ad consent form.
+  Future<void> showPrivacyOptions();
 
   /// Optional rewarded ad (e.g. an extra reroll). Returns true if the
   /// reward was earned.
@@ -14,16 +33,28 @@ abstract class MonetizationService {
   /// Starts a purchase of [productId]. Returns true when completed.
   Future<bool> purchase(String productId);
 
-  /// Restores earlier purchases (required on iOS).
+  /// Restores earlier purchases.
   Future<void> restorePurchases();
 }
 
-/// Default: no ads, no purchases.
+/// No ads, no purchases (web, desktop, tests).
 class NoMonetizationService implements MonetizationService {
   const NoMonetizationService();
 
   @override
   bool get adsEnabled => false;
+
+  @override
+  Future<void> initialize() async {}
+
+  @override
+  Future<void> showInterstitial(String placement) async {}
+
+  @override
+  Future<bool> privacyOptionsRequired() async => false;
+
+  @override
+  Future<void> showPrivacyOptions() async {}
 
   @override
   Future<bool> showRewardedAd(String placement) async => false;
@@ -36,5 +67,5 @@ class NoMonetizationService implements MonetizationService {
 }
 
 final monetizationServiceProvider = Provider<MonetizationService>(
-  (ref) => const NoMonetizationService(),
+  (ref) => createPlatformMonetization(),
 );

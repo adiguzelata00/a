@@ -9,11 +9,25 @@ import 'package:tengri_taslari/data/run_setup.dart';
 import 'package:tengri_taslari/services/audio_service.dart';
 import 'package:tengri_taslari/services/haptics_service.dart';
 import 'package:tengri_taslari/services/leaderboard/leaderboard_service.dart';
+import 'package:tengri_taslari/services/monetization_service.dart';
 import 'package:tengri_taslari/services/music_service.dart';
 import 'package:tengri_taslari/services/storage.dart';
 import 'package:tengri_taslari/ui/game/game_controller.dart';
 import 'package:tengri_taslari/ui/game/game_state.dart';
 import 'package:tengri_taslari/ui/settings/settings_providers.dart';
+
+/// Records interstitials instead of showing them.
+class FakeMonetization extends NoMonetizationService {
+  FakeMonetization();
+  final List<String> shown = [];
+  bool enabled = true;
+
+  @override
+  bool get adsEnabled => enabled;
+
+  @override
+  Future<void> showInterstitial(String placement) async => shown.add(placement);
+}
 
 class FakeHaptics implements HapticsService {
   final List<HapticKind> calls = [];
@@ -41,6 +55,7 @@ class Harness {
        audio = PlaceholderAudioService(),
        haptics = FakeHaptics(),
        music = SilentMusicService(),
+       ads = FakeMonetization(),
        store = store ?? MemoryStore() {
     final rules = defaultRunRules.copyWith(
       targetFor: target == null ? null : (f, r) => target,
@@ -70,6 +85,7 @@ class Harness {
         audioServiceProvider.overrideWithValue(audio),
         hapticsServiceProvider.overrideWithValue(haptics),
         musicServiceProvider.overrideWithValue(music),
+        monetizationServiceProvider.overrideWithValue(ads),
         storageProvider.overrideWithValue(this.store),
       ],
     );
@@ -78,6 +94,7 @@ class Harness {
   final PlaceholderAudioService audio;
   final FakeHaptics haptics;
   final SilentMusicService music;
+  final FakeMonetization ads;
   final MemoryStore store;
 
   /// Fixed "today" for the daily challenge.
@@ -391,6 +408,34 @@ void main() {
       expect(h.state.screen, GameScreen.roundSelect);
       expect(h.run.roundInFloor, 1);
       expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('an ad is shown after each boss, not after other trials', (
+      tester,
+    ) async {
+      final h = Harness(target: 1);
+      await h.pump(tester);
+      for (var trial = 0; trial < 3; trial++) {
+        expect(h.run.isBossRound, trial == 2);
+        await h.startRound(tester);
+        await h.playOut(tester);
+        await h.tap(tester, 'collect');
+        expect(h.ads.shown, trial == 2 ? ['boss'] : isEmpty);
+        expect(h.state.screen, GameScreen.shop);
+        await h.tap(tester, 'leave-shop');
+      }
+      expect(h.run.floor, 2);
+
+      // No ads (e.g. after a "remove ads" purchase): straight on.
+      h.ads.enabled = false;
+      for (var trial = 0; trial < 3; trial++) {
+        await h.startRound(tester);
+        await h.playOut(tester);
+        await h.tap(tester, 'collect');
+        await h.tap(tester, 'leave-shop');
+      }
+      expect(h.ads.shown, ['boss']);
+      expect(h.run.floor, 3);
     });
 
     testWidgets('buying a pack opens it; choosing returns to the shop', (

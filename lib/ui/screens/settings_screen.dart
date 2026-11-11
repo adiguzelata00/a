@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tengri_taslari/core/core.dart';
 import 'package:tengri_taslari/services/leaderboard/firebase_leaderboard.dart';
+import 'package:tengri_taslari/services/monetization_service.dart';
 import 'package:tengri_taslari/services/settings_service.dart';
 
 import '../l10n_ext.dart';
@@ -129,11 +130,43 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
           ),
+          const _PrivacyOptions(),
           const SizedBox(height: 24),
         ],
       ),
     );
   }
+}
+
+/// "Reklam gizlilik seçenekleri": only where the consent rules require a
+/// way back to the ad consent form (e.g. in the EEA).
+class _PrivacyOptions extends ConsumerStatefulWidget {
+  const _PrivacyOptions();
+
+  @override
+  ConsumerState<_PrivacyOptions> createState() => _PrivacyOptionsState();
+}
+
+class _PrivacyOptionsState extends ConsumerState<_PrivacyOptions> {
+  late final Future<bool> _required = ref
+      .read(monetizationServiceProvider)
+      .privacyOptionsRequired();
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder<bool>(
+    future: _required,
+    builder: (context, snap) {
+      if (snap.data != true) return const SizedBox.shrink();
+      final l10n = context.l10n;
+      return ListTile(
+        key: const Key('setting-privacy'),
+        leading: const Icon(Icons.privacy_tip_outlined, color: Palette.gold),
+        title: Text(l10n.settingPrivacyOptions),
+        subtitle: Text(l10n.settingPrivacyOptionsDesc),
+        onTap: () => ref.read(monetizationServiceProvider).showPrivacyOptions(),
+      );
+    },
+  );
 }
 
 class _NameField extends StatefulWidget {

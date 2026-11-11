@@ -1155,4 +1155,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get leaderboardNameHint =>
       'Set a player name in Settings to show it on the leaderboard.';
+
+  @override
+  String get settingPrivacyOptions => 'Ad privacy options';
+
+  @override
+  String get settingPrivacyOptionsDesc =>
+      'Change your personalized ads consent';
 }

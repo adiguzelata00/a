@@ -635,5 +635,7 @@
   "leaderboardOngoing": "sürüyor",
   "settingPlayerName": "Oyuncu adı",
   "settingPlayerNameDesc": "Günlük sıralamada diğer oyunculara görünen ad (en çok 20 harf). Boş bırakırsan \"Bir oyuncu\" görünür.",
-  "leaderboardNameHint": "Sıralamada adının görünmesi için Ayarlar'dan oyuncu adı belirle."
+  "leaderboardNameHint": "Sıralamada adının görünmesi için Ayarlar'dan oyuncu adı belirle.",
+  "settingPrivacyOptions": "Reklam gizlilik seçenekleri",
+  "settingPrivacyOptionsDesc": "Kişiselleştirilmiş reklam iznini değiştir"
 }

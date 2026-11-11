@@ -7,6 +7,7 @@ import 'package:tengri_taslari/data/run_setup.dart' as setup;
 import 'package:tengri_taslari/services/audio_service.dart';
 import 'package:tengri_taslari/services/haptics_service.dart';
 import 'package:tengri_taslari/services/leaderboard/leaderboard_service.dart';
+import 'package:tengri_taslari/services/monetization_service.dart';
 import 'package:tengri_taslari/services/music_service.dart';
 import 'package:tengri_taslari/services/save_service.dart';
 import 'package:tengri_taslari/services/settings_service.dart';
@@ -402,7 +403,26 @@ class GameController extends Notifier<GameState> {
 
   // ------------------------------------------------------- cashout/shop
 
-  void collectCashout() {
+  bool _adShowing = false;
+
+  /// Takes the cashout money. After a boss victory a full-screen ad is
+  /// shown first (between levels, never during a round); the game goes on
+  /// when it is closed, or at once when no ad is ready.
+  Future<void> collectCashout() async {
+    final run = state.run;
+    if (run == null || run.phase != RunPhase.cashout || _adShowing) return;
+    final ads = ref.read(monetizationServiceProvider);
+    if (run.isBossRound && ads.adsEnabled) {
+      _adShowing = true;
+      final music = ref.read(musicServiceProvider)..stop();
+      try {
+        await ads.showInterstitial('boss');
+      } finally {
+        _adShowing = false;
+      }
+      if (!ref.mounted) return;
+      music.start();
+    }
     if (_act((r) => r.collectCashout())) _audio.play(SoundId.money);
   }
 

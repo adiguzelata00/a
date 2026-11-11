@@ -2191,6 +2191,18 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Sıralamada adının görünmesi için Ayarlar\'dan oyuncu adı belirle.'**
   String get leaderboardNameHint;
+
+  /// No description provided for @settingPrivacyOptions.
+  ///
+  /// In tr, this message translates to:
+  /// **'Reklam gizlilik seçenekleri'**
+  String get settingPrivacyOptions;
+
+  /// No description provided for @settingPrivacyOptionsDesc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kişiselleştirilmiş reklam iznini değiştir'**
+  String get settingPrivacyOptionsDesc;
 }
 
 class _AppLocalizationsDelegate
