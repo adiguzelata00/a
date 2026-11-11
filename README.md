@@ -1,4 +1,6 @@
-# Tengri'nin Taşları
+# Gök Taşları
+
+> Eski çalışma adı: "Tengri'nin Taşları" (paket adı `tengri_taslari` / `com.tengritaslari.tengri_taslari` değişmedi).
 
 Okey taşlarıyla oynanan, Türk mitolojisi temalı, deste kurmalı **roguelike bulmaca oyunu**.
 Flutter (+ ileride Flame), Android öncelikli, dikey ekran.
@@ -150,7 +152,7 @@ fazla sertlerdi). Kopuz +15, Oğuz Kağan +60/+8, Ergenekon +30 olarak ayarland�
 - **Koleksiyon:** Bir koşuda sahip olunan Kut'lar ve karşılaşılan Boss'lar açılır; başlanan /
   kazanılan koşu, en yüksek el ve en yüksek kat kayıtları.
 - **Müzik:** sentezlenmiş 16 sn'lik döngü (gırtlak sesi benzeri dron + kopuz tınıları).
-- **Yayın:** uygulama adı "Tengri'nin Taşları", ikon yer tutucusu, yalnızca dikey ekran
+- **Yayın:** uygulama adı "Gök Taşları" (EN: "Sky Stones"), ikon yer tutucusu, yalnızca dikey ekran
   (Android + iOS; iPad `UIRequiresFullScreen`), Android release: R8 küçültme, kaynak küçültme,
   `android/key.properties` ile imzalama (yoksa debug anahtarı). `MonetizationService`
   arayüzü hazır; reklam/IAP yok.

@@ -10,7 +10,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Stones of Tengri';
+  String get appTitle => 'Sky Stones';
 
   @override
   String get target => 'Target';
@@ -1095,7 +1095,7 @@ class AppLocalizationsEn extends AppLocalizations {
     String won,
     String seed,
   ) {
-    return 'Stones of Tengri · Daily $date\nFloor $floor · $score points$won\n$seed';
+    return 'Sky Stones · Daily $date\nFloor $floor · $score points$won\n$seed';
   }
 
   @override

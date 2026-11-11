@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appTitle": "Stones of Tengri",
+  "appTitle": "Sky Stones",
   "target": "Target",
   "score": "Score",
   "hands": "Hands",
@@ -330,7 +330,7 @@
   "dailyResultOngoing": "in progress",
   "dailyShare": "Share result",
   "dailyCopied": "Result copied to clipboard",
-  "dailyShareText": "Stones of Tengri · Daily {date}\nFloor {floor} · {score} points{won}\n{seed}",
+  "dailyShareText": "Sky Stones · Daily {date}\nFloor {floor} · {score} points{won}\n{seed}",
   "dailyShareWon": " · reached Tengri ★",
   "dailyHistory": "Recent days",
   "dailyNoHistory": "No daily results yet.",
